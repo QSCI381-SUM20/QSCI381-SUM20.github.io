@@ -6,9 +6,22 @@
     <description>Recent content on QSCI 381 Labs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Fri, 12 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Lab 00</title>
+      <link>/2020/06/12/lab-00/</link>
+      <pubDate>Fri, 12 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/06/12/lab-00/</guid>
+      <description>(Download)
+Most the instructions here are taken from Chapter 1 of Getting Used to R, RStudio, and R Markdown by Ismay and Kennedy and this associated tutorial.. See also Chapter 1 of Statistical Inference via Data Science by Ismay and Kim.
+Installation   Download and install R by going to https://cloud.r-project.org.
+  If you are a Windows user: Click on “Download R for Windows”, then click on “base”, then click on the Download link.</description>
+    </item>
     
     <item>
       <title>About</title>

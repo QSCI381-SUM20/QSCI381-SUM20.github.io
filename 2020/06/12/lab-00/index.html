@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.72.0" />
+
+
+<title>Lab 00 - QSCI 381 Labs</title>
+<meta property="og:title" content="Lab 00 - QSCI 381 Labs">
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+
+  <ul class="nav-links">
+    
+    <li><a href="https://canvas.uw.edu/courses/1382732">Canvas</a></li>
+    
+    <li><a href="/">Home</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+
+
+    <h1 class="article-title">Lab 00</h1>
+
+    
+    <span class="article-date">2020-06-12</span>
+    
+
+    <div class="article-content">
+      <p>(<!-- raw HTML omitted -->Download<!-- raw HTML omitted -->)</p>
+<p>Most the instructions here are taken from Chapter 1 of <a href="https://rbasics.netlify.app/"><em>Getting Used to R, RStudio, and R Markdown</em></a> by Ismay and Kennedy and <a href="https://www.reed.edu/data-at-reed/software/R/r_studio.html">this associated tutorial.</a>. See also Chapter 1 of <a href="https://moderndive.com/index.html"><em>Statistical Inference via Data Science</em></a> by Ismay and Kim.</p>
+<h1 id="installation">Installation</h1>
+<ol>
+<li>
+<p><strong>Download and install R by going to <a href="https://cloud.r-project.org">https://cloud.r-project.org</a>.</strong></p>
+<ul>
+<li>
+<p>If you are a Windows user: Click on “Download R for Windows”, then click on “base”, then click on the Download link.</p>
+</li>
+<li>
+<p>If you are a macOS user: Click on “Download R for (Mac) OS X”, then under “Latest release:” click on R-X.X.X.pkg, where R-X.X.X is the version number. For example, the latest version of R as of June 12, 2020 was R-4.0.1.</p>
+</li>
+<li>
+<p>If you are a Linux user: Click on “Download R for Linux” and choose your distribution for more information on installing R for your setup.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Download and install RStudio at <a href="https://www.rstudio.com/products/rstudio/download">https://www.rstudio.com/products/rstudio/download</a>.</strong></p>
+<ul>
+<li>
+<p>Scroll down to “Installers for Supported Platforms” near the bottom of the page.</p>
+</li>
+<li>
+<p>Click on the download link corresponding to your computer’s operating system.</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="installing-packages">Installing packages</h1>
+<pre><code class="language-{r}" data-lang="{r}"># List of useful packages
+pkg &lt;- c(&quot;tidyr&quot;, &quot;dplyr&quot;, &quot;ggplot2&quot;, &quot;knitr&quot;, &quot;rmarkdown&quot;)
+
+# Check if packages are not installed and assign the
+# names of the uninstalled packages to the variable new.pkg
+new.pkg &lt;- pkg[!(pkg %in% installed.packages())]
+
+# If there are any packages in the list that aren't installed,
+# install them
+if (length(new.pkg)) {
+  install.packages(new.pkg, repos = &quot;http://cran.rstudio.com&quot;)
+}
+</code></pre><h1 id="heading"></h1>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+
