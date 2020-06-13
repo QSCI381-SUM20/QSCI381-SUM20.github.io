@@ -10,6 +10,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -moz-font-feature-settings: "liga" on;
+  font-size: 80%;
 }
 
 h1,
@@ -95,7 +96,7 @@ code {
   max-width: 700px;
   margin: 40px auto 10px;
   padding: 0 15px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.7;
   color: #333;
 }
