@@ -6,10 +6,20 @@
     <description>Recent content on QSCI 381 Labs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Lab 01</title>
+      <link>/2020/06/24/lab-01/</link>
+      <pubDate>Wed, 24 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/06/24/lab-01/</guid>
+      <description>Skills In this lab, we will practice computing descriptive statistics and making plots in R for a dataset about animal sleep habits. First, download the template R Markdown file for Lab 01 here . Open this template in RStudio.
+In R Markdown files, you can switch between text and code. This line is text, but below is a code chunk. In your template file, the first code chunk has the name load_data and the options warning = F, message = F.</description>
+    </item>
     
     <item>
       <title>Lab 00</title>

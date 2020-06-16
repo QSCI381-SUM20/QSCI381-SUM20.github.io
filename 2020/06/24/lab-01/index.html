@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.72.0" />
+
+
+<title>Lab 01 - QSCI 381 Labs</title>
+<meta property="og:title" content="Lab 01 - QSCI 381 Labs">
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+
+  <ul class="nav-links">
+    
+    <li><a href="https://canvas.uw.edu/courses/1382732">Canvas</a></li>
+    
+    <li><a href="/">Home</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+
+
+    <h1 class="article-title">Lab 01</h1>
+
+    
+    <span class="article-date">2020-06-24</span>
+    
+
+    <div class="article-content">
+      
+
+
+<div id="skills" class="section level1">
+<h1>Skills</h1>
+<ol style="list-style-type: decimal">
+<li><p>In this lab, we will practice computing descriptive statistics and making plots in R for a dataset about animal sleep habits. First, download the template R Markdown file for Lab 01 <a href="/post/lab-01/lab_01_template.Rmd" download><b>here</b></a> . Open this template in RStudio.</p>
+<p>In R Markdown files, you can switch between text and code. This line is text, but below is a code chunk. In your template file, the first code chunk has the name <code>load_data</code> and the options <code>warning = F, message = F</code>. Within the code chunk, we have lines of code. The lines that start with <code>#</code> are <strong>comments</strong>, which R ignores when running the code chunk. You can and should write comments to help you remember what your code does.</p></li>
+</ol>
+<pre><code>    ```{r CHUNK_NAME, CHUNK_OPTIONS}
+    # YOUR CODE HERE
+    ```</code></pre>
+<center>
+<figure>
+<img src="/img/01_chunk.png" width="75%"/>
+<figcaption>
+Today’s first code chunk
+</figcaption>
+</figure>
+</center>
+<ol start="2" style="list-style-type: decimal">
+<li>Click the green play button to run the chunk. This chunk will load the <code>msleep</code> dataset and then print out the first few rows. The <code>msleep</code> dataset is a <strong>data frame</strong>, a table where each row corresponds to a particular mammal, and each column is a different variable. After you run the chunk, you should see something like the table below.</li>
+</ol>
+<center>
+<figure>
+<img src="/img/01_head.png" width="85%"/>
+<figcaption>
+Top rows of mammals sleep dataset
+</figcaption>
+</figure>
+</center>
+<ol start="3" style="list-style-type: decimal">
+<li>Next, to get more info about the dataset, copy, paste, and run the following line of code in the console.</li>
+</ol>
+<pre class="r"><code>    ?msleep</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>You should be able to see the help entry in the help pane:</li>
+</ol>
+<center>
+<figure>
+<img src="/img/01_help.png" width="75%"/>
+<figcaption>
+Help entry for mammals sleep dataset
+</figcaption>
+</figure>
+</center>
+<ol start="5" style="list-style-type: decimal">
+<li>This dataset provides information about different mammals’ sleep habits. First let’s calculate the average hours of sleep for all the mammals in our dataset using the following R command. The <code>mean()</code> function computes the arithmetic mean, <code>msleep</code> refers to our data frame, and <code>$sleep_total</code> tells R we only the <code>sleep_total</code> column.</li>
+</ol>
+<pre class="r"><code>    mean(msleep$sleep_total)</code></pre>
+<pre><code>## [1] 10.43373</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Let’s also compute the mean body weight and brain weight in kilograms:</li>
+</ol>
+<pre class="r"><code>    mean(msleep$bodywt)</code></pre>
+<pre><code>## [1] 166.1363</code></pre>
+<pre class="r"><code>    mean(msleep$brainwt)</code></pre>
+<pre><code>## [1] NA</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>When we tried to compute the brain weight, we got <code>NA</code> because we don’t have brain weight data for all the animals. Let’s try again, but this time, we’ll tell R to ignore the NAs, setting the <code>na.rm</code> argument to TRUE to remove all <code>NA</code> values before computing the mean. This time you should get a numerical answer.</li>
+</ol>
+<pre class="r"><code>    mean(msleep$brainwt, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 0.2815814</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Let’s also try calculating some other descriptive statistics like medians and standard deviations. How can we interpret these values?</li>
+</ol>
+<pre class="r"><code>    median(msleep$sleep_total)</code></pre>
+<pre><code>## [1] 10.1</code></pre>
+<pre class="r"><code>    sd(msleep$sleep_total)</code></pre>
+<pre><code>## [1] 4.450357</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Finally, let’s make some basic plots. The following command makes a histogram of the <code>sleep_total</code> variable, which gives us the frequency of different amounts of sleep.</li>
+</ol>
+<pre class="r"><code>    hist(msleep$sleep_total)</code></pre>
+<p><img src="/post/2020-06-24-lab-01_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<ol start="10" style="list-style-type: decimal">
+<li>The x-axis label is not very helpful, and neither is the title, so let’s change those.</li>
+</ol>
+<pre class="r"><code>    hist(msleep$sleep_total, xlab = &quot;Average hours of sleep&quot;, 
+         main = &quot;Average hours of sleep for mammals&quot;)</code></pre>
+<p><img src="/post/2020-06-24-lab-01_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<ol start="11" style="list-style-type: decimal">
+<li>Let’s also make a scatter plot to compare brain weight and body weight.</li>
+</ol>
+<pre class="r"><code>    plot(brainwt~bodywt, data = msleep,
+         ylab = &quot;Brain weight (kg.)&quot;,
+         xlab = &quot;Body weight (kg.)&quot;)</code></pre>
+<p><img src="/post/2020-06-24-lab-01_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<ol start="12" style="list-style-type: decimal">
+<li>It’s hard to see much of anything! Some of these mammals are much heavier than others. Something we could try is to take the logarithm of brain weight and the logarithm of body weight, and plot those variables. We’ll talk more about when this is appropriate later in the course. Do you think the plot below is “better” than the original plot? Why or why not?</li>
+</ol>
+<pre class="r"><code>    plot(log(brainwt)~log(bodywt), data = msleep,
+         ylab = &quot;log(Brain weight)&quot;,
+         xlab = &quot;log(Body weight)&quot;)</code></pre>
+<p><img src="/post/2020-06-24-lab-01_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<ol start="13" style="list-style-type: decimal">
+<li>Finally, let’s play around with changing the points’ shapes and colors.</li>
+</ol>
+<pre class="r"><code>    plot(log(brainwt)~log(bodywt), data = msleep,
+         ylab = &quot;log(Brain weight)&quot;,
+         xlab = &quot;log(Body weight)&quot;,
+         pch = 16, col = &#39;red&#39;)</code></pre>
+<p><img src="/post/2020-06-24-lab-01_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="practice-and-extension" class="section level1">
+<h1><a href="https://www.youtube.com/watch?v=eGDBR2L5kzI">Practice</a> and extension</h1>
+<ol style="list-style-type: decimal">
+<li>The <code>ChickWeight</code> dataset provides data on a sample of fifty chicks, each fed one of four different diets. For each chick, the data frame includes weight measurements at birth and every other day thereafter. Let’s first take a look at the birth weights of the chicks. Here, we use the term in brackets <code>[ChickWeight$Time == 0]</code> to take a subset of our <code>ChickWeight$weight</code> vector. The line below says we want all of the <code>weight</code> values in <code>ChickWeight</code> for which <code>Time == 0</code>, meaning that the time is zero. We use the double equals sign <code>==</code> to test for equality.</li>
+</ol>
+<pre class="r"><code>    ChickWeight$weight[ChickWeight$Time == 0]</code></pre>
+<pre><code>##  [1] 42 40 43 42 41 41 41 42 42 41 43 41 41 41 41 41 42 39 43 41 40 41 43
+## [24] 42 40 42 39 39 39 42 42 41 39 41 41 39 41 41 42 41 42 42 42 42 41 40
+## [47] 41 39 40 41</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>The last day of the experiment is Day 21. Print out the ending weights of the chicks.</p></li>
+<li><p>Calculate the mean ending weight of the chicks.</p></li>
+<li><p>Next, let’s take a look at the starting weights of the chicks that ate Diet 1. Below, the <code>&amp;</code> sign indicates that we want only the weight measurements that were from time zero <strong>and</strong> from chicks that ate Diet 1.</p></li>
+</ol>
+<pre class="r"><code>    ChickWeight$weight[ChickWeight$Time == 0 &amp; ChickWeight$Diet == 1]</code></pre>
+<pre><code>##  [1] 42 40 43 42 41 41 41 42 42 41 43 41 41 41 41 41 42 39 43 41</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li><p>Print out the ending weights of the chicks that ate Diet 1.</p></li>
+<li><p>For each diet, calculate the mean ending weight of the chicks that ate that diet. Is this a good way to compare the diets?</p></li>
+<li><p>Make a histogram of all of the chicks’ birthweights. Use the x-axis label “Birth Weights” and the title “Frequency of Birthweights”. Provide a one-sentence summary of the plot.</p></li>
+<li><p>Make a scatterplot with weight on the y-axis, and time on the x-axis. Use an appropriate title and axis labels, and change the color and shape of the points from their default values. Provide a one-sentence summary of the plot. Additionally, give one reason this is a good way to plot this data, and one reason this plot may be incomplete.</p></li>
+<li><p>Finally, let’s look at another way to subset our data. Below, we introduce the pipe operator <code>%&gt;%</code>. The below code essentially says to take our <code>ChickWeight</code> data and include only the rows that satisfy <code>Diet == 1</code>, and store it into a new data frame named <code>diet_one</code>.</p></li>
+</ol>
+<pre class="r"><code>    diet_one &lt;- ChickWeight %&gt;%
+      filter(Diet == 1)</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>The below line of code introduces a new plotting package called <code>ggplot2</code>, which can be difficult to learn at first but allows us to quickly produce complicated plots that display many variables at once. The first part <code>ggplot(diet_one)</code> tells R we want to generate a ggplot based on the data in <code>diet_one</code>. The <code>geom_line()</code> function tells R we want to add line(s) to our plot. Finally, within <code>geom_line()</code>, we provide aesthetics <code>aes(x = Time, y = weight, color = Chick)</code> that tell R we want the x-values for our lines to be times, the y-values to be weights, and the different colors should represent different chicks. <strong>Provide a one-sentence summary of the resulting plot.</strong></li>
+</ol>
+<pre class="r"><code>    ggplot(diet_one) + geom_line(aes(x = Time, y = weight, color = Chick))</code></pre>
+<p><img src="/post/2020-06-24-lab-01_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<ol start="11" style="list-style-type: decimal">
+<li>Generate your own visualization of the <code>ChickWeight</code> data. You can use any of the functions we’ve used above, but you are encouraged to think about other kinds of plots and figure out how to make them in R. Provide a one-sentence summary of your plot. Additionally, give one reason this is a good way to plot this data, and one reason your plot may be incomplete.</li>
+</ol>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

@@ -2,7 +2,9 @@
 title: "Lab 00 Report"
 author: "YOUR NAME HERE"
 date: "DATE HERE"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 
