@@ -104,7 +104,7 @@ class: middle
 When you write your lab reports this quarter, you are **recommended but not required to use** R Markdown, a tool that makes it easy to combine code and output in one document. In this section we will make sure R Markdown works on your computer and practice compiling a lab report. 
 
 <br>
-#### 7. First, download the <a href="/post/lab-00/lab_00_template.Rmd"><b>Lab 00 Template</b></a> and open it in RStudio.
+#### 7. First, download the <a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-00/lab_00_template.Rmd"><b>Lab 00 Template</b></a> and open it in RStudio.
 ---
 When you open the file, it should appear in the Script pane. Hopefully, it looks something like this:
 

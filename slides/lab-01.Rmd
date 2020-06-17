@@ -18,7 +18,7 @@ class: middle
 
 In this lab, we will practice computing descriptive statistics and making plots in R for a dataset about animal sleep habits. 
 
-#### 1. First, download the template R Markdown file for Lab 01 <a href= "/post/lab-01/lab_01_template.Rmd"><b>here</b></a> . Open this template in RStudio. 
+#### 1. First, download the template R Markdown file for Lab 01 <a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-01/lab_01_template.Rmd"><b>here</b></a> . Open this template in RStudio. 
 
 
 ---
