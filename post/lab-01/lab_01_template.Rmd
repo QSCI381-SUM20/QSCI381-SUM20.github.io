@@ -28,71 +28,76 @@ Below is an example code chunk. Use chunks like these to run the Lab 01 code. Yo
 # YOUR CODE HERE
 ```
 
-# Practice
+# Practice and extension.
+
+The ````ChickWeight```` dataset provides data on a sample of fifty chicks, each fed one of four different diets. For each chick, the data frame includes weight measurements at birth and every other day thereafter. First, load the data.
 
 ```{r load_chick_data, warning = F, message = F, include = F}
-# load ChickWeight dataset 
-data("ChickWeight")
+# YOUR CODE HERE
 ```
 
-1. The ````ChickWeight```` dataset provides data on a sample of fifty chicks, each fed one of four different diets. For each chick, the data frame includes weight measurements at birth and every other day thereafter. Let's first take a look at the birth weights of the chicks. Here, we use the term in brackets ````[ChickWeight$Time == 0]```` to take a subset of our ````ChickWeight$weight```` vector. The line below says we want all of the ````weight```` values in ````ChickWeight```` for which ````Time == 0````, meaning that the time is zero. We use the double equals sign ````==```` to test for equality.
+1. Print out the weights of the chicks on day 0.
 
 ```{r}
-    ChickWeight$weight[ChickWeight$Time == 0]
+# YOUR CODE HERE
 ```
-
 
 2. The last day of the experiment is Day 21. Print out the ending weights of the chicks.
-```{r}
 
+```{r}
+# YOUR CODE HERE
 ```
 
 3. Calculate the mean ending weight of the chicks.
 ```{r}
-
+# YOUR CODE HERE
 ```
 
-4. Next, let's take a look at the starting weights of the chicks that ate Diet 1. Below, the ````&```` sign indicates that we want only the weight measurements that were from time zero **and** from chicks that ate Diet 1.
+4. Next, print out the starting weights of the chicks that ate Diet 1.
+
 ```{r}
-    ChickWeight$weight[ChickWeight$Time == 0 & ChickWeight$Diet == 1]
+# YOUR CODE HERE
 ```
 
 5. Print out the ending weights of the chicks that ate Diet 1.
-```{r}
 
+```{r}
+# YOUR CODE HERE
 ```
 
 6. For each diet, calculate the mean ending weight of the chicks that ate that diet. Is this a good way to compare the diets?
-```{r}
 
+```{r}
+# YOUR CODE HERE
 ```
 
-7. Make a histogram of all of the chicks' birthweights. Use the x-axis label "Birth Weights" and the title "Frequency of Birthweights". Provide a one-sentence summary of the plot.
-```{r}
+7. Make a histogram of all of the chicks' birthweights. Use the x-axis label "Birth Weights" and the title "Frequency of Birthweights". **Provide a one-sentence summary of the plot.**
 
+```{r}
+# YOUR CODE HERE
 ```
 
-8. Make a scatterplot with weight on the y-axis, and time on the x-axis. Use an appropriate title and axis labels, and change the color and shape of the points from their default values. Provide a one-sentence summary of the plot. Additionally, give one reason this is a good way to plot this data, and one reason this plot may be incomplete.
-```{r}
+8. Make a scatterplot with weight on the y-axis, and time on the x-axis. Use an appropriate title and axis labels, and change the color and shape of the points from their default values. **Provide a one-sentence summary of the plot. Additionally, give one reason this is a good way to plot this data, and one reason this plot may be incomplete.**
 
+```{r}
+# YOUR CODE HERE
 ```
 
-9. Finally, let's look at another way to subset our data. Below, we introduce the pipe operator ```%>%```. The below code essentially says to take our ````ChickWeight```` data and include only the rows that satisfy ```Diet == 1```, and store it into a new data frame named ````diet_one````.
+9. Finally, use the pipe operator ```%>%``` and the ```filter``` function to create a new data frame ```diet_one``` that includes only the chicks eating Diet 1. 
 
 ```{r}
-    diet_one <- ChickWeight %>%
-      filter(Diet == 1)
+# YOUR CODE HERE
 ```
 
-10. The below line of code introduces a new plotting package called ````ggplot2````, which can be difficult to learn at first but allows us to quickly produce complicated plots that display many variables at once. The first part ```ggplot(diet_one)``` tells R we want to generate a ggplot based on the data in ````diet_one````. The ````geom_line()```` function tells R we want to add line(s) to our plot. Finally, within ````geom_line()````, we provide aesthetics ````aes(x = Time, y = weight, color = Chick)```` that tell R we want the x-values for our lines to be times, the y-values to be weights, and the different colors should represent different chicks. **Provide a one-sentence summary of the resulting plot.**
+10. Use ```ggplot2``` to generate a line plot of the weights of the chicks that ate Diet 1 over time. **Provide a one-sentence summary of the resulting plot.**
 
 ```{r}
-    ggplot(diet_one) + geom_line(aes(x = Time, y = weight, color = Chick))
+# YOUR CODE HERE
 ```
 
-11. Generate your own visualization of the ```ChickWeight``` data. You can use any of the functions we've used above, but you are encouraged to think about other kinds of plots and figure out how to make them in R. Provide a one-sentence summary of your plot. Additionally, give one reason this is a good way to plot this data, and one reason your plot may be incomplete.
+11. Generate your own visualization of the ```ChickWeight``` data. You can use any of the functions we've used above, but you are encouraged to think about other kinds of plots and figure out how to make them in R. **Provide a one-sentence summary of your plot. Additionally, give one reason this is a good way to plot this data, and one reason your plot may be incomplete.**
 ```{r}
-
+# YOUR CODE HERE
 ```
 
 12. Which diet produces the most weight gain? If you're not sure how to compute this in R, that is okay. If you can describe the set of steps you would take to compare the diets, that will be enough.

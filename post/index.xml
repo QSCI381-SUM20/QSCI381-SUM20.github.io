@@ -17,8 +17,8 @@
       <pubDate>Wed, 24 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>/2020/06/24/lab-01/</guid>
-      <description>Skills In this lab, we will practice computing descriptive statistics and making plots in R for a dataset about animal sleep habits. First, download the template R Markdown file for Lab 01 here . Open this template in RStudio.
-In R Markdown files, you can switch between text and code. This line is text, but below is a code chunk. In your template file, the first code chunk has the name load_data and the options warning = F, message = F.</description>
+      <description>R Basics Slides  Lab 01 Skills Slides  Lab 01 Report Template  Practice and extension The ChickWeight dataset provides data on a sample of fifty chicks, each fed one of four different diets. For each chick, the data frame includes weight measurements at birth and every other day thereafter. First, load the data. You can use the commands:
+# load ChickWeight dataset data(&amp;quot;ChickWeight&amp;quot;) Print out the weights of the chicks on day 0.</description>
     </item>
     
     <item>

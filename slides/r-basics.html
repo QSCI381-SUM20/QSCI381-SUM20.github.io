@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>R Basics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <meta name="date" content="2020-06-17" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# <em>R Basics</em>
+### 2020-06-17
+
+---
+
+class: inverse, center, middle
+
+# *if you've never coded*
+
+---
+class: middle
+
+- Ask for help early and often. Work with classmates on labs. If you are interested in joining a study group
+
+- The Internet is your friend. I had to look up basically everything in this presentation because I don't have it memorized.
+
+- Be patient with yourself. You don't need to understand every single line of code in this class to be successful.
+
+---
+class: inverse, center, middle
+
+# *introducing R*
+---
+class: middle
+## *R*
+
+R is a programming language designed for statistics and data analysis.
+
+### Why R?
+
+- it's free
+- open-source
+- designed for working with different types of data
+- many **packages** for specialized analysis
+
+---
+class: middle
+## *RStudio*
+
+RStudio is a program (like Microsoft Word) designed to streamline work with R.
+
+### Why RStudio?
+
+- it's free
+- open-source
+- puts your code, figures, console, etc. all in one place
+- provides helpful **syntax highlighting**
+
+---
+#### &lt;span style="background-color:#7affdb"&gt;Open RStudio&lt;/span&gt; on your computer. You should see a window that looks like this.
+
+&lt;img src="../img/01_rstudio_window.png" width="90%" style="display: block; margin: auto;" /&gt;
+---
+#### Your RStudio window is typically divided into four panes, as shown below. Find the console pane.
+
+&lt;img src="../img/01_rstudio_annot.png" width="90%" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+## Console
+
+Think of the console as an exceptionally fancy calculator. Using the console, you give your computer directions, in the form of lines of code. Try typing these lines into the console:
+
+
+```r
+# Addition
+2 + 2
+```
+
+```
+## [1] 4
+```
+
+
+```r
+(2 + 2) * 3
+```
+
+```
+## [1] 12
+```
+---
+## Basic R commands
+
+```r
+# Subtraction
+2 - 2
+```
+
+```
+## [1] 0
+```
+
+
+```r
+# Multiplication
+1 * 3
+```
+
+```
+## [1] 3
+```
+
+
+```r
+# Division
+4 / 2
+```
+
+```
+## [1] 2
+```
+---
+## Assigning variables
+
+We can also tell the computer to save **variables** using the ````&lt;-```` or ````=```` operation. Let's save the number 2 in the object ````my_first_variable````.
+
+
+```r
+my_first_variable &lt;- 2
+```
+Nothing is printed when we do this. However, we can **reference** the object we created later.
+
+
+```r
+my_first_variable
+```
+
+```
+## [1] 2
+```
+
+We can also replace the value of our object with a new value. These values don't have to be numbers:
+
+
+```r
+my_first_variable &lt;- "hello"
+my_first_variable
+```
+
+```
+## [1] "hello"
+```
+---
+
+## Comparisons
+
+We can also use R to compare values:
+
+
+```r
+# greater than
+2 &gt; 2
+```
+
+```
+## [1] FALSE
+```
+
+```r
+# greater than or equal to
+2 &gt;= 2
+```
+
+```
+## [1] TRUE
+```
+
+
+```r
+# equal
+1 == 3
+```
+
+```
+## [1] FALSE
+```
+
+---
+
+## Comparisons
+
+We can also use R to compare values:
+
+
+```r
+# greater than
+2 &gt; 2
+```
+
+```
+## [1] FALSE
+```
+
+```r
+# greater than or equal to
+2 &gt;= 2
+```
+
+```
+## [1] TRUE
+```
+
+
+```r
+# equal
+1 == 3
+```
+
+```
+## [1] FALSE
+```
+
+---
+
+## R Functions
+
+Besides basic **operators**, R also provides **functions**:
+
+
+```r
+# pi is a constant in R
+pi
+```
+
+```
+## [1] 3.141593
+```
+
+```r
+# sine function -- be careful with numbers that are very close to zero!
+sin(2 * pi)
+```
+
+```
+## [1] -2.449294e-16
+```
+
+```r
+sin(0)
+```
+
+```
+## [1] 0
+```
+
+---
+## R Functions
+
+Besides these basic **operators**, R also provides **functions**:
+
+
+```r
+print("hello")
+```
+
+```
+## [1] "hello"
+```
+
+```r
+new_variable &lt;- "hello"
+```
+We can explicitly use `print` to display an variable's contents:
+
+```r
+print(new_variable)
+```
+
+```
+## [1] "hello"
+```
+By default, if we only give R a variable name, it will print its contents:
+
+```r
+new_variable
+```
+
+```
+## [1] "hello"
+```
+
+---
+class:middle
+
+## R Functions
+
+What happens if an object has not been defined yet?
+
+
+```r
+print(the_answer)
+```
+
+```
+## Error in print(the_answer): object 'the_answer' not found
+```
+
+---
+## Basic data types
+
+R has a few basic types of values, including
+
+
+```r
+# numeric
+class(2)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+# character
+class("hello")
+```
+
+```
+## [1] "character"
+```
+
+```r
+# logical
+class(TRUE)
+```
+
+```
+## [1] "logical"
+```
+
+---
+## Vectors
+
+We can combine multiple **scalars** into a **vector** using the **concatenate** function `c()`:
+
+
+```r
+scalar_1 &lt;- 4
+scalar_2 &lt;- 3
+my_first_vector &lt;- c(scalar_1, scalar_2)
+print(my_first_vector)
+```
+
+```
+## [1] 4 3
+```
+
+Our `my_first_vector` is a vector of length two:
+
+```r
+length(my_first_vector)
+```
+
+```
+## [1] 2
+```
+---
+## Vectors
+We can access the element in slot i of our vector using the notation `my_second_vector[i]`
+
+```r
+my_second_vector &lt;- c(4, 5)
+print(my_second_vector[1])
+```
+
+```
+## [1] 4
+```
+
+```r
+print(my_second_vector[2])
+```
+
+```
+## [1] 5
+```
+---
+## Vector functions
+We can apply some functions to vectors:
+
+```r
+my_third_vector &lt;- c(4, 5, 6, 7, 8)
+sum(my_third_vector)
+```
+
+```
+## [1] 30
+```
+Which can save us a lot of time:
+
+```r
+my_fourth_vector &lt;- c(1:50)
+my_fourth_vector
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+## [24] 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46
+## [47] 47 48 49 50
+```
+
+```r
+sum(my_fourth_vector)
+```
+
+```
+## [1] 1275
+```
+---
+class:middle
+## Matrices
+
+Matrices are like 2D vectors: we define them by giving a vector of values and a set of dimensions:
+
+```r
+my_first_matrix &lt;- matrix(c(1,2,3,4), nrow = 2, ncol = 2)
+print(my_first_matrix)
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4
+```
+---
+class:middle
+## Matrices
+
+We access the element in the ith row and jth column of our vector using the notation `my_first_matrix[i, j]`
+
+```r
+print(my_first_matrix[1, 1])
+```
+
+```
+## [1] 1
+```
+We access all element in the ith row using the notation `my_first_matrix[i, ]`
+
+```r
+print(my_first_matrix[1, ])
+```
+
+```
+## [1] 1 3
+```
+---
+class:middle
+
+## Data frames
+
+Matrices are only allowed to hold one type of data (such as numeric data). We will want to work with multiple types of data at once, which we can do with **data frames**.
+
+Each column of a **data frame** can hold a different type of data
+
+```r
+my_first_df &lt;- data.frame(name = c("Barry", "Lulu"),
+                          age = c(6, 7), stringsAsFactors = F)
+print(my_first_df)
+```
+
+```
+##    name age
+## 1 Barry   6
+## 2  Lulu   7
+```
+---
+class:middle
+## Data frames
+Each column of a data frame needs to have a name, and we can access different columns of the data frame using `$`:
+
+
+```r
+my_first_df &lt;- data.frame(name = c("Barry", "Lulu",
+                                   "Agnes", "Edward"),
+                          age = c(6, 7, 6, 8),
+                          stringsAsFactors = F)
+my_first_df$name
+```
+
+```
+## [1] "Barry"  "Lulu"   "Agnes"  "Edward"
+```
+
+```r
+my_first_df$age
+```
+
+```
+## [1] 6 7 6 8
+```
+---
+class:middle
+## Data frames
+Each column of a data frame needs to have a name, and we can access different columns of the data frame using `$`:
+
+
+```r
+my_first_df &lt;- data.frame(name = c("Barry", "Lulu", 
+                                   "Agnes", "Edward"),
+                          age = c(6, 7, 6, 8), 
+                          stringsAsFactors = F)
+my_first_df$name
+```
+
+```
+## [1] "Barry"  "Lulu"   "Agnes"  "Edward"
+```
+
+```r
+my_first_df$age
+```
+
+```
+## [1] 6 7 6 8
+```
+
+---
+## Subsetting
+
+Some times we may want to take a subset our data. Suppose we want to look only at the rows of data for six-year-olds in `my_first_df`:
+
+```r
+my_first_df &lt;- data.frame(name = c("Barry", "Lulu",
+                                   "Agnes", "Edward"),
+                          age = c(6, 7, 6, 8), 
+                          stringsAsFactors = F)
+my_first_df[my_first_df$age == 6, ]
+```
+
+```
+##    name age
+## 1 Barry   6
+## 3 Agnes   6
+```
+
+---
+class:middle
+## Loading data
+
+Naturally, you want to get your data into R so you can start working with it. We'll talk more about this, but for now we'll work with built-in datasets:
+
+```r
+# load the mtcars dataset
+data(mtcars)
+# print the first few rows of data
+head(mtcars)
+```
+
+```
+##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+```
+---
+class:middle
+## Plotting data
+
+Let's plot the miles per gallon `mpg` against the number of cylinders `cyl`.
+
+```r
+plot(mtcars$mpg, mtcars$cyl)
+```
+
+&lt;img src="r-basics_files/figure-html/unnamed-chunk-34-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+---
+class:middle
+## Plotting data
+
+We can change various options to make plots more readable:
+
+```r
+plot(mtcars$mpg, mtcars$cyl, 
+     xlab = "Miles per gallon", 
+     ylab = "Cylinders", pch = 16, col = 'red')
+```
+
+&lt;img src="r-basics_files/figure-html/unnamed-chunk-35-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+---
+class:middle
+## Tidyverse
+
+Up to now, we have been using functions that automatically come with **R**. In Lab 00, you installed `tidyverse`, which provides a unified set of packages for data analysis and cleaning. Some people find this more readable/easy to learn. I'll use a little of both.
+---
+## Tidyverse
+
+For example, let's see how to take a subset of our data using `tidyverse` functions:
+
+
+```r
+library(dplyr) # load a tidyverse package
+my_first_df &lt;- data.frame(name = c("Barry", "Lulu",
+                                   "Agnes", "Edward"),
+                          age = c(6, 7, 6, 8), 
+                          stringsAsFactors = F)
+my_first_df %&gt;%
+  filter(age == 6)
+```
+
+```
+##    name age
+## 1 Barry   6
+## 2 Agnes   6
+```
+which we can compare with the **base R** code
+
+```r
+my_first_df[my_first_df$age == 6, ]
+```
+
+```
+##    name age
+## 1 Barry   6
+## 3 Agnes   6
+```
+
+---
+
+## Plotting with ggplot2
+
+Many people who code with `tidyverse` functions make plots with the `ggplot2` package. Again, you can use whichever package you feel comfortable with. We'll often use `ggplot2`.
+
+Recall the **base R** plotting code:
+
+```r
+plot(mtcars$mpg, mtcars$cyl, 
+     xlab = "Miles per gallon", 
+     ylab = "Cylinders", pch = 16, col = 'red')
+```
+
+&lt;img src="r-basics_files/figure-html/unnamed-chunk-38-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+## Plotting with ggplot2
+
+Compare with ggplot2 code:
+
+```r
+library(ggplot2) # load ggplot2 package
+ggplot(mtcars, aes(x = mpg, y = cyl)) + 
+  geom_point(col = 'red')
+```
+
+&lt;img src="r-basics_files/figure-html/unnamed-chunk-39-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+class:middle
+## Tidyverse and ggplot2
+
+Don't worry about knowing how to use `tidyverse` or `ggplot2` packages for now, just be aware that they exist and often provide alternative ways to do things in R
+
+---
+class:middle
+## General R Tips
+
+- Use comments often to remind yourself what you did and to explain your code to others
+- R is case-sensitive so `y` is not the same as `Y`.
+- Spaces do not mean anything in your code: `1+1` is the same as `1 +     1`
+- Variable names must start with letters
+
+There is a lot more to learn, of course, but hopefully this will be enough to get you started with R.
+---
+## Script/source pane
+
+&lt;img src="../img/01_rstudio_annot.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+class:middle
+## Script/source pane
+
+You can do everything in the console, but if you want to run more than a couple lines of code at once, you will want to write a **script**. The script pane is where you can write and save multiple lines of code. 
+
+---
+class:middle
+## R Markdown
+
+In your lab reports, you'll have to submit figures generated by R, your written answers to lab questions, and R code. One convenient way to put all these things together is R Markdown. 
+
+---
+## Example R Markdown file
+
+&lt;img src="../img/00_template.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+class:middle
+## R Markdown
+
+We'll provide a template file for each lab if you want to submit your work using R Markdown, but you can feel free to use Word or other software, as long as your work is **well-organized** and **easily readable**.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
