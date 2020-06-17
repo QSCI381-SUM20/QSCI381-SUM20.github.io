@@ -2,9 +2,7 @@
 title: "Lab 01 Report"
 author: "YOUR NAME HERE"
 date: "DATE HERE"
-output:
-  html_document:
-    df_print: paged
+output: html_document
 ---
 
 # Skills
