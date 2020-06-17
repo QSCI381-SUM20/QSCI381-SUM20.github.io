@@ -1,0 +1,26 @@
+body {
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+}
+h1, h2, h3, h4, h5, h6, .nav, .article-duration, .archive-item-link, .footer {
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+}
+
+.remark-code, .remark-inline-code { font-family: 'Menlo', 'Consolas'; }
+a {
+  color: #FF4040;
+  text-decoration: none;
+}
+a:hover {
+  background-color: #F0FFF0;
+}
+
+.inverse {
+  background-color: #A2A2D0	 ;
+  color: #ffffff;
+  text-shadow: 0 0 0;
+}
+
+.title-slide {
+  background-color: #ffffff;
+  color: #000000;
+}

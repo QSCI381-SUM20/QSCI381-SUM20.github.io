@@ -23,11 +23,12 @@ In R Markdown files, you can switch between text and code. This line is text, bu
     
     <item>
       <title>Lab 00</title>
-      <link>/2020/06/13/lab-00/</link>
-      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
+      <link>/2020/06/22/overview-of-r/</link>
+      <pubDate>Mon, 22 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/06/13/lab-00/</guid>
-      <description>Most the instructions here are taken from Chapter 1 of Getting Used to R, RStudio, and R Markdown by Ismay and Kennedy and this associated tutorial. See also Chapter 1 of Statistical Inference via Data Science by Ismay and Kim. Before your first lab section, you should follow the steps below to install R, RStudio, and R Markdown. To keep things brief, I have put explanations of why we want to use these tools at the end of these instructions.</description>
+      <guid>/2020/06/22/overview-of-r/</guid>
+      <description> Before your first lab section, you should work through the slides below to install R and check that all the software works on your computer.
+Slides  Lab Report Template  </description>
     </item>
     
     <item>

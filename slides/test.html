@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Lab 00</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <meta name="date" content="2020-06-17" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Lab 00
+## <em>Installing R</em>
+### 2020-06-17
+
+---
+
+class: inverse, center, middle
+
+# Installing R
+
+---
+class: middle
+
+Most the instructions here are taken from Chapter 1 of [*Getting Used to R, RStudio, and R Markdown*](https://rbasics.netlify.app/) by Ismay and Kennedy and [this associated tutorial](https://www.reed.edu/data-at-reed/software/R/r_studio.html). See also Chapter 1 of [*Statistical Inference via Data Science*](https://moderndive.com/index.html) by Ismay and Kim. 
+
+&lt;br&gt;
+Before your first lab section, you should follow the steps below to install R, RStudio, and R Markdown. 
+
+&lt;br&gt;
+To keep things brief, I have put explanations of why we want to use these tools at the end of these instructions. 
+
+---
+#### 1. Download and install R by going to https://cloud.r-project.org.
+
+&lt;img src="../img/01_R.png" width="90%" style="display: block; margin: auto;" /&gt;
+---
+#### 1. Download and install R by going to https://cloud.r-project.org.
+
+&lt;br&gt;
+
+  * **If you are a Windows user**: Click on “**Download R for Windows**”, then click on “base”, then click on the Download link.
+
+&lt;br&gt;
+
+  * **If you are a macOS user**: Click on “**Download R for (Mac) OS X**”, then under “Latest release:” click on R-X.X.X.pkg, where R-X.X.X is the version number. For example, the latest version of R as of June 12, 2020 was R-4.0.1.
+  
+&lt;br&gt;
+  
+  * **If you are a Linux user**: Click on “**Download R for Linux**” and choose your distribution for more information on installing R for your setup.
+---
+#### 2. Download and install RStudio at https://rstudio.com/products/rstudio/download/#download.
+
+&lt;img src="../img/01_rstudio.png" width="90%" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+#### 2. Download and install RStudio at https://rstudio.com/products/rstudio/download/#download.
+
+  * Click the button that says “**Download R for xxxx**,” referring to your computer's operating system. Run the installer program.
+---
+#### 3. Now, open RStudio on your computer. You should see a window that looks like this.
+
+&lt;img src="../img/01_rstudio_window.png" width="90%" style="display: block; margin: auto;" /&gt;
+---
+#### 4. Your RStudio window is typically divided into four panes, as shown below. Find the console pane.
+
+&lt;img src="../img/01_rstudio_annot.png" width="90%" style="display: block; margin: auto;" /&gt;
+---
+
+&lt;br&gt;
+&lt;br&gt;
+
+####5. Copy and paste the following line into the console
+
+
+```r
+install.packages("tidyverse")
+```
+
+and then press Enter/Return to run your first line of code!
+
+&lt;br&gt;
+Follow the instructions and answer yes if prompted. 
+
+&lt;br&gt;
+This line of code will install some helpful "**packages**," which you can think of as **upgrades to R**. These packages include additional functions and tools that we will use this quarter. 
+
+&lt;br&gt;
+**6. Now, close and reopen RStudio to finish installing your packages.**
+
+---
+class: inverse, center, middle
+
+# Compiling your first lab report
+
+---
+class: middle
+When you write your lab reports this quarter, you are **recommended but not required to use** R Markdown, a tool that makes it easy to combine code and output in one document. In this section we will make sure R Markdown works on your computer and practice compiling a lab report. 
+
+&lt;br&gt;
+#### 7. First, download the &lt;a href="/post/lab-00/lab_00_template.Rmd" download&gt;&lt;b&gt;Lab 00 Template&lt;/b&gt;&lt;/a&gt; and open it in RStudio.
+---
+When you open the file, it should appear in the Script pane. Hopefully, it looks something like this:
+
+&lt;br&gt;
+&lt;img src="../img/00_template.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+#### 8. Put your name and the date in the appropriate places in the header.
+
+&lt;br&gt;
+You should also see a block of code that looks like this:
+````markdown
+```{r storms, eval = F}
+    library(tidyverse)
+    data("storms") # load toy dataset
+    
+    # plot histogram for the maximum wind speeds (knots)
+    hist(storms$wind)
+```
+````
+
+
+&lt;br&gt;
+This is called a **code chunk**. R Markdown is helpful because you can include code and text together.
+
+&lt;br&gt;
+**Try running each line of code, one at a time, in the console.** Equivalently, click **Knit** to run all code in your .Rmd file at once. This should produce a **.html** file of your lab report. Submit this html file on Canvas. You have now finished Lab 00!
+
+---
+class: middle
+
+We'll talk more about the details of all of this, but for now, it is enough that you installed R and checked that R Markdown works. If you are interested, see the next few slides.
+
+---
+class: middle
+
+# [Tell me why](https://www.youtube.com/watch?v=4fndeDfaWCg)
+
+---
+class: middle
+### Why R?
+
+"R is an open-source programming language that has seen its popularity grow tremendously in recent years, with developers adding new functionality via packages on a daily basis." (Ismay and Kennedy, 2019).
+
+Broadly speaking, you should think of R as a fancy calculator. You give R specific commands (in the language of code), and R will follow your instructions.
+---
+class: middle
+### Why RStudio?
+
+"RStudio is a graphical development environment that makes it easier to write and view the results of R code" (Ismay and Kennedy, 2019).
+
+RStudio makes it easier to collect all your R commands into a single file, or script. By saving your script, you can create a record of everything you told the computer to do. RStudio also makes it easy to write reports with R Markdown and to work on plots/figures.
+
+---
+class: middle
+### Why R Markdown?
+
+"R Markdown provides an easy way to produce rich, fully-documented, reproducible analyses" (Ismay and Kennedy, 2019).
+
+Instead of copying/pasting code and figures into a Word document, you can use R Markdown to combine text, code, and figures in one unified document. There is a learning curve, but once you get the hang of using R Markdown, you can create reports that clearly communicate how you conducted your statistical analyses.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

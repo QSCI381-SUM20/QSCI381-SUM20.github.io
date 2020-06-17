@@ -18,9 +18,6 @@ When you click the **Knit** button a document will be generated that includes bo
 library(tidyverse)
 data("storms") # load toy dataset
 
-# get info about our storms dataset
-?storms 
-
 # plot histogram for the maximum wind speeds (knots)
 hist(storms$wind)
 ```

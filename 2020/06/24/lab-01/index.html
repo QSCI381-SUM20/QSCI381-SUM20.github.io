@@ -142,7 +142,7 @@ Help entry for mammals sleep dataset
          main = &quot;Average hours of sleep for mammals&quot;)</code></pre>
 <p><img src="/post/2020-06-24-lab-01_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <ol start="11" style="list-style-type: decimal">
-<li>Let’s also make a scatter plot to compare brain weight and body weight.</li>
+<li>Let’s also make a scatter plot to compare brain weight and body weight. Here, the first argument of the plot function is <code>brainwt~bodywt</code>. This is called a <strong>formula</strong> in R. In general, formulas in R take the form <code>[RESPONSE VARIABLE NAME]~[EXPLANATORY VARIABLE NAME]</code>, and they come in handy when we have a response varaiable and an explanatory variable. The <code>data = msleep</code> argument tells <code>plot</code> where to find the variables.</li>
 </ol>
 <pre class="r"><code>    plot(brainwt~bodywt, data = msleep,
          ylab = &quot;Brain weight (kg.)&quot;,
