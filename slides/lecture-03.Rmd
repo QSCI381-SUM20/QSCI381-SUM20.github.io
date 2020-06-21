@@ -1,0 +1,666 @@
+---
+title: ""
+author: "Peter Gao"
+date: "6/17/2020"
+output: 
+  beamer_presentation:
+    latex_engine: xelatex
+    includes:
+      in_header: "preamble.tex"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = 'pdf')
+```
+
+
+## 
+
+\vspace{4em}
+\Large{\textbf{Introduction to Probability and Statistics}}
+
+\vspace{3em}
+\footnotesize
+\textit{26 June 2020}
+
+## {.standout}
+
+\color{apricot}\textit{\gar\Huge recap}
+
+\normalsize\color{white}\vspace{4ex}\textbf{ Last lecture, we discussed:}
+
+\vspace{2ex}
+\begin{itemize}
+\color{white}
+\setlength{\itemsep}{2ex}
+\item Types of studies
+\item Types of sampling
+\item Principles of experimental design
+\end{itemize}
+
+## {.standout}
+
+\color{apricot}\textit{\gar\Huge recap}
+
+\scriptsize	\color{white}
+\vspace{4ex}Suppose we want to estimate household size, where a “household” is defined as people living together in the same dwelling, and sharing living accommodations.
+	
+\vspace{2ex} If we select students at random at an elementary school and ask them what their family size is, \textbf{will this be a good measure of household size}? Or will our average be biased? If so, will it overestimate or underestimate the true value? 
+	
+\vspace{2ex}\hfill(\textit{OpenIntro Statistics}, exercise 1.26)
+
+##  {.standout}
+
+\begin{center}
+		
+	\vspace{2.3em}
+	\color{white}\textit{\Huge\gar Summarizing data}
+\end{center}
+
+
+##
+
+\scriptsize
+```{r load_data, warning = F, message = F, echo = T, cache = T}
+# load food consumption dataset 
+food_consumption <-
+  readr::read_csv(
+    paste0('https://raw.githubusercontent.com/',
+           'rfordatascience/tidytuesday/master/',
+           'data/2020/2020-02-18/food_consumption.csv')
+    )
+```
+
+##
+
+\textbf{\large Food Consumption data}
+
+Data from the the United Nations on the **annual per-capita** consumption of eleven categories of food for 130 countries.
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T}
+unique(food_consumption$country)
+```
+
+##
+
+\textbf{\large Food Consumption data}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T}
+food_consumption %>%
+  filter(country == "USA")
+```
+
+##
+
+\textbf{\large Food Consumption data}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T}
+unique(food_consumption$food_category)
+```
+
+##
+
+\textbf{\large Food Consumption data}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T}
+food_consumption %>%
+  filter(food_category == "Rice")
+```
+
+##
+
+\textbf{\large Descriptive statistics...}
+
+\vspace{2ex} or: how do we make sense of a long list of numbers?
+
+
+##  {.standout}
+
+\begin{center}
+		
+	\vspace{2.3em}
+	\color{white}\textit{\Huge\gar Visualizing distributions}
+\end{center}
+
+##
+
+\textbf{\large Histogram}
+
+Histograms illustrate the **"distribution of data"** for **one** variable at a time, showing which values are relatively more common in our dataset.
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 4, fig.width = 8}
+rice_data <- food_consumption %>%
+  filter(food_category == "Rice")
+hist(rice_data$consumption)
+```
+
+##
+
+\textbf{\large Histogram}
+
+Which range of values is most common in our dataset?
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 4, fig.width = 8}
+hist(rice_data$consumption, 
+     xlab = "Consumption (kg/person/year)",
+     main = "Histogram of Rice Consumption")
+```
+
+##
+\textbf{\large Histogram}
+
+Can we use this plot to make any generalizations about rice consumption habits in the world?\pause
+
+\vspace{2ex} \color{coralred} Only if we make statements that are connected to the types of countries that are well represented in the dataset.
+
+##
+\textbf{\large Shapes of Histograms}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = F, cache = T, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 3))
+data("faithful")
+data(storms)
+data(treering)
+hist(storms$pressure, 
+     xlab = "Air pressure (millibars)",
+     main = "Skewed left\n (air pressure)")
+hist(treering,
+     xlab = "Circumference",
+     main = "Symmetrical \n (Tree size)")
+hist(rice_data$consumption, 
+     xlab = "Consumption (kg/person/year)",
+     main = "Skewed right\n (Rice consumption)")
+
+```
+
+##
+\textbf{\large Other Shapes of Histograms}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = F, cache = T, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+data("faithful")
+hist(runif(1000), 
+     xlab = "x",
+     main = "Uniform\n (simulated data)")
+hist(faithful$waiting, 
+     xlab = "Waiting time",
+     main = "Bimodal\n (Old Faithful waiting time)")
+```
+
+##
+
+\textbf{\large Scatter plot}
+
+Scatter plots illustrate the **joint distribution** of **two** variables at a time, showing which values are relatively more common in our dataset.
+
+##
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 4, fig.width = 8}
+wheat_data <- food_consumption %>%
+  filter(food_category == "Wheat and Wheat Products")
+wheat_data
+```
+
+##
+
+\textbf{\large Joining data tables}
+
+In order to produce a scatter plot, we need to match countries' wheat and rice consumption.
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 4, fig.width = 8}
+grains_data <- wheat_data %>%
+  bind_rows(rice_data)
+grains_data
+```
+
+##
+
+\textbf{\large Joining data tables}
+
+What we really want is each row to represent a country, and each column to represent a type of food. The `pivot_wider` function comes in handy here:
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 4, fig.width = 8}
+grains_data <- grains_data %>%
+  select(-co2_emmission) %>% # remove c02 variable
+  pivot_wider(names_from = food_category, values_from = consumption) %>%
+  rename(Wheat = `Wheat and Wheat Products`) # make column name shorter
+```
+
+##
+
+\textbf{\large Joining data tables}
+
+What we really want is each row to represent a country, and each column to represent a type of food.
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 4, fig.width = 8}
+head(grains_data)
+```
+
+##
+
+\textbf{\large Scatter plot}
+
+Finally, we can make our scatter plot. What do we observe?
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 3.5, fig.width = 8}
+plot(grains_data$Wheat, grains_data$Rice,
+     xlab = "Wheat consumption (kg/person/year)",
+     ylab = "Rice consumption (kg/person/year)",
+     main = "Grain consumption",
+     pch = 16, col = 'tomato')
+```
+
+##
+
+\textbf{\large Scatter plot}
+
+For countries in our dataset, there is a **negative association** betweeen rice consumption and wheat consumption. Countries that consume relatively more rice tend consume relatively less wheat.
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = F, cache = T, fig.height = 3.5, fig.width = 8}
+plot(grains_data$Wheat, grains_data$Rice,
+     xlab = "Wheat consumption (kg/person/year)",
+     ylab = "Rice consumption (kg/person/year)",
+     main = "Grain consumption",
+     pch = 16, col = 'tomato')
+```
+
+##
+
+\textbf{\large Revisiting the histogram}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 3.5, fig.width = 8}
+hist(grains_data$Wheat + grains_data$Rice,
+     xlab = "Consumption (kg/person/year)",
+     main = "Wheat and Rice consumption")
+```
+
+##
+
+\textbf{\large Scatter plot in ggplot2}
+
+In case you wanted code to do this in ggplot2.
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 3.5, fig.width = 8}
+ggplot(grains_data) +
+  geom_point(aes(x = Wheat, y = Rice), color = 'tomato') +
+  xlab("Wheat consumption (kg/person/year)") + 
+  ylab("Rice consumption (kg/person/year)") +
+  ggtitle("Grain consumption")
+```
+
+##  {.standout}
+
+\begin{center}
+		
+	\vspace{2.3em}
+	\color{white}\textit{\Huge\gar Summary statistics}
+\end{center}
+
+##
+
+\textbf{\large Summary statistics}
+
+\vspace{2ex} Sometimes we don't want the full **distribution**: we may just want a few numbers that summarize our data. 
+
+\vspace{2ex} The full distribution will give us more information, but **summary statistics** take up less space and can speed up decision making.
+
+\vspace{2ex}\textbf{ex.} GPA\pause
+
+\vspace{2ex} Note that these are all computed based on **samples** and that we will focus on statistics for single variables for now.
+
+##  {.standout}
+
+\begin{center}
+		
+	\vspace{2.3em}
+	\color{white}\textit{\Huge\gar ``Location"}
+\end{center}
+
+##  
+
+\textbf{\large Location statistics}
+
+\vspace{2ex} Some statistics describe the **location** of our data. 
+
+\vspace{2ex} Crudely speaking, these statistics tell us what possible values of our variable are the most representative/common/important.
+
+##  
+
+\textbf{\large Notation}
+
+\vspace{2ex} Let $x_1,\ldots, x_n$ denote the $n$ observations of our variable of interest.
+
+##  
+
+\textbf{\large Sample mean $\overline{x}$}
+
+\vspace{2ex}\textbf{In words:} the sum of a collection of numbers divided by the count of numbers 
+
+\vspace{2ex}\textbf{In math:} $$\overline{x}=\frac{1}{n}\sum_{i=1}^n x_i$$
+
+\vspace{2ex}\textbf{In R:}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T}
+mean(grains_data$Rice)
+```
+##  
+
+\textbf{\large Sample median $\widetilde{x}$}
+
+\vspace{2ex}\textbf{In words:} the "middle" value of a set of numbers
+
+\vspace{2ex}\textbf{In math:} 
+\begin{align*}
+\text{even number of numbers}&: \textrm{median}(\{1, 2, 3,\mathbf{\color{coralred}3}, \mathbf{\color{coralred}5}, 8,8,9\})= \frac{3+5}{2}=4\\
+\text{odd number of numbers}&: \textrm{median}(\{3, 4, 4,\mathbf{\color{coralred}5}, 6, 8,9\})= 5\end{align*}
+
+\vspace{2ex}\textbf{In R:}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T}
+median(grains_data$Rice)
+```
+
+##
+
+\textbf{\large Sample mode}
+
+\vspace{2ex}\textbf{In words:} the most common value of a variable
+
+\vspace{2ex}\textbf{In math:} 
+$$\textrm{mode}(\{1, 2, \mathbf{\color{coralred}3},\mathbf{\color{coralred}3}, 5\})= 3$$
+$$\textrm{mode}(\{1, 2, \mathbf{\color{coralred}3},\mathbf{\color{coralred}3}, 5, \mathbf{\color{coralred}8}, \mathbf{\color{coralred}8},9\})= 3\text{ and } 8$$
+
+\vspace{2ex}\textbf{In R:} R has no built in mode function!
+
+##
+
+\textbf{\large Revisiting the histogram}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 3.5, fig.width = 8}
+hist(grains_data$Rice,
+     xlab = "Consumption (kg/person/year)",
+     main = "Rice consumption") 
+abline(v = mean(grains_data$Rice), col = 'tomato')
+abline(v = median(grains_data$Rice), col = 'dodgerblue')
+legend("topright", c("mean", "median"), 
+       col = c("tomato", "dodgerblue"), lty = 1)
+```
+
+##
+
+\textbf{\large Sensitivity to skew/outliers}
+
+\vspace{2ex} Imagine that we're all in one classroom (scary!).
+
+\vspace{2ex} A brave student says: \textit{I wonder how many Instagram followers the typical person in this room has.}
+
+\vspace{2ex} Another over-eager student says: \textit{Let's take a sample of 10 people and find out!}
+
+\vspace{2ex} What sample location statistic should we calculate based on our sample?
+
+##
+
+\textbf{\large Sensitivity to skew/outliers}
+
+\vspace{2ex} Now, suppose Christiano Ronaldo (225 million), Ariana Grande (191.1 m), The Rock (187.3 m) walk into the room. 
+
+\vspace{2ex} They would be **outliers** in our population, meaning that their values would be located abnormally far from the other values.
+
+\vspace{2ex} Suppose they all end up in our sample. What happens to the sample mean? What happens to the sample median? 
+
+##
+
+\textbf{\large Comparing location statistics}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T, fig.height = 3.5, fig.width = 8}
+hist(grains_data$Rice,
+     xlab = "Consumption (kg/person/year)",
+     main = "Rice consumption") 
+abline(v = mean(grains_data$Rice), col = 'tomato')
+abline(v = median(grains_data$Rice), col = 'dodgerblue')
+legend("topright", c("mean", "median"), 
+       col = c("tomato", "dodgerblue"), lty = 1)
+```
+
+
+##
+
+\textbf{\large Comparing location statistics}
+
+\vspace{2ex}
+\scriptsize
+\begin{tabular}{|r|p{.27\textwidth}|p{.27\textwidth}|p{.24\textwidth}|}
+\hline
+Statistic & Mean & Median & Mode\\
+\hline
+Pros & 
+\begin{itemize}[leftmargin=*]\item[]  - unique value
+\item[] - good for inference\end{itemize} & 
+\begin{itemize}[leftmargin=*]\item[] - unique value
+\item[] - robust to outliers \end{itemize} & 
+\begin{itemize}[leftmargin=*]\item[]  - easy to explain 
+\item[] - can compute for numerical and categorical variables\end{itemize}\\\hline
+Cons & 
+\begin{itemize}[leftmargin=*]\item[]  - sensitive to outliers \item - only numerical variables
+\end{itemize} & 
+\begin{itemize}[leftmargin=*]\item - only numerical variables\end{itemize} & 
+\begin{itemize}[leftmargin=*]\item[]  - may not be unique/meaningful\end{itemize}\\\hline
+\end{tabular}
+
+##  
+
+\textbf{\large Other location statistics}
+
+**Quartiles** split your data up into quarters. If you think of the median as the second quartile, then the first quartile is the median of the first half of the data and third quartile is the median of the second half of the data.
+
+\vspace{2ex} So, 25% of the data fall below the first quartile and 75% fall below the third quartile.
+
+##  
+
+\textbf{\large Boxplots}
+
+We can use boxplots to summarize distributions and visualize the quartiles:
+
+\vspace{1ex} The edges of the box represent the first and third quartile
+
+\vspace{1ex} The line inside the box is the median
+
+\vspace{1ex} The edges of the "whiskers" are usually the maximum and minimum
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = F, cache = T,  fig.height = 2.5, fig.width = 8}
+boxplot(0:100, horizontal = T, frame.plot = FALSE)
+```
+
+##
+
+\textbf{\large Boxplots}
+
+Returning to our rice consumption data (the points to the right are **outliers**):
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = F, cache = T,  fig.height = 4.5, fig.width = 8}
+par(mfrow = c(2,1))
+hist(grains_data$Rice,
+     xlab = "Consumption (kg/person/year)",
+     main = "Rice consumption") 
+boxplot(grains_data$Rice, horizontal = T, frame.plot = FALSE)
+```
+
+##
+
+\textbf{\large Example Boxplots}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = F, cache = T,  fig.height = 4.5, fig.width = 8}
+par(mfrow = c(3,1))
+boxplot(grains_data$Rice, horizontal = T, main = "Skewed right", frame.plot = FALSE)
+boxplot(rnorm(1000), horizontal = T, main = "Symmetrical", frame.plot = FALSE)
+boxplot(storms$pressure, horizontal = T, main = "Skewed left", frame.plot = FALSE)
+```
+
+##  {.standout}
+
+\begin{center}
+	\vspace{2.3em}
+	\color{white}\textit{\Huge\gar ``Spread"}
+\end{center}
+
+##  
+
+\textbf{\large Spread statistics}
+
+\vspace{2ex} Some statistics describe the **location** of our data. 
+
+\vspace{2ex} Crudely speaking, these statistics tell us how far our data values tend to be from each other.
+
+##  
+
+\textbf{\large Range}
+
+\vspace{2ex}\textbf{In words:} the difference between the biggest data value and the smallest data value
+
+\vspace{2ex}\textbf{In math:} $$\textrm{range}(x_1,\ldots, x_n)=\max(x_1,\ldots, x_n) - \min(x_1,\ldots, x_n)$$
+
+\vspace{2ex}\textbf{In R:}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T}
+range(grains_data$Rice)
+```
+
+##  
+
+\textbf{\large Sample Variance}
+
+\vspace{2ex} Let the \textbf{sample deviation} be the distance of an observation from its sample mean. So, for now, we compute the sample deviation of $x_i$ as $x_i-\overline{x}$.
+
+\vspace{2ex} We define **sample variance** as the average squared sample deviation of the observations.
+
+## 
+
+\textbf{\large Sample Variance}
+
+\vspace{2ex}\textbf{In words:} the "average" squared deviation of the observations
+
+\vspace{2ex}\textbf{In math:} $$\textrm{Var}(x_1,\ldots, x_n)=\frac{1}{n-1}\sum_{i=1}^n(x_i-\overline{x})^2$$
+\hfill\textbf{\color{coralred} Note: we divide by $n-1$ to get a better estimator}
+
+\vspace{2ex}\textbf{In R:}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T}
+var(grains_data$Rice)
+```
+
+## 
+
+\textbf{\large Sample Standard Deviation}
+
+\vspace{2ex}\textbf{In words:} the square root of "average" squared deviation of the observations
+
+\vspace{2ex}\textbf{In math:} $$\textrm{SD}(x_1,\ldots, x_n)=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(x_i-\overline{x})^2}$$
+\hfill\textbf{\color{coralred} Note: we divide by $n-1$ to get a better estimator}
+
+\vspace{2ex}\textbf{In R:}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T}
+sd(grains_data$Rice)
+```
+
+
+## 
+
+Which data has the higher standard deviation?
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = F, cache = T,  fig.height = 3.5, fig.width = 8}
+par(mfrow = c(1, 2))
+hist(rnorm(1000), xlab = "x", main = "Left")
+hist(rnorm(1000, sd = 3), xlab = "x", main = "Right")
+```
+
+## 
+
+Drawn on the same scale:
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = F, cache = T,  fig.height = 3.5, fig.width = 8}
+par(mfrow = c(1, 2))
+hist(rnorm(1000), xlab = "x", main = "Left", xlim = c(-10, 10))
+hist(rnorm(1000, sd = 3), xlab = "x", main = "Right", xlim = c(-10, 10))
+```
+
+##  
+
+\textbf{\large Context matters}
+
+Context matters a lot when discussing standard deviation. These two (fake) datasets have the same standard deviation:
+
+```{r warning = F, message = F, echo = F, cache = T,  fig.height = 3.5, fig.width = 8}
+par(mfrow = c(1, 2))
+hist(rnorm(1000, mean = 1), xlab = "Prize Money", main = "Left")
+hist(rnorm(1000, mean = 1000), xlab = "Prize Money", main = "Right")
+```
+
+##  
+
+\textbf{\large Coefficient of variation}
+
+\vspace{2ex}\textbf{In words:} the standard deviation divided by the mean
+
+\vspace{2ex}\textbf{In math:} $$\textrm{CV}(x_1,\ldots, x_n)=\frac{\textrm{SD}(x_1,\ldots, x_n)}{\overline{x}}$$
+\vspace{2ex}\textbf{In R:}
+
+\vspace{1ex}\scriptsize
+```{r warning = F, message = F, echo = T, cache = T}
+sd(grains_data$Rice) / mean(grains_data$Rice)
+```
+
+
+## {.standout}
+
+\color{apricot}\textit{\gar\Huge recap}
+
+\normalsize\color{white}\vspace{4ex}\textbf{Today, we discussed:}
+
+\vspace{2ex}
+\begin{itemize}
+\color{white}
+\setlength{\itemsep}{2ex}
+\item Visualizing distributions
+\item Location statistics
+\item Spread statistics
+\end{itemize}
+
+## {.standout}
+
+\color{apricot}\textit{\gar\Huge recap}
+
+\normalsize\color{white}\vspace{4ex}\textbf{If you only take one thing away from today:}
+
+\vspace{2ex} All of the summaries/statistics we discussed today were calculated without making **any assumptions** about our population. \pause
+
+\vspace{2ex} All were based entirely on our **sample**. In the next lecture we'll talk more about how we can use **sample statistics** to estimate **population parameters**.
+
+

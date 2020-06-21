@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.72.0" />
+
+
+<title>Lab 02 - QSCI 381 Labs</title>
+<meta property="og:title" content="Lab 02 - QSCI 381 Labs">
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+
+  <ul class="nav-links">
+    
+    <li><a href="https://canvas.uw.edu/courses/1382732">Canvas</a></li>
+    
+    <li><a href="/">Home</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+
+
+    <h1 class="article-title">Lab 02</h1>
+
+    
+    <span class="article-date">2020-07-02</span>
+    
+
+    <div class="article-content">
+      
+
+
+<div id="lab-02-skills-slides" class="section level1">
+<h1><a href="/slides/lab-02.html">Lab 02 Skills Slides</a></h1>
+</div>
+<div id="lab-02-report-template" class="section level1">
+<h1><a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-02/lab-02-template.Rmd">Lab 02 Report Template</a></h1>
+</div>
+<div id="homework" class="section level1">
+<h1>Homework</h1>
+<p><strong>For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.</strong></p>
+<p>First, load and clean the data using the following code:</p>
+<pre class="r"><code># load package of helpful datasets and functions
+library(tidyverse)
+
+# load data
+tuition_cost &lt;-
+  readr::read_csv(paste0(
+    &#39;https://raw.githubusercontent.com/&#39;,
+    &#39;rfordatascience/tidytuesday/master/&#39;,
+    &#39;data/2020/2020-03-10/tuition_cost.csv&#39;))
+
+# remove other
+tuition_cost &lt;- tuition_cost %&gt;%
+  filter(type != &quot;Other&quot;) %&gt;%
+  filter(degree_length != &quot;Other&quot;)</code></pre>
+<ol style="list-style-type: decimal">
+<li><p><strong>Construct a two-way table for type of college and degree length using the <code>table</code> command.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>What is the (empirical) marginal probability of being a public school?</strong></p></li>
+<li><p><strong>What is the (empirical) marginal probability of being a 4-year degree school?</strong></p></li>
+<li><p><strong>What is the (empirical) conditional probability of being a public school <em>given</em> that the degree length is 2 years?</strong></p></li>
+<li><p><strong>What is the (empirical) conditional probability of being a 2-year degree school <em>given</em> that the type is public?</strong></p></li>
+<li><p><strong>What is the (empirical) conditional probability of being a 2-year degree school <em>given</em> that the type is private?</strong></p></li>
+<li><p><strong>If you choose a school at random from the dataset, what is the probability of choosing a private, 4-year school?</strong></p></li>
+<li><p><strong>If you choose two schools at random (with replacement) from the dataset, what is the probability of choosing two private schools?</strong></p></li>
+<li><p><strong>Is there an association between type of college and degree length? Justify your answer.</strong></p></li>
+</ol></li>
+<li><p><strong>In this problem, we will compare public schools in WA and in CA.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>Make a histogram of in-state annual total costs for public schools in WA.</strong></p></li>
+<li><p><strong>Make a histogram of in-state annual total costs for public schools in CA. You can use the <code>xlim</code> command to control the scale of your histogram.</strong></p></li>
+<li><p><strong>Make boxplots to compare in-state annual total costs for public schools in WA and in CA.</strong></p></li>
+<li><p><strong>Compute the mean, median, and standard deviation for in-state annual total costs for public schools in WA and in CA.</strong></p></li>
+<li><p><strong>Based on the above plots and statistics, briefly compare the distributions of in-state annual total costs for public schools in WA and in CA. (4 sentences <em>max</em>).</strong></p></li>
+<li><p><strong>Now, use appropriate plots and statistics to compare the distributions of out-of-state annual total costs for public schools in WA and in CA.</strong></p></li>
+</ol></li>
+</ol>
+<p>Now, load this data on salary potential:</p>
+<pre class="r"><code>salary_potential &lt;- 
+  readr::read_csv(paste0(
+    &#39;https://raw.githubusercontent.com/rfordatascience/&#39;,
+    &#39;tidytuesday/master/data/2020/2020-03-10/salary_potential.csv&#39;))</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><p><strong>This dataset provides information on estimated early and mid career pay, as well as information about the percentage of students in STEM fields and <code>make_world_better_percent</code>, the percentage of alumni who think they are making the world a better place.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>Make a scatterplot with <code>early_career_pay</code> on the x-axis and <code>mid_career_pay</code> on the y-axis. Use appropriate axis labels and titles. Provide one or two sentences summarizing your plot.</strong></p></li>
+<li><p><strong>Make a scatterplot with <code>early_career_pay</code> on the x-axis and <code>make_world_better_percent</code> on the y-axis. Use appropriate axis labels and titles. Provide one or two sentences summarizing your plot.</strong></p></li>
+<li><p><strong>Which state has the highest average value for <code>early_career_pay</code>? Which state has the lowest? How appropriate is it for use to use this dataset to compare pay across states?</strong></p></li>
+<li><p><strong>Use this dataset to make another plot or compute another appropriate statistic that provides some added insight about this dataset. Provide one or two sentences summarizing what you found.</strong></p></li>
+</ol></li>
+<li><p><strong>Finally, let’s practice Bayes’ rule.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>(<em>OpenIntro Statistics</em>, exercise 3.21) Lupus is a medical phenomenon where antibodies that are supposed to attack foreign cells to prevent infections instead see plasma proteins as foreign bodies, leading to a high risk of blood clotting. It is believed that 2% of the population su↵er from this disease. The test is 98% accurate if a person actually has the disease. The test is 74% accurate if a person does not have the disease. There is a line from the Fox television show House that is often used after a patient tests positive for lupus: “It’s never lupus.” Do you think there is truth to this statement? Use appropriate probabilities to support your answer.</strong></p></li>
+<li><p><strong>(<em>OpenIntro Statistics</em>, exercise 3.22) Edison Research gathered exit poll results from several sources for the Wisconsin recall election of Scott Walker. They found that 53% of the respondents voted in favor of Scott Walker. Additionally, they estimated that of those who did vote in favor for Scott Walker, 37% had a college degree, while 44% of those who voted against Scott Walker had a college degree. Suppose we randomly sampled a person who participated in the exit poll and found that he had a college degree. What is the probability that he voted in favor of Scott Walker?</strong></p></li>
+</ol></li>
+</ol>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

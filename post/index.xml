@@ -6,10 +6,21 @@
     <description>Recent content in Posts on QSCI 381 Labs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Lab 02</title>
+      <link>/2020/07/02/lab-02/</link>
+      <pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/07/02/lab-02/</guid>
+      <description>Lab 02 Skills Slides  Lab 02 Report Template  Homework For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.
+First, load and clean the data using the following code:
+# load package of helpful datasets and functions library(tidyverse) # load data tuition_cost &amp;lt;- readr::read_csv(paste0( &amp;#39;https://raw.githubusercontent.com/&amp;#39;, &amp;#39;rfordatascience/tidytuesday/master/&amp;#39;, &amp;#39;data/2020/2020-03-10/tuition_cost.csv&amp;#39;)) # remove other tuition_cost &amp;lt;- tuition_cost %&amp;gt;% filter(type !</description>
+    </item>
     
     <item>
       <title>Lab 01</title>

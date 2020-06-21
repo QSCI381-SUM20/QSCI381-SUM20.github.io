@@ -1,8 +1,9 @@
 body {
   font-family: 'Helvetica Neue', 'Arial', sans-serif;
 }
-h1, h2, h3, h4, h5, h6, .nav, .article-duration, .archive-item-link, .footer {
+h1,h2, h3, h4, h5, h6, .nav, .article-duration, .archive-item-link, .footer {
   font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  color: #000000;
 }
 
 .remark-code, .remark-inline-code { font-family: 'Menlo', 'Consolas'; }

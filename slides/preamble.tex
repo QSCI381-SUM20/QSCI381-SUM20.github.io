@@ -1,0 +1,70 @@
+
+\setbeamercolor{red1}{fg = white, bg=pink}
+\definecolor{bluebell}{rgb}{0.64, 0.64, 0.82}
+\definecolor{coralred}{rgb}{1.0, 0.25, 0.25}
+\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+\setbeamercolor{itemize item}{fg=black}
+
+
+%%%% HEADLINE %%%%
+\makeatletter
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{head}{fg=black}
+\setbeamertemplate{headline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.5\paperwidth,ht=3ex,dp=2ex, left]{head}%
+			\usebeamerfont{foot}
+			\hspace{1ex}Lecture 03 \insertsection
+		\end{beamercolorbox}%
+		
+		\begin{beamercolorbox}[wd=.5\paperwidth,ht=3ex,dp=2ex,right]{head}%
+			\usebeamerfont{foot}
+			Summarizing Data\hspace*{2ex} 
+	\end{beamercolorbox}}%
+	\vskip1pt%
+}
+\makeatother
+
+%%%% FOOTLINE %%%%
+\makeatletter
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{foot}{fg=black}
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.5\paperwidth,ht=3ex,dp=1ex, left]{foot}%
+			\usebeamerfont{foot}
+			\hspace{1ex}Q SCI 381 \insertsection
+		\end{beamercolorbox}%
+
+		\begin{beamercolorbox}[wd=.5\paperwidth,ht=3ex,dp=1ex,right]{foot}%
+			\usebeamerfont{foot}
+			\insertframenumber{}\hspace*{2ex} 
+	\end{beamercolorbox}}%
+	\vskip1pt%
+}
+\makeatother
+
+\setbeamertemplate{caption}{\footnotesize{\raggedright\insertcaption\par}}
+
+\usepackage{fontspec}
+\newfontfamily{\gar}{Marion}
+\setsansfont{Helvetica Neue}
+
+\usepackage{etoolbox}
+\usepackage{enumitem}
+\BeforeBeginEnvironment{frame}{%
+  \setbeamercolor{background canvas}{bg=white}
+  \setbeamercolor{head}{fg=black}
+  \setbeamercolor{foot}{fg=black}
+}
+\makeatletter
+\define@key{beamerframe}{standout}[true]{%
+  \setbeamercolor{background canvas}{bg=bluebell}
+  \setbeamercolor{head}{fg=white}
+  \setbeamercolor{foot}{fg=white}
+}
+\makeatother

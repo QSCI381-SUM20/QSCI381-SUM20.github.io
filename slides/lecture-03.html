@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Lecture 03</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <meta name="date" content="2020-06-17" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Lecture 03
+## <em>Descriptive Statistics I</em>
+### 2020-06-17
+
+---
+
+class: middle
+
+In this lab, we will practice computing descriptive statistics and making plots in R for a dataset about animal sleep habits. 
+
+#### 1. First, download the template R Markdown file for Lab 01 &lt;a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-01/lab_01_template.Rmd"&gt;&lt;b&gt;here&lt;/b&gt;&lt;/a&gt; . Open this template in RStudio. 
+
+
+---
+class: middle
+
+    In R Markdown files, you can switch between text and code. This line is text, but below is a code chunk. In your template file, the first code chunk has the name `load_data` and the options `warning = F, message = F`. Within the code chunk, we have lines of code. The lines that start with `#` are **comments**, which R ignores when running the code chunk. You can and should write comments to help you remember what your code does.
+
+---
+class: middle, center
+
+&lt;img src="../img/01_chunk.png" width="90%" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+
+#### **2. Click the green play button to run the chunk.** 
+
+This chunk will load the `msleep` dataset and then print out the first few rows.
+
+The `msleep` dataset is a **data frame**, a table where each row corresponds to a particular mammal, and each column is a different variable. 
+
+
+
+
+---
+class: middle
+
+After you run the chunk, you should see something like the table below.
+
+&lt;img src="../img/01_head.png" width="90%" /&gt;
+---
+class: middle
+#### 3. Next, to get more info about the dataset, copy, paste, and run the following line of code in the console.
+
+```r
+?msleep
+```
+---
+class: middle
+#### 4. You should be able to see the help entry in the help pane:
+
+&lt;img src="../img/01_help.png" width="80%" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+This dataset provides information about different mammals' sleep habits. 
+
+#### 5. First let's calculate the average hours of sleep for all the mammals in our dataset using the following R command.
+
+```r
+mean(msleep$sleep_total)
+```
+
+```
+## [1] 10.43373
+```
+
+The `mean()` function computes the arithmetic mean, `msleep` refers to our data frame, and `$sleep_total` tells R we only the `sleep_total` column.
+
+---
+class: middle
+
+#### 6. Let's also compute the mean body weight and brain weight in kilograms:
+
+```r
+mean(msleep$bodywt)
+```
+
+```
+## [1] 166.1363
+```
+
+```r
+mean(msleep$brainwt)
+```
+
+```
+## [1] NA
+```
+---
+class: middle
+When we tried to compute the brain weight, we got `NA` because we don't have brain weight data for all the animals. 
+
+#### 7. Let's try again, but this time, we'll tell R to ignore the NAs, setting the `na.rm` argument to TRUE to remove all `NA` values before computing the mean. 
+
+This time you should get a numerical answer.
+
+```r
+mean(msleep$brainwt, na.rm = TRUE)
+```
+
+```
+## [1] 0.2815814
+```
+
+---
+class: middle
+#### 8. Let's also try calculating some other descriptive statistics like medians and standard deviations. How can we interpret these values?
+
+
+```r
+median(msleep$sleep_total)
+```
+
+```
+## [1] 10.1
+```
+
+```r
+sd(msleep$sleep_total)
+```
+
+```
+## [1] 4.450357
+```
+---
+class: middle
+
+#### 9. Finally, let's make some basic plots. The following command makes a histogram of the `sleep_total` variable, which gives us the frequency of different amounts of sleep. 
+
+```r
+hist(msleep$sleep_total)
+```
+
+&lt;img src="lecture-03_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+#### 10. The x-axis label is not very helpful, and neither is the title, so let's change those.
+
+
+```r
+hist(msleep$sleep_total, xlab = "Average hours of sleep", 
+     main = "Average hours of sleep for mammals")
+```
+
+&lt;img src="lecture-03_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+#### 11. Let's also make a scatter plot to compare brain weight and body weight.
+
+Here, the first argument of the plot function is `brainwt~bodywt`. This is called a **formula** in R. 
+
+In general, formulas in R take the form ````[RESPONSE VARIABLE NAME]~[EXPLANATORY VARIABLE NAME]`, and they come in handy when we have a response varaiable and an explanatory variable. 
+
+The `data = msleep` argument tells `plot` where to find the variables.
+
+
+```r
+plot(brainwt~bodywt, data = msleep,
+     ylab = "Brain weight (kg.)",
+     xlab = "Body weight (kg.)")
+```
+
+&lt;img src="lecture-03_files/figure-html/unnamed-chunk-11-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+
+It's hard to see much of anything! Some of these mammals are much heavier than others. 
+
+#### 12. Something we could try is to take the logarithm of brain weight and  the logarithm of body weight, and plot those variables. We'll talk more about when this is appropriate later in the course. Do you think the plot below is "better" than the original plot? Why or why not?
+
+
+```r
+    plot(log(brainwt)~log(bodywt), data = msleep,
+         ylab = "log(Brain weight)",
+         xlab = "log(Body weight)")
+```
+
+&lt;img src="lecture-03_files/figure-html/unnamed-chunk-12-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+
+It's hard to see much of anything! Some of these mammals are much heavier than others. 
+
+#### 13. Finally, let's play around with changing the points' shapes and colors.
+
+
+```r
+    plot(log(brainwt)~log(bodywt), data = msleep,
+         ylab = "log(Brain weight)",
+         xlab = "log(Body weight)",
+         pch = 16, col = 'red')
+```
+
+&lt;img src="lecture-03_files/figure-html/unnamed-chunk-13-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "tango",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

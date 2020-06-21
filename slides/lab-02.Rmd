@@ -1,0 +1,259 @@
+---
+title: "Lab 02"
+subtitle: "*Descriptive Statistics II*"
+author: ""
+institute: ""
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["style.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+ 
+---     
+class: middle
+
+In this lab, we will continue practice with descriptive statistics and making plots in R for a dataset on college tuition and pay.
+
+---
+class: middle
+
+Today's data comes from the [`tidytuesday` project](https://github.com/rfordatascience/tidytuesday), which makes datasets freely available for practice with data visualization and exploration.
+
+The data we'll be looking at today come originally from the Department of Education, but are summarized on [Tuitiontracker.org](https://www.tuitiontracker.org/). For more info on the cleaned dataset, see [this link](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-03-10/readme.md).
+
+Other teachers and statisticians often use `tidytuesday` data to teach
+ data analysis; you can find some examples [here](https://juliasilge.com/blog/tuition-resampling/) and [here](https://jonnylaw.rocks/blog/tidy-tuesday-us-tuition-data/).
+---
+class: middle
+
+First, we need to load our dataset. We also load the `tidyverse` package to help us with data analysis.
+
+```{r load_data, warning = F, message = F}
+# load package of helpful datasets and functions
+library(tidyverse)
+
+# load data
+tuition_cost <-
+  readr::read_csv(paste0(
+    'https://raw.githubusercontent.com/',
+    'rfordatascience/tidytuesday/master/',
+    'data/2020/2020-03-10/tuition_cost.csv'))
+```
+---
+class: middle
+
+#### 1. Use the `head` command to display the first few rows of data.
+
+Each row corresponds to a school and degree type and provides the cost of in-state and out-of-state tuition.
+
+```{r}
+head(tuition_cost)
+```
+---
+class: middle
+
+#### 2. Use the "pipe" `%>%` operator with the `filter` command to select only schools in Washington.
+
+```{r}
+# save results in new object tuition_WA
+tuition_WA <- tuition_cost %>%
+  filter(state_code == "WA")
+
+# print first few rows
+head(tuition_WA) 
+```
+---
+class: middle
+
+#### 3. Use the `hist` command to produce a histogram of `in_state_total`, the **annual** in-state total costs for schools in Washington. Use appropriate `xlab` and `main` labels.
+
+```{r, fig.height= 5, fig.width=7, fig.align = "center"}
+hist(tuition_WA$in_state_total,
+     xlab = "Total Costs",
+     main = "WA College Annual In-State Total Costs")
+```
+---
+
+class: middle
+
+#### 4. Let's compare in-state total costs for public and private WA schools. What do you observe?
+
+```{r, fig.height= 4, fig.width=8, fig.align = "center"}
+public_WA <- tuition_WA %>%
+  filter(type == "Public")
+private_WA <- tuition_WA %>%
+  filter(type == "Private")
+par(mfrow = c(1, 2))
+hist(public_WA$in_state_total,
+     xlab = "Total Costs",
+     main = "Public")
+hist(private_WA$in_state_total,
+     xlab = "Total Costs",
+     main = "Private")
+```
+---
+
+#### 5. Instead of using histograms, we can use boxplots to compare costs for public and private WA schools. What do you observe?
+
+```{r, fig.height= 5, fig.width=8, fig.align = "center"}
+boxplot(tuition_WA$in_state_total ~ # response variable
+          tuition_WA$type, # explanatory variable
+        horizontal = T, 
+        xlab = "In-state Total Costs",
+        main = "WA College Annual In-state Total Costs")
+```
+---
+class: middle
+
+#### 6. We can also split up the data by `degree_length`. Why are some of the boxplots missing?
+
+```{r, fig.height= 4.5, fig.width=8.5, fig.align = "center"}
+# change margins of plot to make x-axis visible
+par(mar = c(5, 8, 3, 1)) 
+boxplot(tuition_WA$in_state_total ~ # response variable
+          tuition_WA$type + # explanatory variable 1
+          tuition_WA$degree_length, # explanatory variable 2
+        horizontal = T, las=1, # make boxes and labels horizontal
+        xlab = "In-state Total Costs",
+        main = "WA College Annual In-state Total Costs")
+```
+---
+class: middle
+
+#### 7. Let's repeat this plot but for all data:
+
+```{r, fig.height= 4.5, fig.width=8.5, fig.align = "center"}
+# change margins of plot to make x-axis visible
+par(mar = c(5, 8, 3, 1)) 
+boxplot(tuition_cost$in_state_total ~ # response variable
+          tuition_cost$type + # explanatory variable 1
+          tuition_cost$degree_length, # explanatory variable 2
+        horizontal = T, las=1, # make boxes and labels horizontal
+        xlab = "In-state Total Costs",
+        main = "US College Annual In-state Total Costs")
+```
+---
+
+class: middle
+
+
+
+#### 8. The `other` categories don't seem to have much data. Let's remove those rows.
+
+```{r, fig.height= 4.5, fig.width=8.5, fig.align = "center"}
+plot_data <- tuition_cost %>%
+  filter(type != "Other") %>%
+  filter(degree_length != "Other")
+```
+---
+
+class: middle
+
+#### 9. Now, let's remake our boxplots. What conclusions can you draw?
+
+```{r, fig.height= 4.5, fig.width=8.5, fig.align = "center"}
+par(mar = c(5, 8, 3, 1)) 
+boxplot(plot_data$in_state_total ~ # response variable
+          plot_data$type + # explanatory variable 1
+          plot_data$degree_length, # explanatory variable 2
+        horizontal = T, las=1, # make boxes and labels horizontal
+        xlab = "In-state Total Costs",
+        main = "US College Annual In-state Total Costs")
+```
+---
+class: middle
+
+#### 10. Let's also make a two-way table to see how many schools of each type we have in our dataset.
+
+```{r, fig.height= 4.5, fig.width=8.5, fig.align = "center"}
+table(plot_data$type, plot_data$degree_length)
+```
+---
+
+class: middle
+
+#### 11. Finally, let's calculate some summary statistics:
+
+```{r}
+mean(plot_data$in_state_total)
+mean(plot_data$out_of_state_total)
+sd(plot_data$in_state_total)
+sd(plot_data$out_of_state_total)
+```
+---
+class: middle
+
+These statistics are not very meaningful since we know that we have different groups (public vs. private vs. for-profit) within our dataset.
+
+#### 12. Use the `group_by` and `summarize` commands to calculate **group-specific** means for each type of college (public, private, for-profit).
+
+```{r}
+plot_data %>%
+  group_by(type) %>%
+  summarize(mean(in_state_total)) %>%
+  ungroup()
+```
+---
+class: middle
+
+We can also group by more than one variable.
+
+#### 13. Calculate **group-specific** means for each type of college (public, private, for-profit) and each degree length (2-year, 4-year).
+
+```{r}
+plot_data %>%
+  group_by(type, degree_length) %>%
+  summarize(mean(in_state_total)) %>%
+  ungroup()
+```
+---
+class: middle
+
+#### 14. Calculate the maximum, minimum, median, first quartile, and third quartile of the `in_state_total` data.
+
+```{r}
+max(plot_data$in_state_total)
+min(plot_data$in_state_total)
+median(plot_data$in_state_total)
+quantile(plot_data$in_state_total, probs = .25)
+quantile(plot_data$in_state_total, probs = .75)
+```
+---
+class: middle
+
+#### 15. Here is code for calculating **group-specific** medians for each type of college (public, private, for-profit) and each degree length (2-year, 4-year).
+
+```{r}
+plot_data %>%
+  group_by(type, degree_length) %>%
+  summarize(median(in_state_total)) %>%
+  ungroup()
+```
+---
+
+#### 16. Finally, here is code for calculating **group-specific** medians for each type of college (public, private, for-profit) and each degree length (2-year, 4-year).
+
+---
+class: middle
+
+Making plots in `ggplot2` is fundamentally different from making plots in base R. Let's review the base R command. We only call one function, `hist`, which we provide with data (`tuition_WA$in_state_total`) and `xlab` and `main` arguments.
+
+```{r, eval = F}
+hist(tuition_WA$in_state_total,
+     xlab = "Total Costs",
+     main = "WA College In-State Total Costs")
+```
+---
+class: middle
+`ggplot2` plots are built gradually. We first specify the data for the plot (`ggplot(tuition_WA)`) and then tell the computer what kind of plot we want, (`geom_histogram()`). Within the `geom_histogram` command, we specify which data variables we want to use for which axes (`aes(x = in_state_total`)). We finally add on axis labels and titles.
+
+```{r, eval = F}
+ggplot(tuition_WA) +
+  geom_histogram(aes(x = in_state_total), bins = 7) +
+  xlab("Total Costs") +
+  ggtitle("WA College In-State Total Costs")
+```
