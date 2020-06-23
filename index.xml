@@ -39,7 +39,8 @@ First, load and clean the data using the following code:
       
       <guid>/2020/06/22/overview-of-r/</guid>
       <description> Before your first lab section, you should work through the slides below to install R and check that all the software works on your computer.
-Slides  Lab 00 Report Template  </description>
+Slides  Lab 00 Report Template If, when you download the template, you don’t see the header, you can copy and paste the header below:
+--- title: &amp;quot;Lab 00 Report&amp;quot; author: &amp;quot;YOUR NAME HERE&amp;quot; date: &amp;quot;DATE HERE&amp;quot; output: html_document ---  </description>
     </item>
     
     <item>
