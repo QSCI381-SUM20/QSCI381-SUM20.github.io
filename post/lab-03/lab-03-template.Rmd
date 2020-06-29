@@ -49,19 +49,15 @@ tuition_cost <- tuition_cost %>%
     
     YOUR ANSWER HERE
     
-    f. **Why don't your answers to d. and e. add up to 1?**
+    f. **If you choose a school at random from the dataset, what is the probability of choosing a private, 4-year school?**
     
     YOUR ANSWER HERE
     
-    g. **If you choose a school at random from the dataset, what is the probability of choosing a private, 4-year school?**
+    g. **If you choose two schools at random (with replacement) from the dataset, what is the probability of choosing two private schools?**
     
     YOUR ANSWER HERE
     
-    h. **If you choose two schools at random (with replacement) from the dataset, what is the probability of choosing two private schools?**
-    
-    YOUR ANSWER HERE
-    
-    i. **Is there an association between type of college and degree length? Justify your answer.**
+    h. **Is there an association between type of college and degree length? Justify your answer.**
     
     YOUR ANSWER HERE
     

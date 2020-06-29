@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.72.0" />
+
+
+<title>Lab 03 - QSCI 381 Labs</title>
+<meta property="og:title" content="Lab 03 - QSCI 381 Labs">
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+
+  <ul class="nav-links">
+    
+    <li><a href="https://canvas.uw.edu/courses/1382732">Canvas</a></li>
+    
+    <li><a href="/">Home</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+
+
+    <h1 class="article-title">Lab 03</h1>
+
+    
+    <span class="article-date">2020-07-09</span>
+    
+
+    <div class="article-content">
+      
+
+
+<div id="lab-03-skills-slides" class="section level1">
+<h1><a href="/slides/lab-03.html">Lab 03 Skills Slides</a></h1>
+</div>
+<div id="lab-03-report-template" class="section level1">
+<h1><a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-02/lab-02-template.Rmd">Lab 03 Report Template</a></h1>
+</div>
+<div id="lab-03-data" class="section level1">
+<h1><a href="/data/seattleWeather_1948-2017.csv">Lab 03 Data</a></h1>
+</div>
+<div id="homework" class="section level1">
+<h1>Homework</h1>
+<p><strong>For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.</strong></p>
+<div id="problem-2" class="section level3">
+<h3>Problem 2</h3>
+<p>First, load and clean the data using the following code:</p>
+<pre class="r"><code># load package of helpful datasets and functions
+library(tidyverse)
+library(lubridate)
+# load data
+daily_rain &lt;-
+  readr::read_csv(&quot;../../static/data/seattleWeather_1948-2017.csv&quot;) %&gt;%
+  mutate(year = year(mdy(DATE)),
+         month = month(mdy(DATE))) %&gt;%
+  mutate(year = ifelse(year &gt; 2017, year - 100, year))
+
+monthly_rain &lt;- daily_rain %&gt;%
+  group_by(month, year) %&gt;%
+  summarize(days_of_rain = sum(RAIN))
+
+ggplot(monthly_rain) + 
+  geom_boxplot(aes(x = days_of_rain,
+                   y = as.factor(month), 
+                   group = as.factor(month))) +
+  xlab(&quot;Days of Rain&quot;) + ylab(&quot;Month&quot;)</code></pre>
+<p><img src="/post/2020-07-09-lab-03_files/figure-html/load_data-1.png" width="672" /></p>
+<p><strong>In this problem we’ll look at historical data on the number of days of rain per month in Seattle from 1948-2017.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>Create a histogram of the number of days of rain in July in Seattle using the data from 1948-2017.</strong></p></li>
+<li><p><strong>Give an estimate of the probability that it will rain on any single July day in Seattle. Provide a one-sentence explanation of how you got your estimate.</strong></p></li>
+<li><p><strong>Use the data to compute the empirical probability of observing more than seven days of rain in July in Seattle.</strong></p></li>
+<li><p><strong>Assume that the number of days of rain in July in Seattle is a binomial random variable, with <em>p</em>, the probability of rain on a single day, given by your answer to b. What is the theoretical probability of observing more than seven days of rain in July in Seattle?</strong></p></li>
+<li><p><strong>Compare your answers to c. and d.</strong></p></li>
+<li><p><strong>As in d., assume that the number of days of rain in July in Seattle is a binomial random variable, with <em>p</em>, the probability of rain on a single day, given by your answer to b. Plot the theoretical binomial distribution.</strong></p></li>
+<li><p><strong>Is it appropriate to model the number of days of rain in July as a binomial random variable? Why or why not? If not, what other distributions could we use?</strong></p></li>
+<li><p><strong>Now, for each month, give an estimate of the probability that it will rain on any single day in Seattle. Provide a one-sentence interpretation of your results.</strong></p></li>
+<li><p><strong>Generate a visualization of your choice that provides some insight about this dataset. Provide a one-sentence summary of your visualization. Full points will be given for clarity and creativity.</strong></p></li>
+</ol>
+</div>
+<div id="problem-2-1" class="section level3">
+<h3>Problem 2</h3>
+<p><strong>In this problem, we’ll look at data simulated from different distributions using <code>R</code>.</strong></p>
+<pre class="r"><code>    X &lt;- c(2.563, 14.019, 16.168,  9.580, 10.745,
+           9.861, 13.109, 13.492, 12.054,  8.258,
+           14.182,  8.979, 10.283,  9.107,  9.459,
+           20.429,  7.341,  4.743, 17.673,  8.728)
+    Y &lt;- c(3,  3, 18,  3,  7,  
+           2,  6,  4,  6, 10, 
+           11,  2,  7, 12,  4,
+           25,  7,  6,  1, 17)</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong><code>X</code> was sampled from either a normal, binomial, geometric, or Poisson distribution. Which distribution seems like the most appropriate model for <code>X</code>? Justify your answer and give an estimate of any model parameters.</strong></p></li>
+<li><p><strong><code>Y</code> was sampled from either a normal, binomial, geometric, or Poisson distribution. Which distribution seems like the most appropriate model for <code>Y</code>? Justify your answer and give an estimate of any model parameters.</strong></p></li>
+</ol>
+</div>
+<div id="problem-3" class="section level3">
+<h3>Problem 3</h3>
+<p><strong>In this problem, we’ll use simulation to think about survey sampling. Suppose I want to plan a survey to learn what percentage of UW students prefer coffee to tea.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>Let <em>X</em> be the number of students in my sample that prefer coffee. If I survey <em>n</em> students, and the true proportion of students that prefer coffee is <em>p</em>, then we can model <em>X</em> as a Binomial(<em>n</em>, <em>p</em>) random variable. If I survey ten students, what is the theoretical probability that more than 60% of my sample prefer coffee?</strong></p></li>
+<li><p><strong>If I survey one hundred students, what is the theoretical probability that more than 60% of the individuals in my sample prefer coffee?</strong></p></li>
+<li><p><strong>We can also use simulation to explore this situation. Generate 1000 samples from a Binomial(10, 0.5) random variable <em>X</em>. What proportion of generated samples have sample proportions greater than 60%? Compare with your answer to a.</strong></p></li>
+<li><p><strong>Generate 1000 samples from a Binomial(100, 0.5) random variable <em>X</em>. What proportion of generated samples have sample proportions greater than 60%? Compare with your answer to b.</strong></p></li>
+<li><p><strong>Using your answers to the above questions, explain how increasing sample size yield more accurate estimates of <em>p</em>.</strong></p></li>
+</ol>
+</div>
+<div id="problem-4" class="section level3">
+<h3>Problem 4</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>A deck of cards has 52 unique cards. How many different combinations of five cards exist?</strong></p></li>
+<li><p><strong>In how many <em>distinguishable</em> ways can you rearrange the letters <code>PASSWORD</code>?</strong></p></li>
+<li><p><strong>A (sad) local pizza chain only offers three toppings: sausage, mushrooms, and pineapple. Pizzas can have 0, 1, 2, or 3 or toppings. How many different pizzas can be made?</strong></p></li>
+</ol>
+</div>
+<div id="problem-5" class="section level3">
+<h3>Problem 5</h3>
+<p><strong>Suppose SAT scores closely follow the normal model with mean <span class="math inline">\(\mu=1100\)</span> and standard deviation <span class="math inline">\(\sigma = 200\)</span>.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>Approximately what proportion of test takers score higher than 1300?</strong></p></li>
+<li><p><strong>Approximately what proportion of test takers score higher than 900?</strong></p></li>
+<li><p><strong>Approximately what proportion of test takers score between 1300 and 1500?</strong></p></li>
+</ol>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

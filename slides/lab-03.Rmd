@@ -1,0 +1,58 @@
+---
+title: "Lab 03"
+subtitle: "*Distributions*"
+author: ""
+institute: ""
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["style.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+ 
+---     
+class: middle
+
+In this lab, we'll practice working with different distributions in `R`.
+
+
+---
+class: middle
+
+---
+class: middle
+
+First, we need to load our dataset, which you can find [here](/data/seattleWeather_1948-2017.csv). t We also load the `tidyverse` and `lubridate` package to help us with data cleaning. If you do not have the `lubridate` package, you may need to run `install.packages("lubridate")` first.
+
+```{r load_data, warning = F, message = F}
+# load package of helpful datasets and functions
+library(tidyverse)
+library(lubridate)
+# load data
+daily_rain <-
+  readr::read_csv("../data/seattleWeather_1948-2017.csv") 
+```
+---
+```{r}
+daily_rain <- daily_rain %>%
+  mutate(year = year(mdy(DATE)), # get year
+         month = month(mdy(DATE))) %>% # get month
+  mutate(year = ifelse(year > 2017, year - 100, year))
+  # replace 2048, 2049, ... with 1948, 1949
+
+monthly_rain <- daily_rain %>%
+  group_by(month, year) %>% # group by month and year
+  summarize(days_of_rain = sum(RAIN)) # count number of days of rain
+```
+---
+```{r, warning = F, fig.height = 5, fig.width = 5, fig.align = "center"}
+ggplot(monthly_rain) + 
+  geom_boxplot(aes(x = days_of_rain,
+                   y = as.factor(month), 
+                   group = as.factor(month))) +
+  xlab("Days of Rain") + ylab("Month")
+```
+---
