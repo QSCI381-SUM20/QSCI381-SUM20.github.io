@@ -19,11 +19,130 @@ class: center, middle, inverse, title-slide
 
 class: middle
 
-In this lab, we'll practice working with different distributions in `R`.
+In this lab, we'll practice working with different distributions in `R`.\pause
 
+First, let's take a look at binomial distributions.
 
 ---
 class: middle
+
+#### Sampling from a binomial distribution
+
+Recall that every binomial distribution has a *size* parameter which is the number of trails and a *probability of success* parameter. Below, we sample ten coin flips using the `rbinom` function
+
+
+```r
+coin_flips &lt;- rbinom(n = 10, # number of samples
+                     size = 1, # size parameter
+                     prob = 0.5) # probability of success
+coin_flips
+```
+
+```
+##  [1] 1 0 1 1 1 0 1 0 0 0
+```
+
+---
+class: middle
+
+#### Sampling from a binomial distribution
+
+Now, consider an experiment where we flip a coin twenty times. The below code runs this experiment one thousand times for a fair coin and then for an unfair coin.
+
+
+```r
+fair_flips &lt;- rbinom(n = 1000, # number of experiments
+                     size = 20, # size parameter
+                     prob = 0.5) # probability of success
+unfair_flips &lt;- rbinom(n = 1000, # number of experiments
+                       size = 20, # size parameter
+                       prob = 0.6) # probability of success
+```
+
+---
+class: middle
+
+#### Sampling from a binomial distribution
+
+Now, let's compare our results:
+
+
+```r
+par(mfrow = c(1, 2)) # combine plots into one row with two columns
+hist(fair_flips, main = "Fair", xlim = c(0, 20), breaks = 10)
+hist(unfair_flips, main = "Unfair", xlim = c(0, 20), breaks = 10)
+```
+
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+#### Calculating probabilities for a binomial distribution
+
+The `dbinom` command gives the **probability mass function**; `dbinom` calculates the probability of observing `x` successes out of `size` independent trials, each with probability of success `prob`:
+
+
+```r
+dbinom(x = 1, # number of successes
+       size = 1, # size parameter
+       prob = 0.5) # probability of success
+```
+
+```
+## [1] 0.5
+```
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+#### Calculating probabilities for a binomial distribution
+
+The `dbinom` command gives the **probability mass function**; `dbinom` calculates the probability of observing `x` successes out of `size` independent trials, each with probability of success `prob`:
+
+
+```r
+dbinom(x = 5, # number of successes
+       size = 10, # size parameter
+       prob = 0.5) # probability of success
+```
+
+```
+## [1] 0.2460938
+```
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+#### Calculating probabilities for a binomial distribution
+
+The `pbinom` command gives the **distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
+
+
+```r
+pbinom(q = 1, # number of successes
+       size = 1, # size parameter
+       prob = 0.5) # probability of success
+```
+
+```
+## [1] 1
+```
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+#### Calculating probabilities for a binomial distribution
+
+The `pbinom` command gives the **distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
+
+
+```r
+pbinom(q = 5, # number of successes
+       size = 10, # size parameter
+       prob = 0.5) # probability of success
+```
+
+```
+## [1] 0.6230469
+```
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+
 
 ---
 class: middle
@@ -40,6 +159,10 @@ daily_rain &lt;-
   readr::read_csv("../data/seattleWeather_1948-2017.csv") 
 ```
 ---
+class: middle
+
+Next, we clean our dataset by computing the `year` and `month` variables, and then calculating the days of rain in each month:
+
 
 ```r
 daily_rain &lt;- daily_rain %&gt;%
@@ -53,16 +176,20 @@ monthly_rain &lt;- daily_rain %&gt;%
   summarize(days_of_rain = sum(RAIN)) # count number of days of rain
 ```
 ---
+class: middle
+
+Finally, as a check, we visualize our data and make sure everything makes sense.
+
 
 ```r
-ggplot(monthly_rain) + 
-  geom_boxplot(aes(x = days_of_rain,
-                   y = as.factor(month), 
-                   group = as.factor(month))) +
+ggplot(monthly_rain) + # plot monthly rain data
+  geom_boxplot(aes(x = days_of_rain, # x axis variable
+                   y = as.factor(month), # y axis variable
+                   group = as.factor(month))) + # grouping variable
   xlab("Days of Rain") + ylab("Month")
 ```
 
-&lt;img src="lab-03_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 ---
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
