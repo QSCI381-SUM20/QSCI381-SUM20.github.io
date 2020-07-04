@@ -1,0 +1,158 @@
+---
+title: "Lab 02 Report"
+author: "YOUR NAME HERE"
+date: "DATE HERE"
+output: html_document
+---
+
+# Homework
+
+### Problem 1
+
+First, load and clean the data using the following code:
+```{r load_data, warning = F, message = F}
+# load package of helpful datasets and functions
+library(tidyverse)
+library(lubridate)
+# load data
+daily_rain <-
+  readr::read_csv("PATH_TO_DATA/seattleWeather_1948-2017.csv") %>%
+  mutate(year = year(mdy(DATE)),
+         month = month(mdy(DATE))) %>%
+  mutate(year = ifelse(year > 2017, year - 100, year))
+
+monthly_rain <- daily_rain %>%
+  group_by(month, year) %>%
+  summarize(days_of_rain = sum(RAIN))
+
+ggplot(monthly_rain) + 
+  geom_boxplot(aes(x = days_of_rain,
+                   y = as.factor(month), 
+                   group = as.factor(month))) +
+  xlab("Days of Rain") + ylab("Month")
+```
+
+**In this problem we'll look at historical data on the number of days of rain per month in Seattle from 1948-2017.** 
+    
+a. **Create a histogram of the number of days of rain in July in Seattle using the data from 1948-2017.**
+
+    **YOUR ANSWER HERE**
+    
+b. **Give an estimate of the probability that it will rain on any single July day in Seattle. Provide a one-sentence explanation of how you got your estimate.**
+
+    **YOUR ANSWER HERE**
+    
+c. **Use the data to compute the empirical probability of observing more than seven days of rain in July in Seattle.**
+
+    **YOUR ANSWER HERE**
+    
+d. **Assume that the number of days of rain in July in Seattle is a binomial random variable, with *p*, the probability of rain on a single day, given by your answer to b. What is the theoretical probability of observing more than seven days of rain in July in Seattle?**
+
+    **YOUR ANSWER HERE**
+    
+e. **Compare your answers to c. and d.**
+
+    **YOUR ANSWER HERE**
+    
+f. **As in d., assume that the number of days of rain in July in Seattle is a binomial random variable, with *p*, the probability of rain on a single day, given by your answer to b. Plot the theoretical binomial distribution.**
+
+    **YOUR ANSWER HERE**
+    
+g. **Is it appropriate to model the number of days of rain in July as a binomial random variable? Why or why not? If not, what other distributions could we use?**
+
+    **YOUR ANSWER HERE**
+    
+h. **Now, for each month, give an estimate of the probability that it will rain on any single day in Seattle. Provide a one-sentence interpretation of your results.**
+
+    **YOUR ANSWER HERE**
+    
+i. **Generate a visualization of your choice that provides some insight about this dataset. Provide a one-sentence summary of your visualization. Full points will be given for clarity and creativity.**
+
+    **YOUR ANSWER HERE**
+
+### Problem 2
+
+**In this problem, we'll look at data simulated from different distributions using `R`.**
+
+```{r}
+    X <- c(2.563, 14.019, 16.168,  9.580, 10.745,
+           9.861, 13.109, 13.492, 12.054,  8.258,
+           14.182,  8.979, 10.283,  9.107,  9.459,
+           20.429,  7.341,  4.743, 17.673,  8.728)
+    Y <- c(3,  3, 18,  3,  7,  
+           2,  6,  4,  6, 10, 
+           11,  2,  7, 12,  4,
+           25,  7,  6,  1, 17)
+```
+  
+a. **`X` was sampled from either a normal, binomial, geometric, or Poisson distribution. Which distribution seems like the most appropriate model for `X`? Justify your answer and give an estimate of any model parameters.**
+
+    **YOUR ANSWER HERE**
+    
+b. **`Y` was sampled from either a normal, binomial, geometric, or Poisson distribution. Which distribution seems like the most appropriate model for `Y`? Justify your answer and give an estimate of any model parameters.**
+
+    **YOUR ANSWER HERE**
+    
+### Problem 3
+
+**In this problem, we'll use simulation to think about survey sampling. Suppose I want to plan a survey to learn what percentage of UW students prefer coffee to tea.**
+
+    **YOUR ANSWER HERE**
+
+a. **Let *X* be the number of students in my sample that prefer coffee. If I survey *n* students, and the true proportion of students that prefer coffee is *p*, then we can model *X* as a Binomial(*n*, *p*) random variable. If I survey ten students, what is the theoretical probability that more than 60% of my sample prefer coffee?**
+
+    **YOUR ANSWER HERE**
+    
+b. **If I survey one hundred students, what is the theoretical probability that more than 60% of the individuals in my sample prefer coffee?**
+
+    **YOUR ANSWER HERE**
+    
+c. **We can also use simulation to explore this situation. Generate 1000 samples from a Binomial(10, 0.5) random variable *X*. What proportion of generated samples have sample proportions greater than 60%? Compare with your answer to a.**
+
+```{r}
+    # YOUR CODE HERE #
+```
+
+    **YOUR ANSWER HERE**
+
+d. **Generate 1000 samples from a Binomial(100, 0.5) random variable *X*. What proportion of generated samples have sample proportions greater than 60%? Compare with your answer to b.**
+
+```{r}
+    # YOUR CODE HERE #
+```
+
+    **YOUR ANSWER HERE**
+    
+e. **Using your answers to the above questions, explain how increasing sample size yield more accurate estimates of *p*.**
+
+    **YOUR ANSWER HERE**
+    
+### Problem 4
+
+a. **A deck of cards has 52 unique cards. How many different combinations of five cards exist?**
+
+    **YOUR ANSWER HERE**
+
+b. **In how many *distinguishable* ways can you rearrange the letters `PASSWORD`?**
+
+    **YOUR ANSWER HERE**
+
+c. **A (sad) local pizza chain only offers three toppings: sausage, mushrooms, and pineapple. Pizzas can have 0, 1, 2, or 3 or toppings. How many different pizzas can be made?**
+
+    **YOUR ANSWER HERE**
+
+### Problem 5
+
+**Suppose SAT scores closely follow the normal model with mean $\mu=1100$ and standard deviation $\sigma = 200$.**
+
+a. **Approximately what proportion of test takers score higher than 1300?**
+
+    **YOUR ANSWER HERE**
+
+b. **Approximately what proportion of test takers score higher than 900?**
+    
+    **YOUR ANSWER HERE**
+
+c. **Approximately what proportion of test takers score between 1300 and 1500?**
+
+    **YOUR ANSWER HERE**
