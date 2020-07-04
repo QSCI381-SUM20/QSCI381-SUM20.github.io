@@ -1,0 +1,188 @@
+---
+title: "Lab 04"
+subtitle: "*Sampling Distributions*"
+author: ""
+institute: ""
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["style.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+ 
+---     
+class: middle
+
+In this lab, we'll practice working with different distributions in `R`.\pause
+
+First, let's take a look at binomial distributions.
+
+---
+class: middle
+
+#### Sampling from a binomial distribution
+
+Recall that every binomial distribution has a *size* parameter which is the number of trails and a *probability of success* parameter. Below, we sample ten coin flips using the `rbinom` function
+
+```{r}
+coin_flips <- rbinom(n = 10, # number of samples
+                     size = 1, # size parameter
+                     prob = 0.5) # probability of success
+coin_flips
+```
+
+---
+class: middle
+
+#### Sampling from a binomial distribution
+
+Now, consider an experiment where we flip a coin twenty times. The below code runs this experiment one thousand times for a fair coin and then for an unfair coin.
+
+```{r, cache = T}
+fair_flips <- rbinom(n = 1000, # number of experiments
+                     size = 20, # size parameter
+                     prob = 0.5) # probability of success
+unfair_flips <- rbinom(n = 1000, # number of experiments
+                       size = 20, # size parameter
+                       prob = 0.6) # probability of success
+```
+
+---
+class: middle
+
+#### Sampling from a binomial distribution
+
+Now, let's compare our results:
+
+```{r, fig.height = 5, fig.width = 8, fig.align = "center"}
+par(mfrow = c(1, 2)) # combine plots into one row with two columns
+hist(fair_flips, main = "Fair", xlim = c(0, 20), breaks = 10)
+hist(unfair_flips, main = "Unfair", xlim = c(0, 20), breaks = 10)
+```
+
+---
+#### Calculating probabilities for a binomial distribution
+
+The `dbinom` command gives the **probability mass function**; `dbinom` calculates the probability of observing `x` successes out of `size` independent trials, each with probability of success `prob`:
+
+```{r}
+dbinom(x = 1, # number of successes
+       size = 1, # size parameter
+       prob = 0.5) # probability of success
+```
+```{r, echo = F, fig.height = 5, fig.width = 8, fig.align = "center"}
+n <- 1
+P <- 0.5
+data <- dbinom(x=0:n,size=n, prob=P)
+names(data) <- 0:n
+cols <- rep("grey", n + 1)
+cols[2] <- "tomato"
+barplot(data, col = cols, main = "x = 1, n = 1, p = 0.5")
+```
+---
+
+#### Calculating probabilities for a binomial distribution
+
+The `dbinom` command gives the **probability mass function**; `dbinom` calculates the probability of observing `x` successes out of `size` independent trials, each with probability of success `prob`:
+
+```{r}
+dbinom(x = 5, # number of successes
+       size = 10, # size parameter
+       prob = 0.5) # probability of success
+```
+```{r, echo = F, fig.height = 5, fig.width = 8, fig.align = "center"}
+n <- 10
+P <- 0.5
+data <- dbinom(x=0:n,size=n, prob=P)
+names(data) <- 0:n
+cols <- rep("grey", n + 1)
+cols[6] <- "tomato"
+barplot(data, col = cols, main = "x = 1, n = 10, p = 0.5")
+```
+---
+
+#### Calculating probabilities for a binomial distribution
+
+The `pbinom` command gives the **distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
+
+```{r}
+pbinom(q = 1, # number of successes
+       size = 1, # size parameter
+       prob = 0.5) # probability of success
+```
+```{r, echo = F, fig.height = 5, fig.width = 8, fig.align = "center"}
+n <- 1
+P <- 0.5
+data <- dbinom(x=0:n,size=n, prob=P)
+names(data) <- 0:n
+cols <- rep("grey", n + 1)
+cols[1:2] <- "tomato"
+barplot(data, col = cols, main = "q = 1, n = 1, p = 0.5")
+```
+---
+
+#### Calculating probabilities for a binomial distribution
+
+The `pbinom` command gives the **distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
+
+```{r}
+pbinom(q = 5, # number of successes
+       size = 10, # size parameter
+       prob = 0.5) # probability of success
+```
+```{r, echo = F, fig.height = 5, fig.width = 8, fig.align = "center"}
+n <- 10
+P <- 0.5
+data <- dbinom(x=0:n,size=n, prob=P)
+names(data) <- 0:n
+cols <- rep("grey", n + 1)
+cols[1:6] <- "tomato"
+barplot(data, col = cols, main = "q = 5, n = 10, p = 0.5")
+```
+
+
+---
+class: middle
+
+First, we need to load our dataset, which you can find [here](/data/seattleWeather_1948-2017.csv). t We also load the `tidyverse` and `lubridate` package to help us with data cleaning. If you do not have the `lubridate` package, you may need to run `install.packages("lubridate")` first.
+
+```{r load_data, warning = F, message = F}
+# load package of helpful datasets and functions
+library(tidyverse)
+library(lubridate)
+# load data
+daily_rain <-
+  readr::read_csv("../data/seattleWeather_1948-2017.csv") 
+```
+---
+class: middle
+
+Next, we clean our dataset by computing the `year` and `month` variables, and then calculating the days of rain in each month:
+
+```{r}
+daily_rain <- daily_rain %>%
+  mutate(year = year(mdy(DATE)), # get year
+         month = month(mdy(DATE))) %>% # get month
+  mutate(year = ifelse(year > 2017, year - 100, year))
+  # replace 2048, 2049, ... with 1948, 1949
+
+monthly_rain <- daily_rain %>%
+  group_by(month, year) %>% # group by month and year
+  summarize(days_of_rain = sum(RAIN)) # count number of days of rain
+```
+---
+class: middle
+
+Finally, as a check, we visualize our data and make sure everything makes sense.
+
+```{r, warning = F, fig.height = 6, fig.width = 6, fig.align = "center"}
+ggplot(monthly_rain) + # plot monthly rain data
+  geom_boxplot(aes(x = days_of_rain, # x axis variable
+                   y = as.factor(month), # y axis variable
+                   group = as.factor(month))) + # grouping variable
+  xlab("Days of Rain") + ylab("Month")
+```
+---

@@ -138,15 +138,15 @@ salary_potential <-
 
 4. **Finally, let's practice computing probabilities.** 
 
-    a. Consider a fruit bowl with an apple, an orange, and a dragonfruit. You have two friends, Roberta and Donny who take turns choosing fruit. Roberta chooses first and takes one of the fruits at random. Donny then takes one of the remaining fruits, also at random. What is the probability that you will be left with the dragonfruit?
+    a. **Consider a fruit bowl with an apple, an orange, and a dragonfruit. You have two friends, Roberta and Donny who take turns choosing fruit. Roberta chooses first and takes one of the fruits at random. Donny then takes one of the remaining fruits, also at random. What is the probability that you will be left with the dragonfruit?**
     
     YOUR ANSWER HERE
     
-    b. What is the probability that Donny gets the dragonfruit?
+    b. **What is the probability that Donny gets the dragonfruit?**
     
     YOUR ANSWER HERE
     
-    c. Now, consider a fruit bowl with forty-nine apples and a dragon fruit. Imagine you have a line of forty-nine friends. The first friend takes one of the fruits at random, then the second friend takes one of the remaining fruits at random, and so on until only one fruit is left, which you get to eat. What is the probability that you will be left with the dragonfruit?
+    c. **Now, consider a fruit bowl with forty-nine apples and a dragon fruit. Imagine you have a line of forty-nine friends. The first friend takes one of the fruits at random, then the second friend takes one of the remaining fruits at random, and so on until only one fruit is left, which you get to eat. What is the probability that you will be left with the dragonfruit?**
     
     YOUR ANSWER HERE
 

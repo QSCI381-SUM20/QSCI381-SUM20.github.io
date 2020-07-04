@@ -1,0 +1,100 @@
+---
+title: Lab 04
+author: 'Peter Gao'
+date: '2020-07-16'
+slug: lab-04
+categories: []
+tags: []
+---
+
+# [Lab 03 Skills Slides](/slides/lab-03.html)
+
+# <a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-02/lab-02-template.Rmd">Lab 03 Report Template</a>
+
+# [Lab 03 Data](/data/seattleWeather_1948-2017.csv)
+
+# Homework
+
+**For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.**
+
+### Problem 1
+
+**Suppose we would like to know the true proportion of US adults who would not get a vaccine to protect against COVID-19. 27% of 1,001 adults surveyed in an ABC News/Washington Post poll (conducted May 25-28) said they definitely or probably would not get the vaccine.** 
+    
+a. **What is the population of interest?**
+    
+b. **What is the population parameter of interest?**
+    
+c. **What is the sample statistic?**
+    
+d. **What is the expected value of the sampling distribution?**
+    
+e. **What is the standard error of the sampling distribution?**
+
+f. **What is the shape of the sampling distribution? Justify your answer.**
+
+g. **Construct a 90\% confidence interval for the population parameter of interest. Give a one-sentence interpretation of your results**
+    
+### Problem 2
+
+
+```{r, message = F, warning = F}
+require("forcats")
+data(gss_cat)
+
+gss_cat_2014 <- gss_cat %>%
+  dplyr::filter(year == 2014)
+```
+
+a. **What is the proportion of individuals surveyed in 2014 that reported they were divorced?**
+    
+b. **Is your answer to a. a sample statistic or population parameter?**
+    
+c. **Estimate the standard error for your answer to a.**
+    
+d. **Calculate a 95\% confidence interval for the proportion of all US adults that are divorced.**
+
+    
+### Problem 3
+
+```{r, message = F, warning = F}
+dog_descriptions <- 
+  readr::read_csv(paste0('https://raw.githubusercontent.com/',
+                         'rfordatascience/tidytuesday/master/',
+                         'data/2019/2019-12-17/dog_descriptions.csv'))
+```
+
+a. **This dataset contains information on all dogs that were adoptable on PetFinder.org on September 20, 2019. For this question, this will be our *population***
+    
+b. **What proportion of our *population* was labeled as `breed_primary` being Labrador Retriever?**
+    
+```{r, message = F, warning = F}
+sample_50 <- sample(dog_descriptions$breed_primary, 50)
+```    
+    
+c. **What proportion of *your sample* of size 50 was labeled as `breed_primary` being Labrador Retriever?**
+    
+d. **Estimate the sampling error of your sample statistic. Show your work.**
+
+```{r, message = F, warning = F}
+sample_200 <- sample(dog_descriptions$breed_primary, 200)
+```    
+
+e. **What proportion of *your sample* of size 200 was labeled as `breed_primary` being Labrador Retriever?**
+    
+f. **Estimate the sampling error of your sample statistic. Show your work.**
+
+g. **Based on your answer to f., construct a 80\% confidence interval.**
+
+## Problem 4 (*OpenIntro* Exercise 5.10, Twitter users and news, Part II)
+
+**A poll conducted in 2013 found that 52% of U.S. adult Twitter users get at least some news on Twitter, and the standard error for this estimate was 2.4%. Identify each of the following statements as true or false. Provide an explanation to justify each of your answers.**
+
+a. **Since the standard error is 2.4%, we can conclude that 97.6% of all U.S. adult Twitter users were included in the study.**
+
+b. **If we want to reduce the standard error of the estimate, we should collect less data.**
+
+c. **If we construct a 90% confidence interval for the percentage of U.S. adults Twitter users who get some news through Twitter, this confidence interval will be wider than a corresponding 99% confidence
+interval.**
+
+d. **There is a 95\% chance that the true proportion of U.S. adult Twitter users who get at least some news on Twitter is between 47.2\% and 56.8\%.**
