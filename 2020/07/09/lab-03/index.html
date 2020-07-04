@@ -67,7 +67,7 @@
 <h1><a href="/slides/lab-03.html">Lab 03 Skills Slides</a></h1>
 </div>
 <div id="lab-03-report-template" class="section level1">
-<h1><a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-02/lab-02-template.Rmd">Lab 03 Report Template</a></h1>
+<h1><a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-03/lab-03-template.Rmkd">Lab 03 Report Template</a></h1>
 </div>
 <div id="lab-03-data" class="section level1">
 <h1><a href="/data/seattleWeather_1948-2017.csv">Lab 03 Data</a></h1>
@@ -75,15 +75,16 @@
 <div id="homework" class="section level1">
 <h1>Homework</h1>
 <p><strong>For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.</strong></p>
-<div id="problem-2" class="section level3">
-<h3>Problem 2</h3>
-<p>First, load and clean the data using the following code:</p>
+<div id="problem-1" class="section level3">
+<h3>Problem 1</h3>
+<p>First, load and clean the data using the following code, being sure to insert the appropriate file path instead of <code>PATH_TO_DATA</code>.</p>
 <pre class="r"><code># load package of helpful datasets and functions
 library(tidyverse)
 library(lubridate)
+
 # load data
 daily_rain &lt;-
-  readr::read_csv(&quot;../../static/data/seattleWeather_1948-2017.csv&quot;) %&gt;%
+  readr::read_csv(&quot;PATH_TO_DATA/seattleWeather_1948-2017.csv&quot;) %&gt;%
   mutate(year = year(mdy(DATE)),
          month = month(mdy(DATE))) %&gt;%
   mutate(year = ifelse(year &gt; 2017, year - 100, year))
@@ -97,7 +98,6 @@ ggplot(monthly_rain) +
                    y = as.factor(month), 
                    group = as.factor(month))) +
   xlab(&quot;Days of Rain&quot;) + ylab(&quot;Month&quot;)</code></pre>
-<p><img src="/post/2020-07-09-lab-03_files/figure-html/load_data-1.png" width="672" /></p>
 <p><strong>In this problem we’ll look at historical data on the number of days of rain per month in Seattle from 1948-2017.</strong></p>
 <ol style="list-style-type: lower-alpha">
 <li><p><strong>Create a histogram of the number of days of rain in July in Seattle using the data from 1948-2017.</strong></p></li>
@@ -111,7 +111,7 @@ ggplot(monthly_rain) +
 <li><p><strong>Generate a visualization of your choice that provides some insight about this dataset. Provide a one-sentence summary of your visualization. Full points will be given for clarity and creativity.</strong></p></li>
 </ol>
 </div>
-<div id="problem-2-1" class="section level3">
+<div id="problem-2" class="section level3">
 <h3>Problem 2</h3>
 <p><strong>In this problem, we’ll look at data simulated from different distributions using <code>R</code>.</strong></p>
 <pre class="r"><code>    X &lt;- c(2.563, 14.019, 16.168,  9.580, 10.745,

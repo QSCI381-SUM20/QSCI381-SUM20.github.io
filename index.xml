@@ -6,10 +6,21 @@
     <description>Recent content on QSCI 381 Labs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Lab 03</title>
+      <link>/2020/07/09/lab-03/</link>
+      <pubDate>Thu, 09 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/07/09/lab-03/</guid>
+      <description>Lab 03 Skills Slides  Lab 03 Report Template  Lab 03 Data  Homework For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.
+Problem 1 First, load and clean the data using the following code, being sure to insert the appropriate file path instead of PATH_TO_DATA.
+# load package of helpful datasets and functions library(tidyverse) library(lubridate) # load data daily_rain &amp;lt;- readr::read_csv(&amp;quot;PATH_TO_DATA/seattleWeather_1948-2017.</description>
+    </item>
     
     <item>
       <title>Lab 02</title>

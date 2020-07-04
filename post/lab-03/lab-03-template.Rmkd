@@ -9,7 +9,8 @@ output: html_document
 
 ### Problem 1
 
-First, load and clean the data using the following code:
+First, load and clean the data using the following code, being sure to insert the appropriate file path instead of `PATH_TO_DATA`.
+
 ```{r load_data, warning = F, message = F}
 # load package of helpful datasets and functions
 library(tidyverse)
