@@ -1,0 +1,162 @@
+---
+title: "Lab 02 Report"
+author: "YOUR NAME HERE"
+date: "DATE HERE"
+output: html_document
+---
+
+# Homework
+
+**For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.**
+
+First, load and clean the data using the following code:
+```{r load_data, warning = F, message = F}
+# load package of helpful datasets and functions
+library(tidyverse)
+
+# load data
+tuition_cost <-
+  readr::read_csv(paste0(
+    'https://raw.githubusercontent.com/',
+    'rfordatascience/tidytuesday/master/',
+    'data/2020/2020-03-10/tuition_cost.csv'))
+
+# remove other
+tuition_cost <- tuition_cost %>%
+  filter(type != "Other") %>%
+  filter(degree_length != "Other")
+```
+
+1. **Construct a two-way table for type of college and degree length using the `table` command.** 
+
+    a. **What is the (empirical) marginal probability of being a public school?**
+    
+    YOUR ANSWER HERE
+    
+    b. **What is the (empirical) marginal probability of being a 4-year degree school?**
+    
+    YOUR ANSWER HERE
+    
+    c. **What is the (empirical) conditional  probability of being a public school *given* that the degree length is 2 years?**
+    
+    YOUR ANSWER HERE
+    
+    d. **What is the (empirical) conditional probability of being a 2-year degree school *given* that the type is public?**
+    
+    YOUR ANSWER HERE
+    
+    e. **What is the (empirical) conditional probability of being a 2-year degree school *given* that the type is private?**
+    
+    YOUR ANSWER HERE
+    
+    f. **Why don't your answers to d. and e. add up to 1?**
+    
+    YOUR ANSWER HERE
+    
+    g. **If you choose a school at random from the dataset, what is the probability of choosing a private, 4-year school?**
+    
+    YOUR ANSWER HERE
+    
+    h. **If you choose two schools at random (with replacement) from the dataset, what is the probability of choosing two private schools?**
+    
+    YOUR ANSWER HERE
+    
+    i. **Is there an association between type of college and degree length? Justify your answer.**
+    
+    YOUR ANSWER HERE
+    
+2. **In this problem, we will compare public schools in WA and in CA.** 
+
+    a. **Make a histogram of in-state annual total costs for public schools in WA.**
+    
+```{r}
+# YOUR CODE HERE
+```
+    
+    b. **Make a histogram of in-state annual total costs for public schools in CA. You can use the `xlim` command to control the scale of your histogram.**
+    
+```{r}
+# YOUR CODE HERE
+```    
+    
+    c. **Make boxplots to compare in-state annual total costs for public schools in WA and in CA.**
+    
+```{r}
+# YOUR CODE HERE
+```
+    
+    d. **Compute the mean, median, and standard deviation for in-state annual total costs for public schools in WA and in CA.**
+    
+```{r}
+# YOUR CODE HERE
+```
+
+    e. **Based on the above plots and statistics, briefly compare the distributions of in-state annual total costs for public schools in WA and in CA. (4 sentences *max*).**
+    
+    YOUR ANSWER HERE
+    
+    f. **Now, use appropriate plots and statistics to compare the distributions of out-of-state annual total costs for public schools in WA and in CA.**
+  
+    
+```{r}
+# YOUR CODE HERE
+```
+  
+Now, load this data on salary potential:
+```{r load_salary_data, warning = F, message = F, eval = F}
+salary_potential <- 
+  readr::read_csv(paste0(
+    'https://raw.githubusercontent.com/rfordatascience/',
+    'tidytuesday/master/data/2020/2020-03-10/salary_potential.csv'))
+```
+  
+3. **This dataset provides information on estimated early and mid career pay, as well as information about the percentage of students in STEM fields and `make_world_better_percent`, the percentage of alumni who think they are making the world a better place.**
+
+    a. **Make a scatterplot with `early_career_pay` on the x-axis and `mid_career_pay` on the y-axis. Use appropriate axis labels and titles. Provide one or two sentences summarizing your plot.** 
+    
+```{r}
+# YOUR CODE HERE
+```
+    
+    b. **Make a scatterplot with `early_career_pay` on the x-axis and `make_world_better_percent` on the y-axis. Use appropriate axis labels and titles. Provide one or two sentences summarizing your plot.**
+    
+```{r}
+# YOUR CODE HERE
+```
+    
+    c. **Which state has the highest average value for `early_career_pay`? Which state has the lowest? How appropriate is it for use to use this dataset to compare pay across states?**
+
+```{r}
+# YOUR CODE HERE
+```
+    
+    d. **Use this dataset to make another plot or compute another appropriate statistic that provides some added insight about this dataset. Provide one or two sentences summarizing what you found.**
+
+```{r}
+# YOUR CODE HERE
+```
+
+4. **Finally, let's practice computing probabilities.** 
+
+    a. **Consider a fruit bowl with an apple, an orange, and a dragonfruit. You have two friends, Roberta and Donny who take turns choosing fruit. Roberta chooses first and takes one of the fruits at random. Donny then takes one of the remaining fruits, also at random. What is the probability that you will be left with the dragonfruit?**
+    
+    YOUR ANSWER HERE
+    
+    b. **What is the probability that Donny gets the dragonfruit?**
+    
+    YOUR ANSWER HERE
+    
+    c. **Now, consider a fruit bowl with forty-nine apples and a dragon fruit. Imagine you have a line of forty-nine friends. The first friend takes one of the fruits at random, then the second friend takes one of the remaining fruits at random, and so on until only one fruit is left, which you get to eat. What is the probability that you will be left with the dragonfruit?**
+    
+    YOUR ANSWER HERE
+
+5. **Bayes' rule.** 
+
+    a. **(*OpenIntro Statistics*, exercise 3.21) Lupus is a medical phenomenon where antibodies that are supposed to attack foreign cells to prevent infections instead see plasma proteins as foreign bodies, leading to a high risk of blood clotting. It is believed that 2% of the population suffer from this disease. The test is 98% accurate if a person actually has the disease. The test is 74% accurate if a person does not have the disease. There is a line from the Fox television show House that is often used after a patient tests positive for lupus: “It’s never lupus.” Do you think there is truth to this statement? Use appropriate probabilities to support your answer.**
+    
+    YOUR ANSWER HERE
+    
+    b. **(*OpenIntro Statistics*, exercise 3.22) Edison Research gathered exit poll results from several sources for the Wisconsin recall election of Scott Walker. They found that 53% of the respondents voted in favor of Scott Walker. Additionally, they estimated that of those who did vote in favor for Scott Walker, 37% had a college degree, while 44% of those who voted against Scott Walker had a college degree. Suppose we randomly sampled a person who participated in the exit poll and found that he had a college degree. What is the probability that he voted in favor of Scott Walker?**
+    
+    YOUR ANSWER HERE
+
