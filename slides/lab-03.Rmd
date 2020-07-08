@@ -340,7 +340,15 @@ Finally, for this week's lab, we'll be taking a look at data on rain in Seattle.
 
 First, we need to load our dataset, which you can find [here](/data/seattleWeather_1948-2017.csv). We also load the `tidyverse` and `lubridate` package to help us with data cleaning. If you do not have the `lubridate` package, you may need to run `install.packages("lubridate")` first.
 
-```{r load_data, warning = F, message = F}
+```{r load_data, warning = F, message = F, eval = F}
+# load package of helpful datasets and functions
+library(tidyverse)
+library(lubridate)
+# load data
+daily_rain <-
+  readr::read_csv("PATH_TO_DATA/seattleWeather_1948-2017.csv") 
+```
+```{r load_data_real, warning = F, message = F, echo = F}
 # load package of helpful datasets and functions
 library(tidyverse)
 library(lubridate)
