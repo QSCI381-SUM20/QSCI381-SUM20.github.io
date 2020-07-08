@@ -47,7 +47,7 @@ c. **Use the data to compute the empirical probability of observing more than se
 
     **YOUR ANSWER HERE**
     
-d. **Assume that the number of days of rain in July in Seattle is a binomial random variable, with *p*, the probability of rain on a single day, given by your answer to b. What is the theoretical probability of observing more than seven days of rain in July in Seattle?**
+d. **Assume that the number of days of rain in July in Seattle is a binomial random variable, with *p*, the probability of rain on a single day, given by your answer to b. What is the theoretical probability of observing more than seven days of rain in July in Seattle? Show any code or formulas used to compute your answer.**
 
     **YOUR ANSWER HERE**
     
@@ -55,19 +55,15 @@ e. **Compare your answers to c. and d.**
 
     **YOUR ANSWER HERE**
     
-f. **As in d., assume that the number of days of rain in July in Seattle is a binomial random variable, with *p*, the probability of rain on a single day, given by your answer to b. Plot the theoretical binomial distribution.**
+f. **Is it appropriate to model the number of days of rain in July as a binomial random variable? Why or why not? If not, what other distributions could we use?**
 
     **YOUR ANSWER HERE**
     
-g. **Is it appropriate to model the number of days of rain in July as a binomial random variable? Why or why not? If not, what other distributions could we use?**
+g. **Now, give an estimate of the probability that it will rain on any single day in Seattle for each month in the year. Provide a one-sentence interpretation of your results.**
 
     **YOUR ANSWER HERE**
     
-h. **Now, for each month, give an estimate of the probability that it will rain on any single day in Seattle. Provide a one-sentence interpretation of your results.**
-
-    **YOUR ANSWER HERE**
-    
-i. **Generate a visualization of your choice that provides some insight about this dataset. Provide a one-sentence summary of your visualization. Full points will be given for clarity and creativity.**
+h. **Generate a visualization of your choice that provides some insight about this dataset. Provide a one-sentence summary of your visualization. Full points will be given for clarity and creativity.**
 
     **YOUR ANSWER HERE**
 
@@ -86,11 +82,11 @@ i. **Generate a visualization of your choice that provides some insight about th
            25,  7,  6,  1, 17)
 ```
   
-a. **`X` was sampled from either a normal, binomial, geometric, or Poisson distribution. Which distribution seems like the most appropriate model for `X`? Justify your answer and give an estimate of any model parameters.**
+a. **`X` was sampled from either a normal, binomial, or geometric distribution. Which distribution seems like the most appropriate model for `X`? Justify your answer and give an estimate of the expected value of `X`**
 
     **YOUR ANSWER HERE**
     
-b. **`Y` was sampled from either a normal, binomial, geometric, or Poisson distribution. Which distribution seems like the most appropriate model for `Y`? Justify your answer and give an estimate of any model parameters.**
+b. **`Y` was sampled from either a normal, binomial, or geometric distribution. Which distribution seems like the most appropriate model for `Y`? Justify your answer and give an estimate of the expected value of `Y`**
 
     **YOUR ANSWER HERE**
     
@@ -130,6 +126,8 @@ e. **Using your answers to the above questions, explain how increasing sample si
     
 ### Problem 4
 
+**For the below questions, show all work.**
+
 a. **A deck of cards has 52 unique cards. How many different combinations of five cards exist?**
 
     **YOUR ANSWER HERE**
@@ -144,7 +142,7 @@ c. **A (sad) local pizza chain only offers three toppings: sausage, mushrooms, a
 
 ### Problem 5
 
-**Suppose SAT scores closely follow the normal model with mean $\mu=1100$ and standard deviation $\sigma = 200$.**
+**Suppose SAT scores closely follow the normal model with mean $\mu=1100$ and standard deviation $\sigma = 200$. For the below questions, show all work.**
 
 a. **Approximately what proportion of test takers score higher than 1300?**
 

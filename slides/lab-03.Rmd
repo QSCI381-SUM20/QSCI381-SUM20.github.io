@@ -19,16 +19,42 @@ class: middle
 In this lab, we'll practice working with different distributions in `R`.\pause
 
 First, let's take a look at binomial distributions.
+---
+class: middle
+
+#### Binomial distribution
+
+A **binomial random variable** describes the number of successes in a fixed number of independent trials.
+
+
+The **binomial distribution** describes the probability of having exactly $k$ successes in $n$ independent Bernoulli trials with probability of success $p$.
+
+The probability of observing exactly $k$ successes in $n$ independent trials is given by
+$$\binom{n}{k}p^{k}(1-p)^{n-k}=\frac{n!}{k!(n-k)!}p^{k}(1-p)^{n-k}$$
+---
+class: middle
+
+#### Sampling from a binomial distribution
+
+Recall that every binomial distribution has a *size* parameter which is the number of trials and a *probability of success* parameter. Below, we sample ten coin flips using the `rbinom` function
+
+```{r}
+coin_flips <- rbinom(n = 10, # number of samples
+                     size = 1, # size parameter
+                     prob = 0.5) # probability of success
+coin_flips
+```
+
 
 ---
 class: middle
 
 #### Sampling from a binomial distribution
 
-Recall that every binomial distribution has a *size* parameter which is the number of trails and a *probability of success* parameter. Below, we sample ten coin flips using the `rbinom` function
+We obtain more samples by changing $n$:
 
 ```{r}
-coin_flips <- rbinom(n = 10, # number of samples
+coin_flips <- rbinom(n = 20, # number of samples
                      size = 1, # size parameter
                      prob = 0.5) # probability of success
 coin_flips
@@ -47,7 +73,7 @@ fair_flips <- rbinom(n = 1000, # number of experiments
                      prob = 0.5) # probability of success
 unfair_flips <- rbinom(n = 1000, # number of experiments
                        size = 20, # size parameter
-                       prob = 0.6) # probability of success
+                       prob = 0.75) # probability of success
 ```
 
 ---
@@ -64,6 +90,38 @@ hist(unfair_flips, main = "Unfair", xlim = c(0, 20), breaks = 10)
 ```
 
 ---
+class: middle
+#### Probability mass function
+
+For a **discrete** random variable $X$, we usually can specify **distribution** by just giving the probabilities of each possible value of $X$.
+
+We call the function $P(X=k)$ the **probability mass function**.
+
+**ex.**
+
+$$P(X=k)=\binom{n}{k}p^{k}(1-p)^{n-k}=\frac{n!}{k!(n-k)!}p^{k}(1-p)^{n-k}$$
+---
+class: middle
+#### Calculating probabilities for a binomial distribution
+
+The `dbinom` command gives the **probability mass function**; `dbinom` calculates the probability of observing `x` successes out of `size` independent trials, each with probability of success `prob`:
+
+```{r}
+dbinom(x = 0, # number of successes
+       size = 1, # size parameter
+       prob = 0.5) # probability of success
+```
+```{r, echo = F, fig.height = 5, fig.width = 8, fig.align = "center"}
+n <- 1
+P <- 0.5
+data <- dbinom(x=0:n,size=n, prob=P)
+names(data) <- 0:n
+cols <- rep("grey", n + 1)
+cols[1] <- "tomato"
+barplot(data, col = cols, main = "x = 0, n = 1, p = 0.5")
+```
+---
+class: middle
 #### Calculating probabilities for a binomial distribution
 
 The `dbinom` command gives the **probability mass function**; `dbinom` calculates the probability of observing `x` successes out of `size` independent trials, each with probability of success `prob`:
@@ -100,13 +158,42 @@ data <- dbinom(x=0:n,size=n, prob=P)
 names(data) <- 0:n
 cols <- rep("grey", n + 1)
 cols[6] <- "tomato"
-barplot(data, col = cols, main = "x = 1, n = 10, p = 0.5")
+barplot(data, col = cols, main = "n = 10, p = 0.5")
 ```
 ---
-
 #### Calculating probabilities for a binomial distribution
 
-The `pbinom` command gives the **distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
+The `dbinom` command gives the **probability mass function**; `dbinom` calculates the probability of observing `x` successes out of `size` independent trials, each with probability of success `prob`:
+
+```{r}
+dbinom(x = 3, # number of successes
+       size = 10, # size parameter
+       prob = 0.5) # probability of success
+```
+```{r, echo = F, fig.height = 5, fig.width = 8, fig.align = "center"}
+n <- 10
+P <- 0.5
+data <- dbinom(x=0:n,size=n, prob=P)
+names(data) <- 0:n
+cols <- rep("grey", n + 1)
+cols[4] <- "tomato"
+barplot(data, col = cols, main = "n = 10, p = 0.5")
+```
+---
+class: middle
+
+A **cumulative distribution function** $F$ **also** describes the **distribution** of a random variable.
+
+In particular, for a random variable $X$ with cumulative distribution function $F$,
+
+$F(t)$ describes the probability of observing a value for $X$ that is less than or equal to $t$: 
+
+
+$$F(t) = P(X\leq t)$$
+---
+#### Calculating probabilities for a binomial distribution
+
+The `pbinom` command gives the **cumulative distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
 
 ```{r}
 pbinom(q = 1, # number of successes
@@ -126,7 +213,7 @@ barplot(data, col = cols, main = "q = 1, n = 1, p = 0.5")
 
 #### Calculating probabilities for a binomial distribution
 
-The `pbinom` command gives the **distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
+The `pbinom` command gives the **cumulative distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
 
 ```{r}
 pbinom(q = 5, # number of successes
@@ -147,7 +234,111 @@ barplot(data, col = cols, main = "q = 5, n = 10, p = 0.5")
 ---
 class: middle
 
-First, we need to load our dataset, which you can find [here](/data/seattleWeather_1948-2017.csv). t We also load the `tidyverse` and `lubridate` package to help us with data cleaning. If you do not have the `lubridate` package, you may need to run `install.packages("lubridate")` first.
+#### Sampling from a normal distribution
+
+The `rnorm` command generates samples from a normal distribution:
+
+```{r}
+rnorm(10)
+```
+
+What are the mean and standard deviation of this normal distribution?
+
+---
+class: middle
+
+#### Sampling from a normal distribution
+
+The `rnorm` command generates samples from a normal distribution. By default the mean is 0 and the standard deviation is 1, but we can change these settings (also called arguments):
+
+```{r}
+rnorm(10, mean = 5, sd = 2)
+```
+
+What are the mean and standard deviation of this normal distribution?
+
+---
+class: middle
+
+#### Sampling from a normal distribution
+
+The `rnorm` command generates samples from a normal distribution. By default the mean is 0 and the standard deviation is 1, but we can change these settings (also called arguments):
+
+```{r}
+rnorm(n = 20, mean = 10, sd = 10)
+```
+
+---
+#### Working with densities for a normal distribution
+
+The `dnorm` command gives the **density function**;
+
+```{r}
+dnorm(1)
+```
+```{r, echo = F, fig.height = 5, fig.width = 8, fig.align = "center"}
+x <- seq(-4, 4, length.out = 1000)
+y <- dnorm(x)
+plot(x, y, type = 'l', frame.plot = F,  ylab = '',
+     main = "")
+points(1, dnorm(1), col = "lightseagreen", cex = 2, pch =16)
+```
+---
+#### Working with densities for a normal distribution
+
+The `dnorm` command gives the **density function**;
+
+```{r}
+dnorm(1300, mean = 1100, sd = 200)
+```
+```{r, echo = F, fig.height = 5, fig.width = 8, fig.align = "center"}
+x <- seq(300, 1900, length.out = 1000)
+y <- dnorm(x, mean = 1100, sd = 200)
+plot(x, y, type = 'l', frame.plot = F,  ylab = '',
+     main = "")
+points(1300, dnorm(1300,  mean = 1100, sd = 200), col = "lightseagreen", cex = 2, pch =16)
+```
+---
+
+#### Calculating probabilities for a normal distribution
+
+The `pnorm` command gives the **cumulative distribution function**; `pnorm` calculates the probability of observing a value of `q` **or less** for your normal random variable
+
+```{r}
+pnorm(q = 1)
+```
+```{r, echo = F, fig.height = 5, fig.width = 8, fig.align = "center"}
+x <- seq(-4, 4, length.out = 1000)
+y <- dnorm(x)
+plot(x, y, type = 'l', frame.plot = F, axes = FALSE, ylab = '',
+     main = "P(z < 1)")
+axis(1, col = NA, col.ticks = 1)
+polygon(c(-10, x[x<1], 1),  c(0, y[x<1], 0),
+        col="lightseagreen", border = NA)
+```
+---
+#### Calculating probabilities for a normal distribution
+
+The `pnorm` command gives the **cumulative distribution function**; `pnorm` calculates the probability of observing a value of `q` **or less** for your normal random variable
+
+```{r}
+pnorm(q = 1300, mean = 1100, sd = 200)
+```
+```{r, echo = F, fig.height = 5, fig.width = 8, fig.align = "center"}
+x <- seq(300, 1900, length.out = 1000)
+y <- dnorm(x, mean = 1100, sd = 200)
+plot(x, y, type = 'l', frame.plot = F, axes = FALSE, ylab = '',
+     main = "P(x < 1300)")
+axis(1, col = NA, col.ticks = 1)
+polygon(c(300, x[x<1300], 1300),  c(0, y[x<1300], 0),
+        col="lightseagreen", border = NA)
+```
+---
+class: middle
+
+Finally, for this week's lab, we'll be taking a look at data on rain in Seattle.
+
+First, we need to load our dataset, which you can find [here](/data/seattleWeather_1948-2017.csv). We also load the `tidyverse` and `lubridate` package to help us with data cleaning. If you do not have the `lubridate` package, you may need to run `install.packages("lubridate")` first.
 
 ```{r load_data, warning = F, message = F}
 # load package of helpful datasets and functions
@@ -185,4 +376,3 @@ ggplot(monthly_rain) + # plot monthly rain data
                    group = as.factor(month))) + # grouping variable
   xlab("Days of Rain") + ylab("Month")
 ```
----

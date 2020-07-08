@@ -4,7 +4,7 @@
     <title>Lab 03</title>
     <meta charset="utf-8" />
     <meta name="author" content="" />
-    <meta name="date" content="2020-06-26" />
+    <meta name="date" content="2020-07-08" />
     <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
   <body>
@@ -13,7 +13,7 @@ class: center, middle, inverse, title-slide
 
 # Lab 03
 ## <em>Distributions</em>
-### 2020-06-26
+### 2020-07-08
 
 ---
 
@@ -22,13 +22,24 @@ class: middle
 In this lab, we'll practice working with different distributions in `R`.\pause
 
 First, let's take a look at binomial distributions.
+---
+class: middle
 
+#### Binomial distribution
+
+A **binomial random variable** describes the number of successes in a fixed number of independent trials.
+
+
+The **binomial distribution** describes the probability of having exactly `\(k\)` successes in `\(n\)` independent Bernoulli trials with probability of success `\(p\)`.
+
+The probability of observing exactly `\(k\)` successes in `\(n\)` independent trials is given by
+`$$\binom{n}{k}p^{k}(1-p)^{n-k}=\frac{n!}{k!(n-k)!}p^{k}(1-p)^{n-k}$$`
 ---
 class: middle
 
 #### Sampling from a binomial distribution
 
-Recall that every binomial distribution has a *size* parameter which is the number of trails and a *probability of success* parameter. Below, we sample ten coin flips using the `rbinom` function
+Recall that every binomial distribution has a *size* parameter which is the number of trials and a *probability of success* parameter. Below, we sample ten coin flips using the `rbinom` function
 
 
 ```r
@@ -39,7 +50,27 @@ coin_flips
 ```
 
 ```
-##  [1] 1 0 1 1 1 0 1 0 0 0
+##  [1] 1 1 1 1 0 1 1 0 1 0
+```
+
+
+---
+class: middle
+
+#### Sampling from a binomial distribution
+
+We obtain more samples by changing `\(n\)`:
+
+
+```r
+coin_flips &lt;- rbinom(n = 20, # number of samples
+                     size = 1, # size parameter
+                     prob = 0.5) # probability of success
+coin_flips
+```
+
+```
+##  [1] 1 1 0 0 1 0 0 1 0 1 0 0 1 0 0 0 1 1 0 0
 ```
 
 ---
@@ -56,7 +87,7 @@ fair_flips &lt;- rbinom(n = 1000, # number of experiments
                      prob = 0.5) # probability of success
 unfair_flips &lt;- rbinom(n = 1000, # number of experiments
                        size = 20, # size parameter
-                       prob = 0.6) # probability of success
+                       prob = 0.75) # probability of success
 ```
 
 ---
@@ -73,9 +104,38 @@ hist(fair_flips, main = "Fair", xlim = c(0, 20), breaks = 10)
 hist(unfair_flips, main = "Unfair", xlim = c(0, 20), breaks = 10)
 ```
 
-&lt;img src="lab-03_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
+class: middle
+#### Probability mass function
+
+For a **discrete** random variable `\(X\)`, we usually can specify **distribution** by just giving the probabilities of each possible value of `\(X\)`.
+
+We call the function `\(P(X=k)\)` the **probability mass function**.
+
+**ex.**
+
+`$$P(X=k)=\binom{n}{k}p^{k}(1-p)^{n-k}=\frac{n!}{k!(n-k)!}p^{k}(1-p)^{n-k}$$`
+---
+class: middle
+#### Calculating probabilities for a binomial distribution
+
+The `dbinom` command gives the **probability mass function**; `dbinom` calculates the probability of observing `x` successes out of `size` independent trials, each with probability of success `prob`:
+
+
+```r
+dbinom(x = 0, # number of successes
+       size = 1, # size parameter
+       prob = 0.5) # probability of success
+```
+
+```
+## [1] 0.5
+```
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+---
+class: middle
 #### Calculating probabilities for a binomial distribution
 
 The `dbinom` command gives the **probability mass function**; `dbinom` calculates the probability of observing `x` successes out of `size` independent trials, each with probability of success `prob`:
@@ -90,7 +150,7 @@ dbinom(x = 1, # number of successes
 ```
 ## [1] 0.5
 ```
-&lt;img src="lab-03_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 ---
 
 #### Calculating probabilities for a binomial distribution
@@ -107,12 +167,38 @@ dbinom(x = 5, # number of successes
 ```
 ## [1] 0.2460938
 ```
-&lt;img src="lab-03_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 ---
-
 #### Calculating probabilities for a binomial distribution
 
-The `pbinom` command gives the **distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
+The `dbinom` command gives the **probability mass function**; `dbinom` calculates the probability of observing `x` successes out of `size` independent trials, each with probability of success `prob`:
+
+
+```r
+dbinom(x = 3, # number of successes
+       size = 10, # size parameter
+       prob = 0.5) # probability of success
+```
+
+```
+## [1] 0.1171875
+```
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+
+A **cumulative distribution function** `\(F\)` **also** describes the **distribution** of a random variable.
+
+In particular, for a random variable `\(X\)` with cumulative distribution function `\(F\)`,
+
+`\(F(t)\)` describes the probability of observing a value for `\(X\)` that is less than or equal to `\(t\)`: 
+
+
+`$$F(t) = P(X\leq t)$$`
+---
+#### Calculating probabilities for a binomial distribution
+
+The `pbinom` command gives the **cumulative distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
 
 
 ```r
@@ -124,12 +210,12 @@ pbinom(q = 1, # number of successes
 ```
 ## [1] 1
 ```
-&lt;img src="lab-03_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
 ---
 
 #### Calculating probabilities for a binomial distribution
 
-The `pbinom` command gives the **distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
+The `pbinom` command gives the **cumulative distribution function**; `pbinom` calculates the probability of observing `q` **or fewer** successes out of `size` independent trials, each with probability of success `prob`:
 
 
 ```r
@@ -141,13 +227,129 @@ pbinom(q = 5, # number of successes
 ```
 ## [1] 0.6230469
 ```
-&lt;img src="lab-03_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
 class: middle
 
-First, we need to load our dataset, which you can find [here](/data/seattleWeather_1948-2017.csv). t We also load the `tidyverse` and `lubridate` package to help us with data cleaning. If you do not have the `lubridate` package, you may need to run `install.packages("lubridate")` first.
+#### Sampling from a normal distribution
+
+The `rnorm` command generates samples from a normal distribution:
+
+
+```r
+rnorm(10)
+```
+
+```
+##  [1]  0.69042710  0.01725363  0.70859168  2.19278234 -1.09556105
+##  [6] -0.94003910 -0.89482589  0.56065648 -0.52090397 -0.18443255
+```
+
+What are the mean and standard deviation of this normal distribution?
+
+---
+class: middle
+
+#### Sampling from a normal distribution
+
+The `rnorm` command generates samples from a normal distribution. By default the mean is 0 and the standard deviation is 1, but we can change these settings (also called arguments):
+
+
+```r
+rnorm(10, mean = 5, sd = 2)
+```
+
+```
+##  [1]  4.5073781  5.2212031  7.1058222  3.7719957  7.5972625  5.4769938
+##  [7]  0.2815061  4.3764097 -0.7979684  5.7218292
+```
+
+What are the mean and standard deviation of this normal distribution?
+
+---
+class: middle
+
+#### Sampling from a normal distribution
+
+The `rnorm` command generates samples from a normal distribution. By default the mean is 0 and the standard deviation is 1, but we can change these settings (also called arguments):
+
+
+```r
+rnorm(n = 20, mean = 10, sd = 10)
+```
+
+```
+##  [1] 14.4807810 -4.5959228  1.3566345  8.7649181  8.0141433 -5.9325000
+##  [7] 12.3230554 22.8159760  2.7046498  9.9411527  0.2511397  7.5873010
+## [13] 18.8224723 -3.0079031  3.4961773 11.3415216  2.9765240 13.0506276
+## [19] -0.9636809 16.4170274
+```
+
+---
+#### Working with densities for a normal distribution
+
+The `dnorm` command gives the **density function**;
+
+
+```r
+dnorm(1)
+```
+
+```
+## [1] 0.2419707
+```
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+---
+#### Working with densities for a normal distribution
+
+The `dnorm` command gives the **density function**;
+
+
+```r
+dnorm(1300, mean = 1100, sd = 200)
+```
+
+```
+## [1] 0.001209854
+```
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+#### Calculating probabilities for a normal distribution
+
+The `pnorm` command gives the **cumulative distribution function**; `pnorm` calculates the probability of observing a value of `q` **or less** for your normal random variable
+
+
+```r
+pnorm(q = 1)
+```
+
+```
+## [1] 0.8413447
+```
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+---
+#### Calculating probabilities for a normal distribution
+
+The `pnorm` command gives the **cumulative distribution function**; `pnorm` calculates the probability of observing a value of `q` **or less** for your normal random variable
+
+
+```r
+pnorm(q = 1300, mean = 1100, sd = 200)
+```
+
+```
+## [1] 0.8413447
+```
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+
+Finally, for this week's lab, we'll be taking a look at data on rain in Seattle.
+
+First, we need to load our dataset, which you can find [here](/data/seattleWeather_1948-2017.csv). We also load the `tidyverse` and `lubridate` package to help us with data cleaning. If you do not have the `lubridate` package, you may need to run `install.packages("lubridate")` first.
 
 
 ```r
@@ -189,8 +391,7 @@ ggplot(monthly_rain) + # plot monthly rain data
   xlab("Days of Rain") + ylab("Month")
 ```
 
-&lt;img src="lab-03_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
----
+&lt;img src="lab-03_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
