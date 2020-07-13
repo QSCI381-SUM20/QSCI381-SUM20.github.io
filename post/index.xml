@@ -6,10 +6,20 @@
     <description>Recent content in Posts on QSCI 381 Labs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Lab 04</title>
+      <link>/2020/07/16/lab-04/</link>
+      <pubDate>Thu, 16 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/07/16/lab-04/</guid>
+      <description>Lab 04 Skills Slides  Lab 04 Report Template  Homework For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.
+Problem 1 (OpenIntro Exercise 4.8) The Capital Asset Pricing Model (CAPM) is a financial model that assumes returns on a portfolio are normally distributed. Suppose a portfolio has an average annual return of 14.7% (i.e. an average gain of 14.</description>
+    </item>
     
     <item>
       <title>Lab 03</title>

@@ -105,7 +105,7 @@ ggplot(monthly_rain) +
 <li><p><strong>Use the data to compute the empirical probability of observing more than seven days of rain in July in Seattle.</strong></p></li>
 <li><p><strong>Assume that the number of days of rain in July in Seattle is a binomial random variable, with <em>p</em>, the probability of rain on a single day, given by your answer to b. What is the theoretical probability of observing more than seven days of rain in July in Seattle? Show any code or formulas used to compute your answer.</strong></p></li>
 <li><p><strong>Compare your answers to c. and d.</strong></p></li>
-<li><p><strong>Is it appropriate to model the number of days of rain in July as a binomial random variable? Why or why not? If not, what other distributions could we use?</strong></p></li>
+<li><p><strong>Is it appropriate to model the number of days of rain in July as a binomial random variable? Why or why not? </strong></p></li>
 <li><p><strong>Now, give an estimate of the probability that it will rain on any single day in Seattle for each month in the year. Provide a one-sentence interpretation of your results.</strong></p></li>
 <li><p><strong>Generate a visualization of your choice that provides some insight about this dataset. Provide a one-sentence summary of your visualization. Full points will be given for clarity and creativity.</strong></p></li>
 </ol>
@@ -130,10 +130,10 @@ ggplot(monthly_rain) +
 <h3>Problem 3</h3>
 <p><strong>In this problem, we’ll use simulation to think about survey sampling. Suppose I want to plan a survey to learn what percentage of UW students prefer coffee to tea.</strong></p>
 <ol style="list-style-type: lower-alpha">
-<li><p><strong>Let <em>X</em> be the number of students in my sample that prefer coffee. If I survey <em>n</em> students, and the true proportion of students that prefer coffee is <em>p</em>, then we can model <em>X</em> as a Binomial(<em>n</em>, <em>p</em>) random variable. If I survey ten students, what is the theoretical probability that more than 60% of my sample prefer coffee?</strong></p></li>
+<li><p><strong>Let X be the number of students in my sample that prefer coffee. If I survey n students, and the true proportion of students that prefer coffee is <span class="math inline">\(p\)</span>, then we can model X as a Binomial(<span class="math inline">\(n, p\)</span>) random variable. If I survey ten students, what is the theoretical probability that more than 60% of my sample prefer coffee? Your answer should be a formula or an R command you could use to answer this question for any <span class="math inline">\(p\)</span>.</strong></p></li>
 <li><p><strong>If I survey one hundred students, what is the theoretical probability that more than 60% of the individuals in my sample prefer coffee?</strong></p></li>
-<li><p><strong>We can also use simulation to explore this situation. Generate 1000 samples from a Binomial(10, 0.5) random variable <em>X</em>. What proportion of generated samples have sample proportions greater than 60%? Compare with your answer to a.</strong></p></li>
-<li><p><strong>Generate 1000 samples from a Binomial(100, 0.5) random variable <em>X</em>. What proportion of generated samples have sample proportions greater than 60%? Compare with your answer to b.</strong></p></li>
+<li><p><strong>We can also use simulation to explore this situation. Generate 1000 samples from a Binomial(10, 0.5) random variable <em>X</em>. What proportion of generated samples have sample proportions greater than 60%? Using your formula/answer from a. with <span class="math inline">\(p\)</span> = 0.5, calculate the theoretical probability of observing a sample proportion greater than 60% and compare.</strong></p></li>
+<li><p><strong>Generate 1000 samples from a Binomial(100, 0.5) random variable <em>X</em>. What proportion of generated samples have sample proportions greater than 60%? Using your formula/answer from b. with <span class="math inline">\(p\)</span> = 0.5, calculate the theoretical probability of observing a sample proportion greater than 60% and compare.</strong></p></li>
 <li><p><strong>Using your answers to the above questions, explain how increasing sample size yield more accurate estimates of <em>p</em>.</strong></p></li>
 </ol>
 </div>

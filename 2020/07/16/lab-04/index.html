@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.72.0" />
+
+
+<title>Lab 04 - QSCI 381 Labs</title>
+<meta property="og:title" content="Lab 04 - QSCI 381 Labs">
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+
+  <ul class="nav-links">
+    
+    <li><a href="https://canvas.uw.edu/courses/1382732">Canvas</a></li>
+    
+    <li><a href="/">Home</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+
+
+    <h1 class="article-title">Lab 04</h1>
+
+    
+    <span class="article-date">2020-07-16</span>
+    
+
+    <div class="article-content">
+      
+
+
+<div id="lab-04-skills-slides" class="section level1">
+<h1><a href="/slides/lab-04.html">Lab 04 Skills Slides</a></h1>
+</div>
+<div id="lab-04-report-template" class="section level1">
+<h1><a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-04/lab-04-template.Rmkd">Lab 04 Report Template</a></h1>
+</div>
+<div id="homework" class="section level1">
+<h1>Homework</h1>
+<p><strong>For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.</strong></p>
+<div id="problem-1-openintro-exercise-4.8" class="section level3">
+<h3>Problem 1 (<em>OpenIntro</em> Exercise 4.8)</h3>
+<p><strong>The Capital Asset Pricing Model (CAPM) is a financial model that assumes returns on a portfolio are normally distributed. Suppose a portfolio has an average annual return of 14.7% (i.e. an average gain of 14.7%) with a standard deviation of 33%. A return of 0% means the value of the portfolio doesn’t change, a negative return means that the portfolio loses money, and a positive return means that the portfolio gains money.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>What percent of years does this portfolio lose money, i.e. have a return less than 0%?</strong></p></li>
+<li><p><strong>What is the cutoff for the highest 15% of annual returns with this portfolio?</strong></p></li>
+</ol>
+</div>
+<div id="problem-2" class="section level3">
+<h3>Problem 2</h3>
+<p><strong>Suppose we would like to know the true proportion of US adults who would not get a vaccine to protect against COVID-19. 27% of 1,001 adults surveyed in an ABC News/Washington Post poll (conducted May 25-28) said they definitely or probably would not get the vaccine.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>What is the population of interest?</strong></p></li>
+<li><p><strong>What is the population parameter of interest?</strong></p></li>
+<li><p><strong>What is the sample statistic?</strong></p></li>
+<li><p><strong>What is the expected value of the sampling distribution?</strong></p></li>
+<li><p><strong>What is the standard error of the sampling distribution?</strong></p></li>
+<li><p><strong>What is the shape of the sampling distribution? Justify your answer.</strong></p></li>
+<li><p><strong>Construct a 90% confidence interval for the population parameter of interest. Show your work and give a one-sentence interpretation of your results.</strong></p></li>
+</ol>
+</div>
+<div id="problem-3" class="section level3">
+<h3>Problem 3</h3>
+<pre class="r"><code>require(&quot;forcats&quot;)
+data(gss_cat)
+
+gss_cat_2014 &lt;- gss_cat %&gt;%
+  dplyr::filter(year == 2014)</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>What is the proportion of individuals surveyed in 2014 that reported they were divorced?</strong></p></li>
+<li><p><strong>Is your answer to a. a sample statistic or population parameter?</strong></p></li>
+<li><p><strong>Estimate the standard error for your answer to a.</strong></p></li>
+<li><p><strong>Calculate a 95% confidence interval for the proportion of all US adults that are divorced. Interpret your results.</strong></p></li>
+</ol>
+</div>
+<div id="problem-4" class="section level3">
+<h3>Problem 4</h3>
+<pre class="r"><code>dog_descriptions &lt;- 
+  readr::read_csv(paste0(&#39;https://raw.githubusercontent.com/&#39;,
+                         &#39;rfordatascience/tidytuesday/master/&#39;,
+                         &#39;data/2019/2019-12-17/dog_descriptions.csv&#39;))</code></pre>
+<p><strong>This dataset contains information on all dogs that were adoptable on PetFinder.org on September 20, 2019. For this question, this will be our <em>population</em></strong>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>What proportion of our <em>population</em> was labeled as <code>breed_primary</code> being Labrador Retriever?</strong></p></li>
+<li><p><strong>Using the below code, sample 50 dogs from the population. What proportion of <em>your sample</em> of size 50 was labeled as <code>breed_primary</code> being Labrador Retriever? Show your work.</strong></p></li>
+</ol>
+<pre class="r"><code>    sample_50 &lt;- sample(dog_descriptions$breed_primary, 50)</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><p><strong>Estimate the sampling error of your sample statistic. Show your work.</strong></p></li>
+<li><p><strong>Using the below code, sample 200 dogs from the population. What proportion of <em>your sample</em> of size 200 was labeled as <code>breed_primary</code> being Labrador Retriever? Show your work.</strong></p></li>
+</ol>
+<pre class="r"><code>    sample_200 &lt;- sample(dog_descriptions$breed_primary, 200)</code></pre>
+<ol start="5" style="list-style-type: lower-alpha">
+<li><p><strong>Estimate the sampling error of your sample statistic. Show your work.</strong></p></li>
+<li><p><strong>Based on your sample in d., construct a 80% confidence interval. Interpret your results.</strong></p></li>
+</ol>
+</div>
+<div id="problem-5-openintro-exercise-5.10-twitter-users-and-news-part-ii" class="section level2">
+<h2>Problem 5 (<em>OpenIntro</em> Exercise 5.10, Twitter users and news, Part II)</h2>
+<p><strong>A poll conducted in 2013 found that 52% of U.S. adult Twitter users get at least some news on Twitter, and the standard error for this estimate was 2.4%. Identify each of the following statements as true or false. Provide an explanation to justify each of your answers.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>Since the standard error is 2.4%, we can conclude that 97.6% of all U.S. adult Twitter users were included in the study.</strong></p></li>
+<li><p><strong>If we want to reduce the standard error of the estimate, we should collect less data.</strong></p></li>
+<li><p><strong>If we construct a 90% confidence interval for the percentage of U.S. adults Twitter users who get some news through Twitter, this confidence interval will be wider than a corresponding 99% confidence interval.</strong></p></li>
+<li><p><strong>There is a 95% chance that the true proportion of U.S. adult Twitter users who get at least some news on Twitter is between 47.2% and 56.8%.</strong></p></li>
+</ol>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

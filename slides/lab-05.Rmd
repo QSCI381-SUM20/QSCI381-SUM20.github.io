@@ -1,5 +1,5 @@
 ---
-title: "Lab 04"
+title: "Lab 05"
 subtitle: "*Sampling Distributions*"
 author: ""
 institute: ""
