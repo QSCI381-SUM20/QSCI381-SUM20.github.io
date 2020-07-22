@@ -1,0 +1,145 @@
+---
+  title: Lab 05
+author: 'Peter Gao'
+date: '2020-07-23'
+slug: lab-05
+categories: []
+tags: []
+---
+
+# Homework
+  
+  **For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.**
+  
+### Problem 1
+  
+**For this problem, we'll be taking a look at the `ButterfliesBc` dataset from the `Stat2Data` package, which includes measurements from a small sample of butterflies in Greenland. First, run the command `install.packages("Stat2Data")`.**
+
+```{r}
+library(Stat2Data)
+data("ButterfliesBc")
+```
+
+a. **Create two box plots on the same axes, one for male wing lengths and one for female wing lengths. Give a one-sentence summary of your plot.**
+
+```{r}
+# YOUR CODE HERE
+```
+
+    **YOUR ANSWER HERE**
+
+b. **Create two 95% confidence intervals based on the $t$ distribution for mean wing length, one for males and one for females. For each confidence interval, give a one-sentence interpretation of your results. In addition, comment on whether the assumptions necessary for making valid $t$ confidence intervals are satisfied.**
+
+```{r}
+# YOUR CODE HERE
+```
+
+    **YOUR ANSWER HERE**
+
+c. **Create a scatter plot displaying the relationship between `Temp` and `Wing`. For extra credit, use two different colors for the points, one for male butterflies and one for female butterflies. Give a one-sentence summary of your plot.**
+
+```{r}
+# YOUR CODE HERE
+```
+
+    **YOUR ANSWER HERE**
+
+### Problem 2.
+
+**For this problem, we'll be taking a look at the `ArcheryData` dataset from the `Stat2Data` package, which includes measurements a 2002 Archery class.**
+  
+  **The `Improve` column gives a variable that is equal to 1 for students that saw improvements over the course of the class and 0 for students that did not. Based on this column, we will conduct a one-sample Z-test for proportions to test whether or not the students improved over the course of the class.**
+  
+  a. **What is the parameter of interest? Give appropriate null and alternative hypotheses for the value of the parameter of interest.**
+  
+    **YOUR ANSWER HERE**
+  
+  b. **Are the assumptions necessary for performing a one-sample Z-test for proportions satisfied? Why or why not?**
+
+    **YOUR ANSWER HERE**
+  
+  c. **What is the appropriate test statistic to use here? Assuming the conditions necessary for performing a one-sample Z-test for proportions are satisfied, describe the shape, expected value, and standard error of the sampling distribution of the appropriate test statistic.**
+  
+    **YOUR ANSWER HERE**
+  
+  d. **Compute the relevant p-value. What do you conclude at a significance level of $\alpha = .05$?**
+  
+```{r}
+# YOUR CODE HERE
+```
+
+    **YOUR ANSWER HERE**
+  
+  **The `Improvement` column gives the change in score for each student over the course of the class. Based on this variable, we will conduct a one-sample t-test for means to test whether or not the students improved over the course of the class.**
+  
+  e. **What is the parameter of interest? Give appropriate null and alternative hypotheses for the value of the parameter of interest.** 
+  
+```{r}
+# YOUR CODE HERE
+```
+
+    **YOUR ANSWER HERE**
+  
+  f. **Are the assumptions necessary for performing a one-sample t-test for means satisfied? Why or why not?**
+
+    **YOUR ANSWER HERE**
+  
+  g.  **What is the appropriate test statistic to use here? Assuming the conditions necessary for performing a one-sample t-test for means are satisfied, describe the shape, expected value, and standard error of the sampling distribution of the appropriate test statistic.**
+
+    **YOUR ANSWER HERE**
+  
+  h. **Compute the relevant p-value. What do you conclude at a significance level of $\alpha = .05$?**
+  
+```{r}
+# YOUR CODE HERE
+```
+
+    **YOUR ANSWER HERE**
+  
+  i. **Compare your results from the test for proportions and the test for means. Is one test better than the other? Do the conclusions differ? Summarize your conclusions.**
+
+    **YOUR ANSWER HERE**
+  
+  ### Problem 3.
+  
+  ```{r}
+data("YouthRisk2009")
+```
+
+**For this problem, we'll be taking a look at the `YouthRisk2009` dataset from the `Stat2Data` package, which includes survey results from a 2009 survey on youth behaviors.**
+
+a. **What is the proportion of respondents who said they had smoked before? Be careful with how you deal with missing data.**
+
+```{r}
+# YOUR CODE HERE
+```
+
+    **YOUR ANSWER HERE**
+
+b. **A previous survey in 2007 (data available in the `YouthRisk2007` dataset) found that 53% of respondents had smoked before. We will perform a hypothesis test to examine possible changes in the proportion of youth that have ever tried smoking. What is the parameter of interest? What are appropriate null and alternative hypotheses?**
+
+    **YOUR ANSWER HERE**
+
+c. **Choose an appropriate hypothesis test and calculate an appropriate test statistic and p-value. Are the assumptions necessary for your hypothesis test satisfied? Do you reject the null hypothesis at a significance level of $\alpha = .05$?**
+
+```{r}
+# YOUR CODE HERE
+```
+
+    **YOUR ANSWER HERE**
+
+d. **Construct a 90% confidence interval for your parameter of interest using the `YouthRisk2009` dataset.**
+
+```{r}
+# YOUR CODE HERE
+```
+
+    **YOUR ANSWER HERE**
+
+e. **What do you conclude? Interpret your results, being sure to note any possible problems with data or representativeness.**
+
+    **YOUR ANSWER HERE**
+
+### Problem 4.
+
+**A market researcher wants to evaluate car insurance savings at a competing company. Based on past studies he is assuming that the standard deviation of savings is $100. He wants to collect data such that he can get a margin of error of no more than $10 at a 95% confidence level. How large of a sample should he collect?**

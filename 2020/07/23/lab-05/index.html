@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.72.0" />
+
+
+<title>Lab 05 - QSCI 381 Labs</title>
+<meta property="og:title" content="Lab 05 - QSCI 381 Labs">
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+
+  <ul class="nav-links">
+    
+    <li><a href="https://canvas.uw.edu/courses/1382732">Canvas</a></li>
+    
+    <li><a href="/">Home</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+
+
+    <h1 class="article-title">Lab 05</h1>
+
+    
+    <span class="article-date">2020-07-23</span>
+    
+
+    <div class="article-content">
+      
+
+
+<div id="lab-05-skills-slides" class="section level1">
+<h1><a href="/slides/lab-05.html">Lab 05 Skills Slides</a></h1>
+</div>
+<div id="lab-05-report-template" class="section level1">
+<h1><a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-05/lab-05-template.Rmkd">Lab 05 Report Template</a></h1>
+</div>
+<div id="homework" class="section level1">
+<h1>Homework</h1>
+<p><strong>For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions.</strong></p>
+<div id="problem-1" class="section level3">
+<h3>Problem 1</h3>
+<p><strong>For this problem, we’ll be taking a look at the <code>ButterfliesBc</code> dataset from the <code>Stat2Data</code> package, which includes measurements from a small sample of butterflies in Greenland. First, run the command <code>install.packages(&quot;Stat2Data&quot;)</code>.</strong></p>
+<pre class="r"><code>library(Stat2Data)
+data(&quot;ButterfliesBc&quot;)</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>Create two box plots on the same axes, one for male wing lengths and one for female wing lengths. Give a one-sentence summary of your plot.</strong></p></li>
+<li><p><strong>Create two 95% confidence intervals based on the <span class="math inline">\(t\)</span> distribution for mean wing length, one for males and one for females. For each confidence interval, give a one-sentence interpretation of your results. In addition, comment on whether the assumptions necessary for making valid <span class="math inline">\(t\)</span> confidence intervals are satisfied.</strong></p></li>
+<li><p><strong>Create a scatter plot displaying the relationship between <code>Temp</code> and <code>Wing</code>. For extra credit, use two different colors for the points, one for male butterflies and one for female butterflies. Give a one-sentence summary of your plot.</strong></p></li>
+</ol>
+</div>
+<div id="problem-2." class="section level3">
+<h3>Problem 2.</h3>
+<p><strong>For this problem, we’ll be taking a look at the <code>ArcheryData</code> dataset from the <code>Stat2Data</code> package, which includes measurements a 2002 Archery class.</strong></p>
+<p><strong>The <code>Improve</code> column gives a variable that is equal to 1 for students that saw improvements over the course of the class and 0 for students that did not. Based on this column, we will conduct a one-sample Z-test for proportions to test whether or not the students improved over the course of the class.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>What is the parameter of interest? Give appropriate null and alternative hypotheses for the value of the parameter of interest.</strong></p></li>
+<li><p><strong>Are the assumptions necessary for performing a one-sample Z-test for proportions satisfied? Why or why not?</strong></p></li>
+<li><p><strong>What is the appropriate test statistic to use here? Assuming the conditions necessary for performing a one-sample Z-test for proportions are satisfied, describe the shape, expected value, and standard error of the sampling distribution of the appropriate test statistic.</strong></p></li>
+<li><p><strong>Compute the relevant p-value. What do you conclude at a significance level of <span class="math inline">\(\alpha = .05\)</span>?</strong></p></li>
+</ol>
+<p><strong>The <code>Improvement</code> column gives the change in score for each student over the course of the class. Based on this variable, we will conduct a one-sample t-test for means to test whether or not the students improved over the course of the class.</strong></p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li><p><strong>What is the parameter of interest? Give appropriate null and alternative hypotheses for the value of the parameter of interest.</strong></p></li>
+<li><p><strong>Are the assumptions necessary for performing a one-sample t-test for means satisfied? Why or why not?</strong></p></li>
+<li><p><strong>What is the appropriate test statistic to use here? Assuming the conditions necessary for performing a one-sample t-test for means are satisfied, describe the shape, expected value, and standard error of the sampling distribution of the appropriate test statistic.</strong></p></li>
+<li><p><strong>Compute the relevant p-value. What do you conclude at a significance level of <span class="math inline">\(\alpha = .05\)</span>?</strong></p></li>
+<li><p><strong>Compare your results from the test for proportions and the test for means. Is one test better than the other? Do the conclusions differ? Summarize your conclusions.</strong></p></li>
+</ol>
+</div>
+<div id="problem-3." class="section level3">
+<h3>Problem 3.</h3>
+<pre class="r"><code>data(&quot;YouthRisk2009&quot;)</code></pre>
+<p><strong>For this problem, we’ll be taking a look at the <code>YouthRisk2009</code> dataset from the <code>Stat2Data</code> package, which includes survey results from a 2009 survey on youth behaviors.</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>What is the proportion of respondents who said they had smoked before? Be careful with how you deal with missing data.</strong></p></li>
+<li><p><strong>A previous survey in 2007 (data available in the <code>YouthRisk2007</code> dataset) found that 53% of respondents had smoked before. We will perform a hypothesis test to examine possible changes in the proportion of youth that have ever tried smoking. What is the parameter of interest? What are appropriate null and alternative hypotheses?</strong></p></li>
+<li><p><strong>Choose an appropriate hypothesis test and calculate an appropriate test statistic and p-value. Are the assumptions necessary for your hypothesis test satisfied? Do you reject the null hypothesis at a significance level of <span class="math inline">\(\alpha = .05\)</span>?</strong></p></li>
+<li><p><strong>Construct a 90% confidence interval for your parameter of interest using the <code>YouthRisk2009</code> dataset.</strong></p></li>
+<li><p><strong>What do you conclude? Interpret your results, being sure to note any possible problems with data or representativeness.</strong></p></li>
+</ol>
+</div>
+<div id="problem-4." class="section level3">
+<h3>Problem 4.</h3>
+<p><strong>A market researcher wants to evaluate car insurance savings at a competing company. Based on past studies he is assuming that the standard deviation of savings is $100. He wants to collect data such that he can get a margin of error of no more than $10 at a 95% confidence level. How large of a sample should he collect?</strong></p>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

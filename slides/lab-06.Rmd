@@ -1,6 +1,6 @@
 ---
 title: "Lab 05"
-subtitle: "*Hypothesis Tests*"
+subtitle: "*Sampling Distributions*"
 author: ""
 institute: ""
 date: "`r Sys.Date()`"
@@ -19,6 +19,46 @@ class: middle
 In this lab, we'll practice carrying out hypothesis tests in `R`.
 
 ---
+class: middle
+
+#### Scatterplot
+
+temp <- nycflights13::flights %>% filter(month == 7 & day == 15)
+
+---
+class: middle
+
+#### Linear regression by hand
+---
+class: middle
+
+#### Linear regression in R
+---
+class: middle
+
+#### Summarizing results
+---
+class: middle
+
+#### Interpreting results
+---
+class: middle
+
+#### Predicts
+---
+class: middle
+
+#### Residual plots
+---
+class: middle
+
+#### linear regression plots
+---
+class: middle
+
+#### SAT Scores
+---
+
 class: middle
 
 #### SAT Scores

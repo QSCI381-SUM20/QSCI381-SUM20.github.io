@@ -12,7 +12,7 @@
 class: center, middle, inverse, title-slide
 
 # Lab 05
-## <em>Hypothesis Tests</em>
+## <em>Sampling Distributions</em>
 ### 2020-07-22
 
 ---
@@ -22,6 +22,46 @@ class: middle
 In this lab, we'll practice carrying out hypothesis tests in `R`.
 
 ---
+class: middle
+
+#### Scatterplot
+
+temp &lt;- nycflights13::flights %&gt;% filter(month == 7 &amp; day == 15)
+
+---
+class: middle
+
+#### Linear regression by hand
+---
+class: middle
+
+#### Linear regression in R
+---
+class: middle
+
+#### Summarizing results
+---
+class: middle
+
+#### Interpreting results
+---
+class: middle
+
+#### Predicts
+---
+class: middle
+
+#### Residual plots
+---
+class: middle
+
+#### linear regression plots
+---
+class: middle
+
+#### SAT Scores
+---
+
 class: middle
 
 #### SAT Scores
@@ -156,7 +196,7 @@ class: middle
 
 Note that since `\(n\)` is pretty large `\((n = 30)\)`, our sampling distribution is almost normal:
 
-&lt;img src="lab-05_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-06_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
 ---
 class: middle 
 
@@ -199,7 +239,7 @@ class: middle
 ** `\(H_0: \mu = 0\hspace{5ex} H_A:\mu&gt;0\)` **
 
 Draw a picture: 
-&lt;img src="lab-05_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-06_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 class: middle 
@@ -209,7 +249,7 @@ class: middle
 ** `\(H_0: \mu = 0\hspace{5ex} H_A:\mu&gt;0\)` **
 
 Draw a picture: 
-&lt;img src="lab-05_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-06_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
 
 ```r
 t = (mu_hat - 0) / se_mu_hat
@@ -238,7 +278,7 @@ How do we compute a two-sided p-value?
 ** `\(H_0: \mu = 0\hspace{5ex} H_A:\mu\not=0\)` **
 
 Draw a picture: 
-&lt;img src="lab-05_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-06_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
 ---
 class: middle 
 #### Two sided one-sample t test for means
@@ -397,7 +437,7 @@ class: middle
 ** `\(H_0: p = 0.5\hspace{5ex} H_A:p &gt;0.5\)` **
 
 Draw a picture: 
-&lt;img src="lab-05_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="lab-06_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ```r
