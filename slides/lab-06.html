@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Lab 05</title>
+    <title>Lab 06</title>
     <meta charset="utf-8" />
     <meta name="author" content="" />
     <meta name="date" content="2020-07-22" />
@@ -11,490 +11,383 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Lab 05
-## <em>Sampling Distributions</em>
+# Lab 06
+## <em>Correlation and Regression</em>
 ### 2020-07-22
 
 ---
 
 class: middle
 
-In this lab, we'll practice carrying out hypothesis tests in `R`.
+In this lab, we'll practice studying relationships between variables in `R`.
+
 
 ---
 class: middle
 
-#### Scatterplot
+#### Flights data
 
-temp &lt;- nycflights13::flights %&gt;% filter(month == 7 &amp; day == 15)
+Today, we'll look at data on flights leaving from New York for July 30, 2013.
+
+Load the data using the following commands:
+
+
+```r
+install.packages('nycflights13')
+```
+
+
+```r
+flights &lt;- nycflights13::flights %&gt;% filter(month == 7 &amp; day == 30)
+```
 
 ---
 class: middle
 
-#### Linear regression by hand
+#### Visualizing the data
+
+
+```r
+ggplot(data = flights) +
+  geom_point(aes(x = distance, y = air_time), col = "seagreen") + 
+  xlab("Distance") + ylab("Air time") +
+  ggtitle("Flights departing NYC (7/30/2013)") +
+  theme_minimal()
+```
+
+&lt;img src="lab-06_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
 ---
 class: middle
 
+#### Visualizing the data
+
+
+```r
+ggplot(data = flights) +
+  geom_point(aes(x = distance, y = arr_delay), col = "dodgerblue") + 
+  xlab("Distance") + ylab("Minutes delayed") +
+  ggtitle("Flights departing NYC (7/30/2013)") +
+  theme_minimal()
+```
+
+&lt;img src="lab-06_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: middle
+
+#### Computing correlation
+
+
+```r
+cor(flights$distance, flights$air_time)
+```
+
+```
+## [1] NA
+```
+
+```r
+cor(flights$distance, flights$air_time,
+    use = "complete.obs")
+```
+
+```
+## [1] 0.9959831
+```
+
+```r
+cor(flights$air_time, flights$distance,
+    use = "complete.obs")
+```
+
+```
+## [1] 0.9959831
+```
+---
+class: middle
+
+#### Computing correlation
+
+
+```r
+cor(flights$distance, flights$arr_delay,
+    use = "complete.obs")
+```
+
+```
+## [1] 0.1880178
+```
+---
+class: middle
+
+#### Linear regression by "hand"
+
+Suppose we want to use a linear function to predict air time from distance:
+
+`$$\widehat{y}_{air time}=b_0+b_1x_{distance}$$`
+
+**First, we compute the sample correlation `\(r\)`:**
+
+
+```r
+flights &lt;- flights %&gt;%
+  filter(complete.cases(flights))
+r &lt;- cor(flights$distance, flights$air_time,
+         use = "complete.obs")
+r
+```
+
+```
+## [1] 0.9959831
+```
+
+
+---
+class: middle
+
+#### Linear regression by "hand"
+
+Suppose we want to use a linear function to predict air time from distance:
+
+`$$\widehat{y}_{air time}=b_0+b_1x_{distance}$$`
+
+
+**Next, we estimate the slope:**
+
+`$$\widehat{b}_1=r\frac{s_y}{s_x}$$`
+
+```r
+s_y &lt;- sd(flights$air_time, na.rm = T)
+s_x &lt;- sd(flights$distance, na.rm = T)
+b_1_hat &lt;- r * s_y / s_x
+b_1_hat
+```
+
+```
+## [1] 0.1275993
+```
+
+---
+class: middle
+
+#### Linear regression by "hand"
+
+Suppose we want to use a linear function to predict air time from distance:
+
+`$$\widehat{y}_{air time}=b_0+b_1x_{distance}$$`
+
+
+**Finally, we estimate the intercept, using the fact that the least squares line goes through the point `\((\overline{x},\overline{y})\)`:**
+
+`$$\widehat{b}_0=\overline{y}-\widehat{b}_1\overline{x}$$`
+
+```r
+mean_y &lt;- mean(flights$air_time, na.rm = T)
+mean_x &lt;- mean(flights$distance, na.rm = T)
+b_0_hat &lt;- mean_y - b_1_hat * mean_x
+b_0_hat
+```
+
+```
+## [1] 12.18367
+```
+---
+class: middle
+
+#### Linear regression by "hand"
+
+Thus, our estimated least squares line is given by 
+`$$\widehat{y}_{air time}=\widehat{b}_0+\widehat{b}_1x_{distance}$$` with
+
+`\(\widehat{b}_0=\)` 12.1836715 and `\(\widehat{b}_1=\)` 0.1275993
+---
+class: middle
+
+#### Linear regression by "hand"
+
+
+```r
+ggplot(data = flights) +
+  geom_point(aes(x = distance, y = air_time), col = "seagreen") + 
+* geom_abline(slope = b_1_hat, intercept = b_0_hat) + 
+  xlab("Distance") + ylab("Air time") +
+  ggtitle("Flights departing NYC (7/30/2013)") +
+  theme_minimal()
+```
+&lt;img src="lab-06_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
 #### Linear regression in R
+
+
+```r
+linear_reg_res &lt;- lm(air_time~distance, data = flights)
+summary(linear_reg_res)
+```
+
+```r
+Call:
+lm(formula = air_time ~ distance, data = flights)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-45.459  -6.022   0.334   5.521  33.771 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+*(Intercept) 1.218e+01  4.730e-01   25.76   &lt;2e-16 ***
+*distance    1.276e-01  3.657e-04  348.92   &lt;2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 8.565 on 984 degrees of freedom
+Multiple R-squared:  0.992,	Adjusted R-squared:  0.992 
+F-statistic: 1.217e+05 on 1 and 984 DF,  p-value: &lt; 2.2e-16
+```
 ---
 class: middle
+#### Linear regression in R
 
-#### Summarizing results
+
+```r
+linear_reg_res &lt;- lm(air_time~distance, data = flights)
+linear_reg_res$coefficients
+```
+
+```
+## (Intercept)    distance 
+##  12.1836715   0.1275993
+```
+
+```r
+c(b_0_hat, b_1_hat) # what we got by hand
+```
+
+```
+## [1] 12.1836715  0.1275993
+```
+---
+class: middle
+#### Linear regression in R: results
+
+
+```r
+linear_reg_res &lt;- lm(air_time~distance, data = flights)
+summary(linear_reg_res)
+```
+
+```r
+Call:
+lm(formula = air_time ~ distance, data = flights)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-45.459  -6.022   0.334   5.521  33.771 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 1.218e+01  4.730e-01   25.76   &lt;2e-16 ***
+distance    1.276e-01  3.657e-04  348.92   &lt;2e-16 ***
+---
+*Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 8.565 on 984 degrees of freedom
+Multiple R-squared:  0.992,	Adjusted R-squared:  0.992 
+F-statistic: 1.217e+05 on 1 and 984 DF,  p-value: &lt; 2.2e-16
+```
+---
+class: middle
+#### Linear regression in R: results
+
+
+```r
+linear_reg_res &lt;- lm(air_time~distance, data = flights)
+summary(linear_reg_res)
+```
+
+```r
+Call:
+lm(formula = air_time ~ distance, data = flights)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-45.459  -6.022   0.334   5.521  33.771 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 1.218e+01  4.730e-01   25.76   &lt;2e-16 ***
+distance    1.276e-01  3.657e-04  348.92   &lt;2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 8.565 on 984 degrees of freedom
+*Multiple R-squared:  0.992,	Adjusted R-squared:  0.992
+F-statistic: 1.217e+05 on 1 and 984 DF,  p-value: &lt; 2.2e-16
+```
 ---
 class: middle
 
 #### Interpreting results
----
-class: middle
-
-#### Predicts
----
-class: middle
-
-#### Residual plots
----
-class: middle
-
-#### linear regression plots
----
-class: middle
-
-#### SAT Scores
----
-
-class: middle
-
-#### SAT Scores
-
-Suppose we have data on 30 students' changes in SAT scores after taking an SAT class and we want to figure out how much the class helped.
-
-What might be a good population parameter? What would be a good sample statistic?
 
 
-```r
-library(openintro)
-data("sat.improve")
-sat.improve$sat_improve
-```
+**SLOPE:**
 
-```
-##  [1]  57 133 231  41 114 129 170 103 259 110 149 189  93  47 245 -42 182
-## [18] 123 191 150 266  36 231 257 120 -52 153  78 175 140
-```
+The slope is the estimated expected difference in `\(y\)` for one observation is  if `\(x\)` happened to be one unit larger. 
+
+**INTERCEPT:**
+
+The intercept describes the estimated expected value of `\(y\)`  if `\(x = 0\)` \textbf{and} the linear model is valid  at `\(x = 0\)` (often not true)
 
 ---
 class: middle
 
-#### SAT Scores
+#### Predictions
 
-Let's compute the sample mean.
-
-
-```r
-mu_hat &lt;- mean(sat.improve$sat_improve)
-mu_hat
-```
-
-```
-## [1] 135.9333
-```
-
-Is this evidence that the class helped?
----
-
-class: middle
-
-#### One-sample t interval
-
-Let's compute a 95% t interval:
+Suppose we want to predict the airtime for a flight with distance 3500 mi.
 
 
 ```r
-n &lt;- length(sat.improve$sat_improve)
-se_mu_hat &lt;- sd(sat.improve$sat_improve) / sqrt(n)
-se_mu_hat
+new_x &lt;- 3500
+predicted_y &lt;- b_0_hat + b_1_hat * new_x
+predicted_y
 ```
 
 ```
-## [1] 15.01179
+## [1] 458.7813
 ```
+
 
 ```r
-# 95% t-interval
-upper_bound &lt;- mu_hat + qt(.975, df = n - 1) * se_mu_hat
-lower_bound &lt;- mu_hat - qt(.975, df = n - 1) * se_mu_hat
-c(lower_bound, upper_bound)
+predict(linear_reg_res, newdata = data.frame(distance = new_x))
 ```
 
 ```
-## [1] 105.2308 166.6359
+##        1 
+## 458.7813
 ```
-
-Is this evidence that the class helped?
 ---
 class: middle
 
-#### One-sample t interval
+#### Residual plot
 
-Let's compute a **90%** t interval:
+Do you see any problems or outliers?
 
-
-```r
-n &lt;- length(sat.improve$sat_improve)
-se_mu_hat &lt;- sd(sat.improve$sat_improve) / sqrt(n)
-se_mu_hat
-```
-
-```
-## [1] 15.01179
-```
 
 ```r
-# 90% t-interval
-upper_bound &lt;- mu_hat + qt(.95, df = n - 1) * se_mu_hat
-lower_bound &lt;- mu_hat - qt(.95, df = n - 1) * se_mu_hat
-c(lower_bound, upper_bound)
+ggplot(data = flights) + 
+  geom_point(aes(x = distance, y = resid(linear_reg_res))) +
+  xlab("Distance") + ylab("Residual")+
+  ggtitle("Residual plot") + theme_minimal()
 ```
 
-```
-## [1] 110.4264 161.4403
-```
-
+![](lab-06_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
 ---
 class: middle
 
-#### One-sample t interval
+**In-class practice**: Repeat these steps except using distance to predict **arrival delays**.
 
-Let's compute an **80%** t interval:
-
-
-```r
-n &lt;- length(sat.improve$sat_improve)
-se_mu_hat &lt;- sd(sat.improve$sat_improve) / sqrt(n)
-se_mu_hat
-```
-
-```
-## [1] 15.01179
-```
-
-```r
-# 80% t-interval
-upper_bound &lt;- mu_hat + qt(.90, df = n - 1) * se_mu_hat
-lower_bound &lt;- mu_hat - qt(.90, df = n - 1) * se_mu_hat
-c(lower_bound, upper_bound)
-```
-
-```
-## [1] 116.2464 155.6203
-```
-
----
-class: middle
-
-#### One-sample t interval
-
-Note that since `\(n\)` is pretty large `\((n = 30)\)`, our sampling distribution is almost normal:
-
-&lt;img src="lab-06_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
----
-class: middle 
-
-#### One-sample t test for means
-
-What are appropriate test hypotheses if we want to see if the class really helped? 
-
-What level of significance should we choose? By default usually `\(\alpha = 0.05\)`
-
----
-
-class: middle 
-
-#### One sided one-sample t test for means
-
-** `\(H_0: \mu = 0\hspace{5ex} H_A:\mu&gt;0\)` **
-
-
-```r
-# 1. calculate sample statistic
-mu_hat = mean(sat.improve$sat_improve)
-
-# 2. compute standard error
-n &lt;- length(sat.improve$sat_improve)
-se_mu_hat &lt;- sd(sat.improve$sat_improve) / sqrt(n)
-
-# 3. compute t-statistic
-t = (mu_hat - 0) / se_mu_hat
-t
-```
-
-```
-## [1] 9.055104
-```
----
-class: middle 
-
-#### One sided one-sample t test for means
-
-** `\(H_0: \mu = 0\hspace{5ex} H_A:\mu&gt;0\)` **
-
-Draw a picture: 
-&lt;img src="lab-06_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
-
----
-class: middle 
-
-#### One sided one-sample t test for means
-
-** `\(H_0: \mu = 0\hspace{5ex} H_A:\mu&gt;0\)` **
-
-Draw a picture: 
-&lt;img src="lab-06_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
-
-```r
-t = (mu_hat - 0) / se_mu_hat
-# 4. calculate p-value
-upper_tail_prob &lt;- 1 - pt(t, df = n - 1)
-upper_tail_prob
-```
-
-```
-## [1] 2.983819e-10
-```
----
-class: middle 
-
-#### One sided one-sample t test for means
-
-Thus at `\(\alpha = 0.05\)`, we reject the null hypothesis.
-
-
----
-class: middle 
-#### Two sided one-sample t test for means
-
-How do we compute a two-sided p-value?
-
-** `\(H_0: \mu = 0\hspace{5ex} H_A:\mu\not=0\)` **
-
-Draw a picture: 
-&lt;img src="lab-06_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
----
-class: middle 
-#### Two sided one-sample t test for means
-
-How do we compute a two-sided p-value?
-
-** `\(H_0: \mu = 0\hspace{5ex} H_A:\mu\not=0\)` **
-
-We can just multiply our one-sided p-value by two, or we can use R: 
-
-```r
-t = (mu_hat - 0) / se_mu_hat
-# 4. calculate p-value
-upper_tail_prob &lt;- 1 - pt(t, df = n - 1)
-upper_tail_prob
-```
-
-```
-## [1] 2.983819e-10
-```
-
-```r
-two_sided_p_value &lt;- upper_tail_prob * 2
-two_sided_p_value
-```
-
-```
-## [1] 5.967637e-10
-```
-
-```r
-two_sided_p_value &lt;- (1 - pt(t, df = n - 1)) + pt(-t, df = n - 1)
-two_sided_p_value
-```
-
-```
-## [1] 5.967637e-10
-```
----
-class: middle 
-#### Two sided one-sample t test for means
-
-If we don't want to do this by hand, we can also use the `t.test` function:
-
-** `\(H_0: \mu = 0\hspace{5ex} H_A:\mu\not=0\)` **
-
-
-```r
-# two-sided test
-t.test(sat.improve$sat_improve)
-```
-
-```
-## 
-## 	One Sample t-test
-## 
-## data:  sat.improve$sat_improve
-## t = 9.0551, df = 29, p-value = 5.968e-10
-## alternative hypothesis: true mean is not equal to 0
-## 95 percent confidence interval:
-##  105.2308 166.6359
-## sample estimates:
-## mean of x 
-##  135.9333
-```
----
-class: middle 
-#### one sided one-sample t test for means
-
-If we don't want to do this by hand, we can also use the `t.test` function:
-
-** `\(H_0: \mu = 0\hspace{5ex} H_A:\mu&lt;0\)` **
-
-
-```r
-# two-sided test
-t.test(sat.improve$sat_improve, alternative = "greater")
-```
-
-```
-## 
-## 	One Sample t-test
-## 
-## data:  sat.improve$sat_improve
-## t = 9.0551, df = 29, p-value = 2.984e-10
-## alternative hypothesis: true mean is greater than 0
-## 95 percent confidence interval:
-##  110.4264      Inf
-## sample estimates:
-## mean of x 
-##  135.9333
-```
-
----
-class: middle 
-#### Two sided one-sample t test for means
-
-`t.test` assumes the null hypothesis has `\(\mu=0\)`, but we can set other values as well:
-
-** `\(H_0: \mu = 50\hspace{5ex} H_A:\mu\not=50\)` **
-
-
-```r
-# two-sided test
-t.test(sat.improve$sat_improve, mu = 50)
-```
-
-```
-## 
-## 	One Sample t-test
-## 
-## data:  sat.improve$sat_improve
-## t = 5.7244, df = 29, p-value = 3.401e-06
-## alternative hypothesis: true mean is not equal to 50
-## 95 percent confidence interval:
-##  105.2308 166.6359
-## sample estimates:
-## mean of x 
-##  135.9333
-```
-
----
-class: middle 
-#### Hypothesis test for proportions
-
-What if instead, we performed a hypothesis test about `\(p\)`, the proportion of students who improved?
-
-** `\(H_0: p = 0.5\hspace{5ex} H_A:p &gt;0.5\)` **
-
-```r
-# 1. calculate sample statistic
-p_hat &lt;- mean(sat.improve$sat_improve &gt; 0)
-p_hat 
-```
-
-```
-## [1] 0.9333333
-```
-
-```r
-# 2. compute standard error
-n &lt;- length(sat.improve$sat_improve)
-se_p_hat &lt;- sqrt(p_hat * (1 - p_hat) / n)
-
-# 3. compute t-statistic
-z = (p_hat - 0.5) / se_p_hat
-z
-```
-
-```
-## [1] 9.515026
-```
----
-class: middle 
-#### One-sided hypothesis test for proportions
-** `\(H_0: p = 0.5\hspace{5ex} H_A:p &gt;0.5\)` **
-
-Draw a picture: 
-&lt;img src="lab-06_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
-
-
-```r
-z = (p_hat - 0.5) / se_p_hat
-# 4. calculate p-value
-upper_tail_prob &lt;- 1 - pnorm(z)
-upper_tail_prob
-```
-
-```
-## [1] 0
-```
-
----
-class: middle 
-#### Hypothesis test for proportions
-
-What just happened?
-
-The p-value is so small that R thinks it is essentially 0. 
----
-
-class: middle 
-#### 80% confidence interval for proportions
-
-
-```r
-# 80% z-interval
-upper_bound &lt;- p_hat + qnorm(.90) * se_p_hat
-lower_bound &lt;- p_hat - qnorm(.90) * se_p_hat
-c(lower_bound, upper_bound)
-```
-
-```
-## [1] 0.8749689 0.9916978
-```
----
-class: middle 
-#### 95% confidence interval for proportions
-
-
-```r
-# 95% z-interval
-upper_bound &lt;- p_hat + qnorm(.975) * se_p_hat
-lower_bound &lt;- p_hat - qnorm(.975) * se_p_hat
-c(lower_bound, upper_bound)
-```
-
-```
-## [1] 0.8440726 1.0225940
-```
----
-class: middle 
-#### 95% confidence interval for proportions
-What just happened?
-
-We tried to use the central limit theorem without checking to see if our sample size was big enough! We need `\(n\hat{p}\geq 10\)` and `\(n(1-\hat{p})\geq 10\)`. Which isn't satisfied? 
 ---
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

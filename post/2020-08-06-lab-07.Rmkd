@@ -1,0 +1,65 @@
+---
+title: Lab 07
+author: ''
+date: '2020-08-06'
+slug: lab-07
+categories: []
+tags: []
+---
+
+
+# [Lab 07 Skills Slides](/slides/lab-07.html)
+
+# <a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-07/lab-07-template.Rmkd">Lab 07 Report Template</a>
+
+# Homework (optional)
+
+**For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions. All plots should be appropriately labeled and titled.**
+
+### Problem 1
+
+**For this problem, we'll be taking a look at the `evals` dataset from the `moderndive` package. First, run the command `install.packages("moderndive")`.**
+
+```{r, warning = F}
+library(moderndive)
+data(evals)
+```
+
+a. **Provide a scatterplot with `score` on the y-axis and `age` on the x-axis. Color the points by `cls_level`. Interpret your plot (two sentences max).**
+
+
+b. **Fit a parallel slopes linear regression to predict `score` based on `age` *and* `cls_level`. Print out the R output.**
+
+c. **What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?**
+
+d. **What is the estimated `age` coefficient? Explain the interpretation of this coefficient.**
+
+e. **What is the estimated `cls_levelupper` coefficient? Explain the interpretation of this coefficient.**
+
+f. **Fit a interaction linear regression to predict `score` based on `age` *and* `cls_level`. Print out the R output.**
+
+g. **What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?**
+
+h. **What is the estimated `age` coefficient? Explain the interpretation of this coefficient.**
+
+i. **What is the estimated `age:cls_levelupper` coefficient? Explain the interpretation of this coefficient.**
+
+j. **Compare and contrast your parallel slopes and interaction models. Which model is more complicated? Which model do you prefer and why?**
+
+k. **For your interaction model, what is the estimated multiple r-squared value? Explain the interpretation of this quantity.**
+
+l. **For your interaction model, produce a residual plot with the residuals on the y-axis and fitted values on the x-axis. Interpret your plot (two sentences max).**
+
+### Problem 2
+
+a. **Provide a scatterplot with `bty_avg` on the y-axis and `age` on the x-axis. Interpret your plot (two sentences max).**
+
+b. **Fit a linear regression model to predict `bty_avg` based on `age`. Print out the R output.**
+
+c. **What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?**
+
+d. **What is the estimated `age` coefficient? Explain the interpretation of this coefficient.**
+
+e. **Check the four conditions necessary for inference for linear regression. For each condition, describe whether this data meet the condition and justify your answer (you can use plots to do so).**
+
+f. **Use your linear regression output to perform a hypothesis test (at level of significance .05) for whether `age` has an effect on `bty_avg`. Be sure to write your hypotheses, test statistic, and p value. What do you conclude?**

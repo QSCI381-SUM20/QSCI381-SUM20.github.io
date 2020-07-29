@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Lab 07</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <meta name="date" content="2020-07-29" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Lab 07
+## <em>(Multiple) Regression</em>
+### 2020-07-29
+
+---
+
+class: middle
+
+In this lab, we'll practice studying relationships between variables in `R`.
+
+
+---
+class: middle
+
+#### Loans data
+
+Today, we'll look at data on loans made through the Lending Club platform, which is a platform that allows individuals to lend to other individuals.
+
+```r
+loans &lt;- readr::read_csv(paste0("https://www.openintro.org/data/",
+                                "csv/loans_full_schema.csv"))
+```
+---
+
+class: middle
+
+#### Scatterplot
+
+We'll work on predicting loan interest rates based on homeownership and annual income. First, we plot our data:
+
+
+```r
+ggplot(loans, aes(x = annual_income, 
+                  y = interest_rate,
+                  color = homeownership)) +
+  geom_point()+ xlab("Annual Income") + ylab("Interest Rate") +
+  ggtitle("Interest rate by ownership and income")
+```
+
+&lt;img src="lab-07_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+class: middle
+
+#### Adding parallel slopes for visualization
+
+What if we fit linear regression models for each type of homeownership?
+
+
+```r
+library(moderndive) # load package for geom_parallel_slopes
+ggplot(loans, aes(x = annual_income, 
+                  y = interest_rate,
+                  color = homeownership)) +
+  geom_point() + geom_parallel_slopes(se = F) + # add lines
+  xlab("Annual Income") + ylab("Interest Rate") +
+  ggtitle("Scatter with parallel slopes models")
+```
+
+&lt;img src="lab-07_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+class: middle
+
+#### Visualizing interaction model
+
+What if we allow slopes to differ? What do we notice?
+
+
+```r
+ggplot(loans, aes(x = annual_income, 
+                  y = interest_rate,
+                  color = homeownership)) +
+  geom_point() + geom_smooth(method = "lm", se = F) + # add lines
+  xlab("Annual Income") + ylab("Interest Rate") +
+  ggtitle("Scatter with interaction model")
+```
+
+&lt;img src="lab-07_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+
+#### Fitting parallel slopes model
+
+
+```r
+ps_fit &lt;- lm(interest_rate ~ annual_income + homeownership,
+             data = loans)
+summary(ps_fit)
+```
+
+```
+## 
+## Call:
+## lm(formula = interest_rate ~ annual_income + homeownership, data = loans)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.9316 -3.5641 -0.7789  2.7669 18.9976 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        1.269e+01  1.009e-01 125.697  &lt; 2e-16 ***
+## annual_income     -6.896e-06  7.794e-07  -8.847  &lt; 2e-16 ***
+## homeownershipOWN   1.176e-01  1.537e-01   0.765    0.444    
+## homeownershipRENT  7.027e-01  1.090e-01   6.446  1.2e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.966 on 9996 degrees of freedom
+## Multiple R-squared:  0.01421,	Adjusted R-squared:  0.01391 
+## F-statistic: 48.03 on 3 and 9996 DF,  p-value: &lt; 2.2e-16
+```
+---
+class: middle
+
+#### Fitting interaction model
+
+
+```r
+int_fit &lt;- lm(interest_rate ~ annual_income * homeownership,
+             data = loans)
+summary(int_fit)
+```
+
+```
+## 
+## Call:
+## lm(formula = interest_rate ~ annual_income * homeownership, data = loans)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.0284 -3.5939 -0.7861  2.7496 18.9378 
+## 
+## Coefficients:
+##                                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                      1.259e+01  1.132e-01 111.275  &lt; 2e-16 ***
+## annual_income                   -5.883e-06  9.612e-07  -6.120 9.72e-10 ***
+## homeownershipOWN                 3.316e-01  2.472e-01   1.342   0.1798    
+## homeownershipRENT                9.326e-01  1.751e-01   5.325 1.03e-07 ***
+## annual_income:homeownershipOWN  -2.725e-06  2.621e-06  -1.040   0.2985    
+## annual_income:homeownershipRENT -3.056e-06  1.858e-06  -1.645   0.0999 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.966 on 9994 degrees of freedom
+## Multiple R-squared:  0.01453,	Adjusted R-squared:  0.01404 
+## F-statistic: 29.47 on 5 and 9994 DF,  p-value: &lt; 2.2e-16
+```
+---
+
+class: middle
+
+#### Residual vs. fitted plots
+
+
+```r
+ggplot(loans, aes(x = fitted(ps_fit), y = resid(ps_fit))) +
+  geom_point() + geom_hline(yintercept = 0)
+```
+
+&lt;img src="lab-07_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+---
+class: middle
+
+#### Residual vs. fitted plots
+
+
+```r
+ggplot(loans, aes(x = fitted(int_fit), y = resid(int_fit))) +
+  geom_point() + geom_hline(yintercept = 0)
+```
+
+&lt;img src="lab-07_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+class: middle
+
+Note that our residuals may not be normally distributed around zero--this is cause for concern when trying to do inference.
+---
+class: middle
+
+#### Residual vs. covariate plots
+
+
+```r
+ggplot(loans, aes(x = annual_income, y = resid(int_fit))) +
+  geom_point() + geom_hline(yintercept = 0)
+```
+
+&lt;img src="lab-07_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+class: middle
+
+Observe that we tend to underestimate the interest rate for individuals making high annual incomes--does this make sense?
+---
+class: middle
+
+#### Residual vs. covariate plots
+
+Now lets plot residuals against our other covariates.
+
+
+```r
+ggplot(loans, aes(group = homeownership, x = resid(int_fit))) +
+  geom_boxplot()
+```
+
+&lt;img src="lab-07_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+class: middle
+
+We would like to see that the residuals have similar variability for all levels of our categorical variable and that the residuals appear normally distributed. In this case, it looks like all the residuals may not be normally distributed. Again, this is cause for concern when trying to do inference.
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

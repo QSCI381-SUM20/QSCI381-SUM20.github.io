@@ -1,6 +1,6 @@
 ---
-title: "Lab 05"
-subtitle: "*Sampling Distributions*"
+title: "Lab 06"
+subtitle: "*Correlation and Regression*"
 author: ""
 institute: ""
 date: "`r Sys.Date()`"
@@ -16,374 +16,305 @@ output:
 ---     
 class: middle
 
-In this lab, we'll practice carrying out hypothesis tests in `R`.
+In this lab, we'll practice studying relationships between variables in `R`.
+
+```{r, echo = F}
+library(tidyverse)
+```
+---
+class: middle
+
+#### Flights data
+
+Today, we'll look at data on flights leaving from New York for July 30, 2013.
+
+Load the data using the following commands:
+
+```{r, eval = F}
+install.packages('nycflights13')
+```
+
+```{r}
+flights <- nycflights13::flights %>% filter(month == 7 & day == 30)
+```
 
 ---
 class: middle
 
-#### Scatterplot
+#### Visualizing the data
 
-temp <- nycflights13::flights %>% filter(month == 7 & day == 15)
+```{r, warning = F, fig.height = 4.5, fig.align = "center"}
+ggplot(data = flights) +
+  geom_point(aes(x = distance, y = air_time), col = "seagreen") + 
+  xlab("Distance") + ylab("Air time") +
+  ggtitle("Flights departing NYC (7/30/2013)") +
+  theme_minimal()
+```
+---
+class: middle
+
+#### Visualizing the data
+
+```{r, warning = F, fig.height = 4.5, fig.align = "center"}
+ggplot(data = flights) +
+  geom_point(aes(x = distance, y = arr_delay), col = "dodgerblue") + 
+  xlab("Distance") + ylab("Minutes delayed") +
+  ggtitle("Flights departing NYC (7/30/2013)") +
+  theme_minimal()
+```
+
+---
+
+class: middle
+
+#### Computing correlation
+
+```{r, fig.height = 4.5, fig.align = "center"}
+cor(flights$distance, flights$air_time)
+```
+```{r, warning = F}
+cor(flights$distance, flights$air_time,
+    use = "complete.obs")
+```
+```{r, warning = F}
+cor(flights$air_time, flights$distance,
+    use = "complete.obs")
+```
+---
+class: middle
+
+#### Computing correlation
+
+```{r, warning = F}
+cor(flights$distance, flights$arr_delay,
+    use = "complete.obs")
+```
+---
+class: middle
+
+#### Linear regression by "hand"
+
+Suppose we want to use a linear function to predict air time from distance:
+
+$$\widehat{y}_{air time}=b_0+b_1x_{distance}$$
+
+**First, we compute the sample correlation $r$:**
+
+```{r, warning = F} 
+flights <- flights %>%
+  filter(complete.cases(flights))
+r <- cor(flights$distance, flights$air_time,
+         use = "complete.obs")
+r
+```
+
 
 ---
 class: middle
 
-#### Linear regression by hand
+#### Linear regression by "hand"
+
+Suppose we want to use a linear function to predict air time from distance:
+
+$$\widehat{y}_{air time}=b_0+b_1x_{distance}$$
+
+
+**Next, we estimate the slope:**
+
+$$\widehat{b}_1=r\frac{s_y}{s_x}$$
+```{r, warning = F}
+s_y <- sd(flights$air_time, na.rm = T)
+s_x <- sd(flights$distance, na.rm = T)
+b_1_hat <- r * s_y / s_x
+b_1_hat
+```
+
 ---
 class: middle
 
+#### Linear regression by "hand"
+
+Suppose we want to use a linear function to predict air time from distance:
+
+$$\widehat{y}_{air time}=b_0+b_1x_{distance}$$
+
+
+**Finally, we estimate the intercept, using the fact that the least squares line goes through the point $(\overline{x},\overline{y})$:**
+
+$$\widehat{b}_0=\overline{y}-\widehat{b}_1\overline{x}$$
+```{r, warning = F}
+mean_y <- mean(flights$air_time, na.rm = T)
+mean_x <- mean(flights$distance, na.rm = T)
+b_0_hat <- mean_y - b_1_hat * mean_x
+b_0_hat
+```
+---
+class: middle
+
+#### Linear regression by "hand"
+
+Thus, our estimated least squares line is given by 
+$$\widehat{y}_{air time}=\widehat{b}_0+\widehat{b}_1x_{distance}$$ with
+
+$\widehat{b}_0=$ `r b_0_hat` and $\widehat{b}_1=$ `r b_1_hat`
+---
+class: middle
+
+#### Linear regression by "hand"
+
+```{r, warning = F, fig.height = 4.5, fig.align = "center", eval = F}
+ggplot(data = flights) +
+  geom_point(aes(x = distance, y = air_time), col = "seagreen") + 
+{{ geom_abline(slope = b_1_hat, intercept = b_0_hat) + }}
+  xlab("Distance") + ylab("Air time") +
+  ggtitle("Flights departing NYC (7/30/2013)") +
+  theme_minimal()
+```
+```{r, warning = F, fig.height = 4.5, fig.align = "center", echo = F}
+ggplot(data = flights) +
+  geom_point(aes(x = distance, y = air_time), col = "seagreen") + 
+  geom_abline(slope = b_1_hat, intercept = b_0_hat) + 
+  xlab("Distance") + ylab("Air time") +
+  ggtitle("Flights departing NYC (7/30/2013)") +
+  theme_minimal()
+```
+
+---
+class: middle
 #### Linear regression in R
+
+```{r, warning = F, eval = F}
+linear_reg_res <- lm(air_time~distance, data = flights)
+summary(linear_reg_res)
+```
+```{r, warning = F, eval = F}
+Call:
+lm(formula = air_time ~ distance, data = flights)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-45.459  -6.022   0.334   5.521  33.771 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+*(Intercept) 1.218e+01  4.730e-01   25.76   <2e-16 ***
+*distance    1.276e-01  3.657e-04  348.92   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 8.565 on 984 degrees of freedom
+Multiple R-squared:  0.992,	Adjusted R-squared:  0.992 
+F-statistic: 1.217e+05 on 1 and 984 DF,  p-value: < 2.2e-16
+```
 ---
 class: middle
+#### Linear regression in R
 
-#### Summarizing results
+```{r, warning = F}
+linear_reg_res <- lm(air_time~distance, data = flights)
+linear_reg_res$coefficients
+c(b_0_hat, b_1_hat) # what we got by hand
+```
+---
+class: middle
+#### Linear regression in R: results
+
+```{r, warning = F, eval = F}
+linear_reg_res <- lm(air_time~distance, data = flights)
+summary(linear_reg_res)
+```
+```{r, warning = F, eval = F}
+Call:
+lm(formula = air_time ~ distance, data = flights)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-45.459  -6.022   0.334   5.521  33.771 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 1.218e+01  4.730e-01   25.76   <2e-16 ***
+distance    1.276e-01  3.657e-04  348.92   <2e-16 ***
+---
+*Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 8.565 on 984 degrees of freedom
+Multiple R-squared:  0.992,	Adjusted R-squared:  0.992 
+F-statistic: 1.217e+05 on 1 and 984 DF,  p-value: < 2.2e-16
+```
+---
+class: middle
+#### Linear regression in R: results
+
+```{r, warning = F, eval = F}
+linear_reg_res <- lm(air_time~distance, data = flights)
+summary(linear_reg_res)
+```
+```{r, warning = F, eval = F}
+Call:
+lm(formula = air_time ~ distance, data = flights)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-45.459  -6.022   0.334   5.521  33.771 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 1.218e+01  4.730e-01   25.76   <2e-16 ***
+distance    1.276e-01  3.657e-04  348.92   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 8.565 on 984 degrees of freedom
+{{Multiple R-squared:  0.992,	Adjusted R-squared:  0.992}}
+F-statistic: 1.217e+05 on 1 and 984 DF,  p-value: < 2.2e-16
+```
 ---
 class: middle
 
 #### Interpreting results
----
-class: middle
 
-#### Predicts
----
-class: middle
 
-#### Residual plots
----
-class: middle
+**SLOPE:**
 
-#### linear regression plots
----
-class: middle
+The slope is the estimated expected difference in $y$ for one observation is  if $x$ happened to be one unit larger. 
 
-#### SAT Scores
----
+**INTERCEPT:**
 
-class: middle
-
-#### SAT Scores
-
-Suppose we have data on 30 students' changes in SAT scores after taking an SAT class and we want to figure out how much the class helped.
-
-What might be a good population parameter? What would be a good sample statistic?
-
-```{r, message = F, warning = F}
-library(openintro)
-data("sat.improve")
-sat.improve$sat_improve
-```
+The intercept describes the estimated expected value of $y$  if $x = 0$ \textbf{and} the linear model is valid  at $x = 0$ (often not true)
 
 ---
 class: middle
 
-#### SAT Scores
+#### Predictions
 
-Let's compute the sample mean.
+Suppose we want to predict the airtime for a flight with distance 3500 mi.
 
-```{r, message = F, warning = F}
-mu_hat <- mean(sat.improve$sat_improve)
-mu_hat
+```{r, warning = F}
+new_x <- 3500
+predicted_y <- b_0_hat + b_1_hat * new_x
+predicted_y
 ```
 
-Is this evidence that the class helped?
----
-
-class: middle
-
-#### One-sample t interval
-
-Let's compute a 95% t interval:
-
-```{r, message = F, warning = F}
-n <- length(sat.improve$sat_improve)
-se_mu_hat <- sd(sat.improve$sat_improve) / sqrt(n)
-se_mu_hat
-
-# 95% t-interval
-upper_bound <- mu_hat + qt(.975, df = n - 1) * se_mu_hat
-lower_bound <- mu_hat - qt(.975, df = n - 1) * se_mu_hat
-c(lower_bound, upper_bound)
+```{r, warning = F}
+predict(linear_reg_res, newdata = data.frame(distance = new_x))
 ```
-
-Is this evidence that the class helped?
 ---
 class: middle
 
-#### One-sample t interval
+#### Residual plot
 
-Let's compute a **90%** t interval:
+Do you see any problems or outliers?
 
-```{r, message = F, warning = F}
-n <- length(sat.improve$sat_improve)
-se_mu_hat <- sd(sat.improve$sat_improve) / sqrt(n)
-se_mu_hat
-
-# 90% t-interval
-upper_bound <- mu_hat + qt(.95, df = n - 1) * se_mu_hat
-lower_bound <- mu_hat - qt(.95, df = n - 1) * se_mu_hat
-c(lower_bound, upper_bound)
+```{r, warning = F}
+ggplot(data = flights) + 
+  geom_point(aes(x = distance, y = resid(linear_reg_res))) +
+  xlab("Distance") + ylab("Residual")+
+  ggtitle("Residual plot") + theme_minimal()
 ```
-
 ---
 class: middle
 
-#### One-sample t interval
+**In-class practice**: Repeat these steps except using distance to predict **arrival delays**.
 
-Let's compute an **80%** t interval:
-
-```{r, message = F, warning = F}
-n <- length(sat.improve$sat_improve)
-se_mu_hat <- sd(sat.improve$sat_improve) / sqrt(n)
-se_mu_hat
-
-# 80% t-interval
-upper_bound <- mu_hat + qt(.90, df = n - 1) * se_mu_hat
-lower_bound <- mu_hat - qt(.90, df = n - 1) * se_mu_hat
-c(lower_bound, upper_bound)
-```
-
----
-class: middle
-
-#### One-sample t interval
-
-Note that since $n$ is pretty large $(n = 30)$, our sampling distribution is almost normal:
-
-```{r, message = F, warning = F, echo = F, fig.width = 8, fig.height = 6, fig.align = "center"}
-x <- seq(-4, 4, length.out = 1000)
-n <- dnorm(x)
-t <- dt(x, df = 29)
-plot(x, n, type = 'l', frame.plot = F, axes = F,
-     ylab = '', lwd = 2)
-lines(x, t, col = 'tomato', add = T, lwd = 2)
-legend("topright", c("normal", "t"), lty  =1, col = c("black", "tomato"), 
-       bty = 'n')
-```
----
-class: middle 
-
-#### One-sample t test for means
-
-What are appropriate test hypotheses if we want to see if the class really helped? 
-
-What level of significance should we choose? By default usually $\alpha = 0.05$
-
----
-
-class: middle 
-
-#### One sided one-sample t test for means
-
-** $H_0: \mu = 0\hspace{5ex} H_A:\mu>0$ **
-
-```{r, message = F, warning = F}
-# 1. calculate sample statistic
-mu_hat = mean(sat.improve$sat_improve)
-
-# 2. compute standard error
-n <- length(sat.improve$sat_improve)
-se_mu_hat <- sd(sat.improve$sat_improve) / sqrt(n)
-
-# 3. compute t-statistic
-t = (mu_hat - 0) / se_mu_hat
-t
-```
----
-class: middle 
-
-#### One sided one-sample t test for means
-
-** $H_0: \mu = 0\hspace{5ex} H_A:\mu>0$ **
-
-Draw a picture: 
-```{r, message = F, warning = F, echo = F, fig.width = 6, fig.height = 4, fig.align = "center"}
-x <- seq(-4, 4, length.out = 1000)
-t <- dt(x, df = 29)
-plot(x, t, type = 'l', frame.plot = F, axes = F,
-     ylab = '', col = 'tomato', lwd = 2)
-polygon(x = c(1.8, x[x >= 1.8]), y = c(0, t[x >= 1.8]), col = 'tomato',border = NA)
-```
-
----
-class: middle 
-
-#### One sided one-sample t test for means
-
-** $H_0: \mu = 0\hspace{5ex} H_A:\mu>0$ **
-
-Draw a picture: 
-```{r, message = F, warning = F, echo = F, fig.width = 4, fig.height = 3, fig.align = "center"}
-x <- seq(-4, 4, length.out = 1000)
-t <- dt(x, df = 29)
-plot(x, t, type = 'l', frame.plot = F, axes = F,
-     ylab = '', col = 'tomato', lwd = 2)
-polygon(x = c(1.8, x[x >= 1.8]), y = c(0, t[x >= 1.8]), col = 'tomato',border = NA)
-```
-```{r, message = F, warning = F}
-t = (mu_hat - 0) / se_mu_hat
-# 4. calculate p-value
-upper_tail_prob <- 1 - pt(t, df = n - 1)
-upper_tail_prob
-```
----
-class: middle 
-
-#### One sided one-sample t test for means
-
-Thus at $\alpha = 0.05$, we reject the null hypothesis.
-
-
----
-class: middle 
-#### Two sided one-sample t test for means
-
-How do we compute a two-sided p-value?
-
-** $H_0: \mu = 0\hspace{5ex} H_A:\mu\not=0$ **
-
-Draw a picture: 
-```{r, message = F, warning = F, echo = F, fig.width = 4, fig.height = 3, fig.align = "center"}
-x <- seq(-4, 4, length.out = 1000)
-t <- dt(x, df = 29)
-plot(x, t, type = 'l', frame.plot = F, axes = F,
-     ylab = '', col = 'tomato', lwd = 2)
-polygon(x = c(1.8, x[x >= 1.8]), y = c(0, t[x >= 1.8]), col = 'tomato',border = NA)
-polygon(x = c(x[x <= -1.8], -1.8), y = c(t[x <= -1.8], 0), col = 'tomato',border = NA)
-```
----
-class: middle 
-#### Two sided one-sample t test for means
-
-How do we compute a two-sided p-value?
-
-** $H_0: \mu = 0\hspace{5ex} H_A:\mu\not=0$ **
-
-We can just multiply our one-sided p-value by two, or we can use R: 
-```{r, message = F, warning = F}
-t = (mu_hat - 0) / se_mu_hat
-# 4. calculate p-value
-upper_tail_prob <- 1 - pt(t, df = n - 1)
-upper_tail_prob
-
-two_sided_p_value <- upper_tail_prob * 2
-two_sided_p_value
-
-two_sided_p_value <- (1 - pt(t, df = n - 1)) + pt(-t, df = n - 1)
-two_sided_p_value
-```
----
-class: middle 
-#### Two sided one-sample t test for means
-
-If we don't want to do this by hand, we can also use the `t.test` function:
-
-** $H_0: \mu = 0\hspace{5ex} H_A:\mu\not=0$ **
-
-```{r, message = F, warning = F}
-# two-sided test
-t.test(sat.improve$sat_improve)
-```
----
-class: middle 
-#### one sided one-sample t test for means
-
-If we don't want to do this by hand, we can also use the `t.test` function:
-
-** $H_0: \mu = 0\hspace{5ex} H_A:\mu<0$ **
-
-```{r, message = F, warning = F}
-# two-sided test
-t.test(sat.improve$sat_improve, alternative = "greater")
-```
-
----
-class: middle 
-#### Two sided one-sample t test for means
-
-`t.test` assumes the null hypothesis has $\mu=0$, but we can set other values as well:
-
-** $H_0: \mu = 50\hspace{5ex} H_A:\mu\not=50$ **
-
-```{r, message = F, warning = F}
-# two-sided test
-t.test(sat.improve$sat_improve, mu = 50)
-```
-
----
-class: middle 
-#### Hypothesis test for proportions
-
-What if instead, we performed a hypothesis test about $p$, the proportion of students who improved?
-
-** $H_0: p = 0.5\hspace{5ex} H_A:p >0.5$ **
-```{r, message = F, warning = F}
-# 1. calculate sample statistic
-p_hat <- mean(sat.improve$sat_improve > 0)
-p_hat 
-
-# 2. compute standard error
-n <- length(sat.improve$sat_improve)
-se_p_hat <- sqrt(p_hat * (1 - p_hat) / n)
-
-# 3. compute t-statistic
-z = (p_hat - 0.5) / se_p_hat
-z
-```
----
-class: middle 
-#### One-sided hypothesis test for proportions
-** $H_0: p = 0.5\hspace{5ex} H_A:p >0.5$ **
-
-Draw a picture: 
-```{r, message = F, warning = F, echo = F, fig.width = 4, fig.height = 3, fig.align = "center"}
-x <- seq(-4, 4, length.out = 1000)
-t <- dt(x, df = 29)
-plot(x, t, type = 'l', frame.plot = F, axes = F,
-     ylab = '', col = 'tomato', lwd = 2)
-polygon(x = c(1.8, x[x >= 1.8]), y = c(0, t[x >= 1.8]), col = 'tomato',border = NA)
-```
-
-```{r, message = F, warning = F}
-z = (p_hat - 0.5) / se_p_hat
-# 4. calculate p-value
-upper_tail_prob <- 1 - pnorm(z)
-upper_tail_prob
-```
-
----
-class: middle 
-#### Hypothesis test for proportions
-
-What just happened?
-
-The p-value is so small that R thinks it is essentially 0. 
----
-
-class: middle 
-#### 80% confidence interval for proportions
-
-```{r, message = F, warning = F}
-
-# 80% z-interval
-upper_bound <- p_hat + qnorm(.90) * se_p_hat
-lower_bound <- p_hat - qnorm(.90) * se_p_hat
-c(lower_bound, upper_bound)
-```
----
-class: middle 
-#### 95% confidence interval for proportions
-
-```{r, message = F, warning = F}
-
-# 95% z-interval
-upper_bound <- p_hat + qnorm(.975) * se_p_hat
-lower_bound <- p_hat - qnorm(.975) * se_p_hat
-c(lower_bound, upper_bound)
-```
----
-class: middle 
-#### 95% confidence interval for proportions
-What just happened?
-
-We tried to use the central limit theorem without checking to see if our sample size was big enough! We need $n\hat{p}\geq 10$ and $n(1-\hat{p})\geq 10$. Which isn't satisfied? 
 ---

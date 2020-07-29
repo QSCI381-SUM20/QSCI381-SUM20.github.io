@@ -1,0 +1,156 @@
+---
+title: "Lab 07"
+subtitle: "*(Multiple) Regression*"
+author: ""
+institute: ""
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: ["style.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+ 
+---     
+class: middle
+
+In this lab, we'll practice studying relationships between variables in `R`.
+
+```{r, echo = F, cache = T, message = F, warning = F}
+loans <- readr::read_csv("https://www.openintro.org/data/csv/loans_full_schema.csv")
+```
+---
+class: middle
+
+#### Loans data
+
+Today, we'll look at data on loans made through the Lending Club platform, which is a platform that allows individuals to lend to other individuals.
+```{r, eval = F, cache = T}
+loans <- readr::read_csv(paste0("https://www.openintro.org/data/",
+                                "csv/loans_full_schema.csv"))
+```
+---
+
+class: middle
+
+#### Scatterplot
+
+We'll work on predicting loan interest rates based on homeownership and annual income. First, we plot our data:
+
+```{r,  cache = T, fig.height = 4, fig.align = "center"}
+ggplot(loans, aes(x = annual_income, 
+                  y = interest_rate,
+                  color = homeownership)) +
+  geom_point()+ xlab("Annual Income") + ylab("Interest Rate") +
+  ggtitle("Interest rate by ownership and income")
+```
+---
+
+class: middle
+
+#### Adding parallel slopes for visualization
+
+What if we fit linear regression models for each type of homeownership?
+
+```{r,  cache = T, fig.height = 4, fig.align = "center", message = F}
+library(moderndive) # load package for geom_parallel_slopes
+ggplot(loans, aes(x = annual_income, 
+                  y = interest_rate,
+                  color = homeownership)) +
+  geom_point() + geom_parallel_slopes(se = F) + # add lines
+  xlab("Annual Income") + ylab("Interest Rate") +
+  ggtitle("Scatter with parallel slopes models")
+```
+---
+
+class: middle
+
+#### Visualizing interaction model
+
+What if we allow slopes to differ? What do we notice?
+
+```{r,  cache = T, fig.height = 4, fig.align = "center", message = F}
+ggplot(loans, aes(x = annual_income, 
+                  y = interest_rate,
+                  color = homeownership)) +
+  geom_point() + geom_smooth(method = "lm", se = F) + # add lines
+  xlab("Annual Income") + ylab("Interest Rate") +
+  ggtitle("Scatter with interaction model")
+```
+---
+class: middle
+
+#### Fitting parallel slopes model
+
+```{r,  cache = T, fig.height = 4, fig.align = "center", message = F}
+ps_fit <- lm(interest_rate ~ annual_income + homeownership,
+             data = loans)
+summary(ps_fit)
+```
+---
+class: middle
+
+#### Fitting interaction model
+
+```{r,  cache = T, fig.height = 4, fig.align = "center", message = F}
+int_fit <- lm(interest_rate ~ annual_income * homeownership,
+             data = loans)
+summary(int_fit)
+```
+---
+
+class: middle
+
+#### Residual vs. fitted plots
+
+```{r,  cache = T, fig.height = 4, fig.align = "center", message = F}
+ggplot(loans, aes(x = fitted(ps_fit), y = resid(ps_fit))) +
+  geom_point() + geom_hline(yintercept = 0)
+```
+---
+class: middle
+
+#### Residual vs. fitted plots
+
+```{r,  cache = T, fig.height = 4, fig.align = "center", message = F}
+ggplot(loans, aes(x = fitted(int_fit), y = resid(int_fit))) +
+  geom_point() + geom_hline(yintercept = 0)
+```
+---
+
+class: middle
+
+Note that our residuals may not be normally distributed around zero--this is cause for concern when trying to do inference.
+---
+class: middle
+
+#### Residual vs. covariate plots
+
+```{r,  cache = T, fig.height = 4, fig.align = "center", message = F}
+ggplot(loans, aes(x = annual_income, y = resid(int_fit))) +
+  geom_point() + geom_hline(yintercept = 0)
+```
+---
+
+class: middle
+
+Observe that we tend to underestimate the interest rate for individuals making high annual incomes--does this make sense?
+---
+class: middle
+
+#### Residual vs. covariate plots
+
+Now lets plot residuals against our other covariates.
+
+```{r,  cache = T, fig.height = 4, fig.align = "center", message = F}
+ggplot(loans, aes(group = homeownership, x = resid(int_fit))) +
+  geom_boxplot()
+```
+---
+
+class: middle
+
+We would like to see that the residuals have similar variability for all levels of our categorical variable and that the residuals appear normally distributed. In this case, it looks like all the residuals may not be normally distributed. Again, this is cause for concern when trying to do inference.
+---

@@ -1,0 +1,126 @@
+---
+title: Lab 06
+author: ''
+date: '2020-07-30'
+slug: lab-06
+categories: []
+tags: []
+---
+
+# Homework
+
+**For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions. All plots should be appropriately labeled and titled.**
+
+### Problem 1
+
+**For this problem, we'll be taking a data set on sale prices of homes sold between May 2014 and May 2015 in the Wallingford neighborhood of Seattle. This data can be found in the `house_prices` dataset in the `moderndive` package. First, run the command `install.packages("Stat2Data")`.**
+
+```{r}
+library(moderndive)
+library(tidyverse)
+data("house_prices")
+
+wallingford <- house_prices %>% 
+  filter(zipcode == 98103)
+```
+
+a. **Perform an exploratory analysis of this dataset. The variables we are interested in are `price`, `condition`, `bedrooms`, and `sqft_living.` For each of these variables, explain what the variable is, provide a visualization of the distribution of the variable, and describe the distribution in words.**
+
+    **YOUR ANSWER HERE**
+
+b. **We wish to use the `sqft_living` variable to predict `price`. Create a scatterplot of these two variables. Summarize the plot and describe any association you see between the two variables. For extra credit, set the color of each point to correspond to the number of bedrooms and provide an appropriate legend.**
+
+    **YOUR ANSWER HERE**
+
+c. **Calculate and intepret the sample correlation between `price` and `sqft_living`**.
+
+    **YOUR ANSWER HERE**
+
+d. **Fit a linear regression to predict `price` based on `sqft_living`. Print out the R output. Are the conditions needed to fit a linear regression satisfied? Explain.**
+
+    **YOUR ANSWER HERE**
+
+e. **What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?**
+
+    **YOUR ANSWER HERE**
+
+f. **What is the estimated slope? Explain what the slope means. Is the slope significant at the $\alpha=.05$ level? Interpret the results of the corresponding hypothesis test.**
+
+    **YOUR ANSWER HERE**
+
+g. **What is the estimated R-squared value? Give a one-sentence interpretation.**
+
+    **YOUR ANSWER HERE**
+
+h. **Provide a residual plot for your linear regression. Interpret your plot. Do you see any problems or outliers?**
+
+    **YOUR ANSWER HERE**
+
+i. **Use your linear regression model to predict the house price for a 2500 sq. ft. home in Walllingford. What is the predicted price?**
+
+    **YOUR ANSWER HERE**
+
+j. **The largest house in our dataset was 4360 sq. ft. and sold for $1555000. What is the residual for this observation?**
+
+    **YOUR ANSWER HERE**
+
+### Problem 2
+
+```{r}
+u_district <- house_prices %>% 
+  filter(zipcode == 98105)
+```
+
+a. **Use the above code to obtain data for the zip code 98105. We wish to use the `sqft_living` variable to predict `price`. Create a scatterplot of these two variables for 98105. Summarize the plot and describe any association you see between the two variables.**
+
+    **YOUR ANSWER HERE**
+
+b. **Calculate and intepret the sample correlation between `price` and `sqft_living`**.
+
+
+    **YOUR ANSWER HERE**
+
+c. **Fit a linear regression to predict `price` based on `sqft_living`. Print out the R output. Are the conditions needed to fit a linear regression satisfied? Explain.**
+
+    **YOUR ANSWER HERE**
+
+d. **What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?**
+
+    **YOUR ANSWER HERE**
+
+e. **What is the estimated slope? Explain what the slope means. Is the slope significant at the $\alpha=.05$ level? Interpret the results of the corresponding hypothesis test.**
+
+    **YOUR ANSWER HERE**
+
+f. **What is the estimated R-squared value? Give a one-sentence interpretation.**
+
+    **YOUR ANSWER HERE**
+
+g. **Provide a residual plot for your linear regression. Interpret your plot. Do you see any problems or outliers?**
+
+    **YOUR ANSWER HERE**
+
+h. **Compare and contrast the linear regression fits for Problem 1 and Problem 2. In particular, be sure to compare the intercepts, slopes, R-squared values, and whether the assumptions necessary for linear regression are met. Do the differences/similarities you observe make sense? Do the results seem reasonable for both Problem 1 and Problem 2? Feel free to speculate on the causes behind any differences.**
+
+    **YOUR ANSWER HERE**
+
+### Problem 3
+
+**For this problem, we return to the `wallingford` data.**
+
+```{r}
+wallingford <- house_prices %>% 
+  filter(zipcode == 98103)
+```
+
+a. **Fit a linear regression to predict `price` based on `sqft_living` *and* `bedrooms`. Print out the R output.**
+
+    **YOUR ANSWER HERE**
+
+b. **What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?**
+
+    **YOUR ANSWER HERE**
+
+c. **What are the estimated slope coefficients? Explain what these mean.**
+
+    **YOUR ANSWER HERE**

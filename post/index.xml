@@ -6,10 +6,20 @@
     <description>Recent content in Posts on QSCI 381 Labs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Lab 06</title>
+      <link>/2020/07/30/lab-06/</link>
+      <pubDate>Thu, 30 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/07/30/lab-06/</guid>
+      <description>Lab 06 Skills Slides  Lab 06 Report Template  Homework For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions. All plots should be appropriately labeled and titled.
+Problem 1 For this problem, we’ll be taking a data set on sale prices of homes sold between May 2014 and May 2015 in the Wallingford neighborhood of Seattle.</description>
+    </item>
     
     <item>
       <title>Lab 05</title>
