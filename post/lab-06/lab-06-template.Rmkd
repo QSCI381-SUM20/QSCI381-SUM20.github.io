@@ -32,7 +32,7 @@ b. **We wish to use the `sqft_living` variable to predict `price`. Create a scat
 
     **YOUR ANSWER HERE**
 
-c. **Calculate and intepret the sample correlation between `price` and `sqft_living`**.
+c. **Calculate and interpret the sample correlation between `price` and `sqft_living`**.
 
     **YOUR ANSWER HERE**
 
@@ -56,7 +56,7 @@ h. **Provide a residual plot for your linear regression. Interpret your plot. Do
 
     **YOUR ANSWER HERE**
 
-i. **Use your linear regression model to predict the house price for a 2500 sq. ft. home in Walllingford. What is the predicted price?**
+i. **Use your linear regression model to predict the house price for a 2500 sq. ft. home in Walslingford. What is the predicted price?**
 
     **YOUR ANSWER HERE**
 
@@ -75,7 +75,7 @@ a. **Use the above code to obtain data for the zip code 98105. We wish to use th
 
     **YOUR ANSWER HERE**
 
-b. **Calculate and intepret the sample correlation between `price` and `sqft_living`**.
+b. **Calculate and interpret the sample correlation between `price` and `sqft_living`**.
 
 
     **YOUR ANSWER HERE**
@@ -101,26 +101,5 @@ g. **Provide a residual plot for your linear regression. Interpret your plot. Do
     **YOUR ANSWER HERE**
 
 h. **Compare and contrast the linear regression fits for Problem 1 and Problem 2. In particular, be sure to compare the intercepts, slopes, R-squared values, and whether the assumptions necessary for linear regression are met. Do the differences/similarities you observe make sense? Do the results seem reasonable for both Problem 1 and Problem 2? Feel free to speculate on the causes behind any differences.**
-
-    **YOUR ANSWER HERE**
-
-### Problem 3
-
-**For this problem, we return to the `wallingford` data.**
-
-```{r}
-wallingford <- house_prices %>% 
-  filter(zipcode == 98103)
-```
-
-a. **Fit a linear regression to predict `price` based on `sqft_living` *and* `bedrooms`. Print out the R output.**
-
-    **YOUR ANSWER HERE**
-
-b. **What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?**
-
-    **YOUR ANSWER HERE**
-
-c. **What are the estimated slope coefficients? Explain what these mean.**
 
     **YOUR ANSWER HERE**

@@ -74,7 +74,7 @@
 <p><strong>For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions. All plots should be appropriately labeled and titled.</strong></p>
 <div id="problem-1" class="section level3">
 <h3>Problem 1</h3>
-<p><strong>For this problem, we’ll be taking a data set on sale prices of homes sold between May 2014 and May 2015 in the Wallingford neighborhood of Seattle. This data can be found in the <code>house_prices</code> dataset in the <code>moderndive</code> package. First, run the command <code>install.packages(&quot;Stat2Data&quot;)</code>.</strong></p>
+<p><strong>For this problem, we’ll be taking a data set on sale prices of homes sold between May 2014 and May 2015 in the Wallingford neighborhood of Seattle. This data can be found in the <code>house_prices</code> dataset in the <code>moderndive</code> package. First, run the command <code>install.packages(&quot;moderndive&quot;)</code>.</strong></p>
 <pre class="r"><code>library(moderndive)
 library(tidyverse)
 data(&quot;house_prices&quot;)
@@ -84,13 +84,13 @@ wallingford &lt;- house_prices %&gt;%
 <ol style="list-style-type: lower-alpha">
 <li><p><strong>Perform an exploratory analysis of this dataset. The variables we are interested in are <code>price</code>, <code>condition</code>, <code>bedrooms</code>, and <code>sqft_living.</code> For each of these variables, explain what the variable is, provide a visualization of the distribution of the variable, and describe the distribution in words.</strong></p></li>
 <li><p><strong>We wish to use the <code>sqft_living</code> variable to predict <code>price</code>. Create a scatterplot of these two variables. Summarize the plot and describe any association you see between the two variables. For extra credit, set the color of each point to correspond to the number of bedrooms and provide an appropriate legend.</strong></p></li>
-<li><p><strong>Calculate and intepret the sample correlation between <code>price</code> and <code>sqft_living</code></strong>.</p></li>
+<li><p><strong>Calculate and interpret the sample correlation between <code>price</code> and <code>sqft_living</code></strong>.</p></li>
 <li><p><strong>Fit a linear regression to predict <code>price</code> based on <code>sqft_living</code>. Print out the R output. Are the conditions needed to fit a linear regression satisfied? Explain.</strong></p></li>
 <li><p><strong>What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?</strong></p></li>
 <li><p><strong>What is the estimated slope? Explain what the slope means. Is the slope significant at the <span class="math inline">\(\alpha=.05\)</span> level? Interpret the results of the corresponding hypothesis test.</strong></p></li>
 <li><p><strong>What is the estimated R-squared value? Give a one-sentence interpretation.</strong></p></li>
 <li><p><strong>Provide a residual plot for your linear regression. Interpret your plot. Do you see any problems or outliers?</strong></p></li>
-<li><p><strong>Use your linear regression model to predict the house price for a 2500 sq. ft. home in Walllingford. What is the predicted price?</strong></p></li>
+<li><p><strong>Use your linear regression model to predict the house price for a 2500 sq. ft. home in Wallingford. What is the predicted price?</strong></p></li>
 <li><p><strong>The largest house in our dataset was 4360 sq. ft. and sold for $1555000. What is the residual for this observation?</strong></p></li>
 </ol>
 </div>
@@ -100,24 +100,13 @@ wallingford &lt;- house_prices %&gt;%
   filter(zipcode == 98105)</code></pre>
 <ol style="list-style-type: lower-alpha">
 <li><p><strong>Use the above code to obtain data for the zip code 98105. We wish to use the <code>sqft_living</code> variable to predict <code>price</code>. Create a scatterplot of these two variables for 98105. Summarize the plot and describe any association you see between the two variables.</strong></p></li>
-<li><p><strong>Calculate and intepret the sample correlation between <code>price</code> and <code>sqft_living</code></strong>.</p></li>
+<li><p><strong>Calculate and interpret the sample correlation between <code>price</code> and <code>sqft_living</code></strong>.</p></li>
 <li><p><strong>Fit a linear regression to predict <code>price</code> based on <code>sqft_living</code>. Print out the R output. Are the conditions needed to fit a linear regression satisfied? Explain.</strong></p></li>
 <li><p><strong>What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?</strong></p></li>
 <li><p><strong>What is the estimated slope? Explain what the slope means. Is the slope significant at the <span class="math inline">\(\alpha=.05\)</span> level? Interpret the results of the corresponding hypothesis test.</strong></p></li>
 <li><p><strong>What is the estimated R-squared value? Give a one-sentence interpretation.</strong></p></li>
 <li><p><strong>Provide a residual plot for your linear regression. Interpret your plot. Do you see any problems or outliers?</strong></p></li>
 <li><p><strong>Compare and contrast the linear regression fits for Problem 1 and Problem 2. In particular, be sure to compare the intercepts, slopes, R-squared values, and whether the assumptions necessary for linear regression are met. Do the differences/similarities you observe make sense? Do the results seem reasonable for both Problem 1 and Problem 2? Feel free to speculate on the causes behind any differences.</strong></p></li>
-</ol>
-</div>
-<div id="problem-3" class="section level3">
-<h3>Problem 3</h3>
-<p><strong>For this problem, we return to the <code>wallingford</code> data.</strong></p>
-<pre class="r"><code>wallingford &lt;- house_prices %&gt;% 
-  filter(zipcode == 98103)</code></pre>
-<ol style="list-style-type: lower-alpha">
-<li><p><strong>Fit a (parallel slopes) linear regression to predict <code>price</code> based on <code>sqft_living</code> <em>and</em> <code>bedrooms</code>. Print out the R output.</strong></p></li>
-<li><p><strong>What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?</strong></p></li>
-<li><p><strong>What are the estimated slope coefficients? Explain what these mean.</strong></p></li>
 </ol>
 </div>
 </div>
