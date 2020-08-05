@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.72.0" />
+
+
+<title>Lab 07 - QSCI 381 Labs</title>
+<meta property="og:title" content="Lab 07 - QSCI 381 Labs">
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+
+  <ul class="nav-links">
+    
+    <li><a href="https://canvas.uw.edu/courses/1382732">Canvas</a></li>
+    
+    <li><a href="/">Home</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+
+
+    <h1 class="article-title">Lab 07</h1>
+
+    
+    <span class="article-date">2020-08-06</span>
+    
+
+    <div class="article-content">
+      
+
+
+<div id="lab-07-skills-slides" class="section level1">
+<h1><a href="/slides/lab-07.html">Lab 07 Skills Slides</a></h1>
+</div>
+<div id="lab-07-report-template" class="section level1">
+<h1><a href="https://raw.githubusercontent.com/QSCI381-SUM20/QSCI381-SUM20.github.io/master/post/lab-07/lab-07-template.Rmkd">Lab 07 Report Template</a></h1>
+</div>
+<div id="homework-optional" class="section level1">
+<h1>Homework (optional)</h1>
+<p><strong>For each question: show all mathematical work and include all code, plus output from R or graphs. Make sure to answer all sub-questions. All plots should be appropriately labeled and titled.</strong></p>
+<div id="problem-1" class="section level3">
+<h3>Problem 1</h3>
+<p><strong>For this problem, we’ll be taking a look at the <code>evals</code> dataset from the <code>moderndive</code> package. First, run the command <code>install.packages(&quot;moderndive&quot;)</code>.</strong></p>
+<pre class="r"><code>library(moderndive)
+data(evals)</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>Provide a scatterplot with <code>score</code> on the y-axis and <code>age</code> on the x-axis. Color the points by <code>cls_level</code>. Interpret your plot (two sentences max).</strong></p></li>
+<li><p><strong>Fit a parallel slopes linear regression to predict <code>score</code> based on <code>age</code> <em>and</em> <code>cls_level</code>. Print out the R output.</strong></p></li>
+<li><p><strong>What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?</strong></p></li>
+<li><p><strong>What is the estimated <code>age</code> coefficient? Explain the interpretation of this coefficient.</strong></p></li>
+<li><p><strong>What is the estimated <code>cls_levelupper</code> coefficient? Explain the interpretation of this coefficient.</strong></p></li>
+<li><p><strong>Fit a interaction linear regression to predict <code>score</code> based on <code>age</code> <em>and</em> <code>cls_level</code>. Print out the R output.</strong></p></li>
+<li><p><strong>What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?</strong></p></li>
+<li><p><strong>What is the estimated <code>age</code> coefficient? Explain the interpretation of this coefficient.</strong></p></li>
+<li><p><strong>What is the estimated <code>age:cls_levelupper</code> coefficient? Explain the interpretation of this coefficient.</strong></p></li>
+<li><p><strong>Compare and contrast your parallel slopes and interaction models. Which model is more complicated? Which model do you prefer and why?</strong></p></li>
+<li><p><strong>For your interaction model, what is the estimated multiple r-squared value? Explain the interpretation of this quantity.</strong></p></li>
+<li><p><strong>For your interaction model, produce a residual plot with the residuals on the y-axis and fitted values on the x-axis. Interpret your plot (two sentences max).</strong></p></li>
+</ol>
+</div>
+<div id="problem-2" class="section level3">
+<h3>Problem 2</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p><strong>Provide a scatterplot with <code>bty_avg</code> on the y-axis and <code>age</code> on the x-axis. Interpret your plot (two sentences max).</strong></p></li>
+<li><p><strong>Fit a linear regression model to predict <code>bty_avg</code> based on <code>age</code>. Print out the R output.</strong></p></li>
+<li><p><strong>What is the estimated intercept? Explain what the intercept represents. Does the intercept have any real world significance?</strong></p></li>
+<li><p><strong>What is the estimated <code>age</code> coefficient? Explain the interpretation of this coefficient.</strong></p></li>
+<li><p><strong>Check the four conditions necessary for inference for linear regression. For each condition, describe whether this data meet the condition and justify your answer (you can use plots to do so).</strong></p></li>
+<li><p><strong>Use your linear regression output to perform a hypothesis test (at level of significance .05) for whether <code>age</code> has an effect on <code>bty_avg</code>. Be sure to write your hypotheses, test statistic, and p value. What do you conclude?</strong></p></li>
+</ol>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+
